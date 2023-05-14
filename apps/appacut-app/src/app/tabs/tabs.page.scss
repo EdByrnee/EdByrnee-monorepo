@@ -1,0 +1,28 @@
+ion-tab-bar {
+  border-top: solid #d8d8d8 1px;
+}
+
+ion-icon {
+  font-size: 24px !important;
+  --color: #7c7e85;
+}
+
+ion-tab-button {
+  --color: var(--ion-color-medium);
+  --color-selected: var(--ion-color-primary);
+  --background: white;
+  --font-size: 12px;
+
+  ion-label {
+    font-size: 10px;
+  }
+}
+
+.updating{
+  background: var(--ion-color-success);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}

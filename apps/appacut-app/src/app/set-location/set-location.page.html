@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Welcome</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="setPostcode()" [disabled]="!postcode.valid" color="secondary"
+        >Save</ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" (click)="setPostcodeModalBreakpoint(1)">
+  <!-- <h4>Set Location</h4> -->
+
+  <h4>Enter your postcode</h4>
+  <p>Please enter your postcode so we can show the food most relevent to you</p>
+
+  <ion-item>
+    <ion-label position="stacked">My postcode</ion-label>
+    <ion-input
+      autocapitalize="on"
+      placeholder="e.g. L13 3DE"
+      [formControl]="postcode"
+      style="transform: uppercase"
+    ></ion-input>
+    <ion-text slot="error">
+      <p *ngIf="postcode.hasError('required')">Postcode is required</p>
+      <p *ngIf="postcode.hasError('pattern')">Postcode is invalid</p>
+    </ion-text>
+  </ion-item>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="secondary" expand="block" (click)="setPostcode()" [disabled]="!postcode.valid"
+      >Continue</ion-button
+    >
+  </ion-toolbar>
+</ion-footer>

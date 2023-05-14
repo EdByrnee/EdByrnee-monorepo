@@ -1,0 +1,14 @@
+{
+  "defaultProject": "appacut-app",
+  "projects": {
+    "appacut-app": {
+      "name": "appacut-app",
+      "integrations": {
+        "capacitor": {}
+      },
+      "type": "angular",
+      "id": "c67f1e71",
+      "root": "apps/appacut-app"
+    }
+  }
+}

@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Complete Profile</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button
+        color="secondary"
+        [disabled]="!currentUserForm.valid"
+        (click)="saveChanges()"
+      >
+        Save
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="(currentUser$ | async) as currentUser">
+  <div class="ion-padding">
+    <h4>Complete Signup</h4>
+    <p>Select a username to complete signup</p>
+  </div>
+
+  <ion-list inset="true">
+    <form [formGroup]="currentUserForm">
+      <ion-item>
+        <ion-label position="stacked">Username</ion-label>
+        <ion-input placeholder="Enter Username" formControlName="username">
+        </ion-input>
+        <ion-text
+          slot="error"
+          *ngIf="currentUserForm.get('username')?.hasError('required')"
+        >
+          Username is required
+        </ion-text>
+        <ion-text
+          slot="error"
+          *ngIf="currentUserForm.get('username')?.hasError('minlength')"
+        >
+          Username must be at least 2 characters long
+        </ion-text>
+        <ion-text
+          slot="error"
+          *ngIf="currentUserForm.get('username')?.hasError('maxlength')"
+        >
+          Username cannot be more than 25 characters long
+        </ion-text>
+        <ion-text
+          slot="error"
+          *ngIf="currentUserForm.get('username')?.hasError('pattern')"
+        >
+          Username can only contain letters, numbers, underscores, and hyphens
+        </ion-text>
+      </ion-item>
+      <!-- <ion-item>
+        <ion-label position="stacked">Display Name</ion-label>
+        <ion-input placeholder="Enter Display Name" formControlName="name"></ion-input>
+
+        <ion-text
+          slot="error"
+          *ngIf="currentUserForm.get('name')?.hasError('required')"
+        >
+          Display name is required
+        </ion-text>
+        <ion-text
+          slot="error"
+          *ngIf="currentUserForm.get('name')?.hasError('minlength')"
+        >
+          Display name must be at least 2 characters long
+        </ion-text>
+      </ion-item> -->
+    </form>
+  </ion-list>
+
+  <div class="ion-padding">
+    Your username helps you connect with makers and other users on the platform.
+  </div>
+
+  <!-- <div class="ion-padding">
+    <br>
+    <br>
+    <br>
+    <br>
+    <p>Upload a profile picture (optional)</p>
+
+    <ion-item (click)="authService.showChangeProfilePhotoActions()">
+      <ion-avatar slot="start">
+        <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-button size="small">
+        Profile Photo&nbsp;<small>(optional)</small></ion-button
+      >
+    </ion-item>
+  </div> -->
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button
+      style="width: 100%"
+      [disabled]="!currentUserForm.valid"
+      (click)="saveChanges()"
+      color="secondary"
+    >
+      <ion-icon
+        name="rocket-outline"
+        *ngIf="!this.loadingCompleteProfile"
+      ></ion-icon>
+      <ion-spinner
+        name="circular"
+        *ngIf="this.loadingCompleteProfile"
+      ></ion-spinner>
+
+      &nbsp; Complete Signup
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

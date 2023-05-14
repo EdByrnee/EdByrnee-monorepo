@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "appId": "c67f1e71",
+      "root": "apps/appacut-app",
+      "dependencyInstallCommand": "cd ../../ && npm install --legacy-peer-deps",
+      "webBuildCommand": "cd ../../ && npx nx build appacut-app --prod"
+    }
+  ]
+}

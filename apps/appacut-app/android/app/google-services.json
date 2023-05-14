@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "523601161911",
+    "project_id": "polar-program-379410",
+    "storage_bucket": "polar-program-379410.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523601161911:android:3fc0f31a89e58533082732",
+        "android_client_info": {
+          "package_name": "market.localshelf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523601161911-llc69c9sn3tggai84c406vrjhqudq5s6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAga6lfgrDBTMUICEyzf8jS9E9gPiRfu6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523601161911-llc69c9sn3tggai84c406vrjhqudq5s6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "523601161911-c0jbe9mv7652lg5uv9qjc6eo2fdl94vp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "market.localshelf"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

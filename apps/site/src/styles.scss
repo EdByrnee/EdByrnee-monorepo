@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.cdnfonts.com/css/inter');
+
+// Import afterflow font from assets folder
+@font-face {
+  font-family: Afterglow;
+  src: url('./assets/fonts/Afterglow-Regular.ttf');
+}
+
+@font-face {
+  font-family: Delight-Winter;
+  src: url('./assets/fonts/delight_winter/Delight Winter.ttf');
+}
+
+body {
+  background: white;
+  // background: url('https://media.istockphoto.com/id/1203731449/photo/baker-man-hands-breadmaking-kneading-bread.jpg?s=612x612&w=is&k=20&c=2ENTZWl4lCN-ZUa1RlG-R8B9ZkknIQNMB5GzE4Lu5IA=');
+  background-size: cover;
+  // background-position: center center;
+}
+
+h1 {
+  font-family: Delight-Winter;
+  color: #2f2f2f;
+} p{
+  color: #2f2f2f;
+}
+
+h2,
+h3,
+h4 {
+  font-family: Afterglow;
+}
+
+h5,
+h6 {
+  font-family: 'Inter', sans-serif;
+  font-family: Afterglow;
+}
+
+body, p {
+  font-family: 'Inter', sans-serif;
+}

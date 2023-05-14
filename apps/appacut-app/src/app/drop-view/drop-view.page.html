@@ -1,0 +1,328 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title> SUGAR RUSH </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="!loading">
+  <div>
+    <div class="photo-slides">
+      <ion-slides pager="true" #slides>
+        <ion-slide class="slide--two" *ngFor="let p of drop.photos">
+          <img alt="Drop Photo" height="500" [src]="p.photo_url" />
+        </ion-slide>
+
+        <div class="sold-out-overlay" *ngIf="drop.qty_available < 1">
+          <ion-icon name="sad-outline"></ion-icon>
+          <h6>SOLD OUT!</h6>
+        </div>
+      </ion-slides>
+    </div>
+    <div class="ion-padding" style="padding-bottom: 10px">
+      <h2 style="margin: 0px" class="drop-name">{{ drop.name }}</h2>
+    </div>
+    <!-- <div class="ion-padding delivery-chips">
+      <ion-chip
+        class="local-delivery-chip"
+        [color]="drop.localDeliveryEnabled ? 'success' : 'medium'"
+        size="small"
+      >
+        <ion-icon
+          *ngIf="drop.localDeliveryEnabled"
+          name="checkmark-circle-outline"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="!drop.localDeliveryEnabled"
+          name="close-circle-outline"
+        ></ion-icon>
+        <ion-label>Local Delivery</ion-label>
+      </ion-chip>
+      <ion-chip
+        class="national-delivery-chip"
+        [color]="drop.nationalDeliveryEnabled ? 'success' : 'medium'"
+        size="small"
+      >
+        <ion-icon
+          *ngIf="drop.nationalDeliveryEnabled"
+          name="checkmark-circle-outline"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="!drop.nationalDeliveryEnabled"
+          name="close-circle-outline"
+        ></ion-icon>
+        <ion-label>UK Delivery</ion-label>
+      </ion-chip>
+
+      <ion-chip
+        [color]="drop.collectionEnabled ? 'success' : 'medium'"
+        size="small"
+        class="collection-chip"
+      >
+        <ion-icon
+          *ngIf="drop.collectionEnabled"
+          name="checkmark-circle-outline"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="!drop.collectionEnabled"
+          name="close-circle-outline"
+        ></ion-icon>
+        <ion-label>Collection</ion-label>
+      </ion-chip>
+    </div> -->
+
+    <div class="ion-padding">
+      <p style="margin: 0px" class="drop-description">{{ drop.description }}</p>
+    </div>
+
+    <ng-template #loadingUser>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text
+            [animated]="true"
+            style="width: 40px; height: 40px"
+          ></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text
+              [animated]="true"
+              style="width: 80px"
+            ></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text
+              [animated]="true"
+              style="width: 80px"
+            ></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text
+              [animated]="true"
+              style="width: 80px"
+            ></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ng-template>
+
+    <div class="map">
+      <google-map
+        *ngIf="showCollectionMap"
+        [options]="collectionMapOptions"
+        [width]="'100%'"
+        [height]="'100%'"
+      >
+        <map-marker [options]="collectionMapPin"> </map-marker>
+      </google-map>
+    </div>
+
+    <!-- <div style="height: 100px"></div> -->
+
+    <!-- <ion-item-divider> -->
+      <!-- <ion-label>Ingredients & Allergies</ion-label> -->
+    <!-- </ion-item-divider> -->
+    <ion-item>
+      <ion-label text-wrap>
+        <h4 class="allegen-title">Allergens</h4>
+        <!-- <p class="allegen-info">{{ drop.allergens }}</p> -->
+        <p class="allegen-disclaimer">
+          <small style="font-style: italic">
+            All food sold on Sugar Rush may contain traces of nuts, gluten,
+            eggs, milk, soya, sesame, celery, mustard, fish, crustaceans,
+            molluscs, lupin, sulphites, peanuts, and other allergens.
+          </small>
+        </p>
+      </ion-label>
+    </ion-item>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="!loading">
+  <div>
+    <ion-toolbar>
+      <div class="footer-toolbar-wrapper">
+        <h2 class="footer-price">{{ drop.price | currency:"GBP":true }}</h2>
+
+        <div
+          class="qty_status"
+          *ngIf="drop.makerUuid === (currentUser$ | async)?.uuid"
+        >
+          <div class="">
+            <small> In stock: {{ drop.qty_available }} </small>
+          </div>
+
+          <small>
+            Status:
+            <span *ngIf="drop.status === 'ACTIVE_LISTING'">
+              <ion-text color="success">Active</ion-text>
+            </span>
+            <span *ngIf="drop.status === 'AWAITING_APPROVAL'">
+              <ion-text color="warning">Awaiting Approval</ion-text>
+            </span>
+            <span *ngIf="drop.status === 'USER_DELISTED'">
+              <ion-text color="warning">Paused</ion-text>
+            </span>
+            <span *ngIf="drop.status === 'DELISTED_FOR_HOLIDAY'">
+              <ion-text color="warning">Paused for holiday</ion-text>
+            </span>
+          </small>
+        </div>
+
+        <div class="buttons">
+          <ion-button
+            *ngIf="drop.makerUuid !== (currentUser$ | async)?.uuid"
+            class="buy-now-button"
+            shape="round"
+            size="small"
+            [disabled]="drop.qty_available < 1"
+            color="secondary"
+            (click)="addToBasket()"
+          >
+            -
+          </ion-button>
+          <span class="">
+            0
+          </span>
+          <ion-button
+            *ngIf="drop.makerUuid !== (currentUser$ | async)?.uuid"
+            class="buy-now-button"
+            shape="round"
+            size="small"
+            [disabled]="drop.qty_available < 1"
+            color="secondary"
+            (click)="addToBasket()"
+          >
+            +
+          </ion-button>
+        </div>
+      </div>
+    </ion-toolbar>
+    <ion-toolbar *ngIf="drop.makerUuid === (currentUser$ | async)?.uuid">
+      <ion-button
+        class="buy-now-button"
+        color="primary"
+        (click)="updateDrop()"
+        expand="block"
+      >
+        <ion-icon name="pencil-outline"></ion-icon>&nbsp; Edit Quantity / Price
+      </ion-button>
+
+      <ion-button
+        class="buy-now-button"
+        color="success"
+        (click)="updateStatus('ACTIVE_LISTING')"
+        expand="block"
+        *ngIf="drop.status === 'USER_DELISTED'"
+      >
+        <ion-icon name="play-outline"></ion-icon>&nbsp; Resume Listing
+      </ion-button>
+
+      <ion-button
+        class="buy-now-button"
+        color="danger"
+        disabled
+        fill="clear"
+        expand="block"
+        *ngIf="drop.status === 'AWAITING_APPROVAL'"
+        disabled
+      >
+        <ion-icon name="hourglass-outline"></ion-icon>&nbsp; Awaiting Approval
+      </ion-button>
+
+      <ion-button
+        class="buy-now-button"
+        color="warning"
+        (click)="updateStatus('USER_DELISTED')"
+        expand="block"
+        *ngIf="drop.status === 'ACTIVE_LISTING'"
+      >
+        <ion-icon name="pause-outline"></ion-icon>&nbsp; Pause Listing
+      </ion-button>
+
+      <!-- <ion-button
+        class="buy-now-button"
+        color="danger"
+        (click)="buyNow()"
+        expand="block"
+        style="color: white"
+        *ngIf="drop.status === 'ACTIVE_LISTING'"
+      >
+        <ion-icon name="close-outline"></ion-icon>&nbsp; Remove listing
+      </ion-button> -->
+    </ion-toolbar>
+    <!-- <ion-toolbar *ngIf="drop.makerUuid === (currentUser$ | async)?.uuid">
+      <div class="footer-toolbar-wrapper">
+        <div class="">
+          <ion-button
+            [disabled]="drop.qty_available === 0 || drop.status === 'ACTIVE_LISTING'"
+            class="buy-now-button"
+            color="primary"
+            (click)="buyNow()"
+            expand="block"
+          >
+            Edit Quantity
+          </ion-button>
+        </div>
+      </div>
+    </ion-toolbar> -->
+  </div>
+</ion-footer>
+
+<ion-content *ngIf="loading">
+  <div class="profile-photos">
+    <ion-slides pager="true" #slides>
+      <ion-slide class="slide--two" style="height: 75h">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <div class="ion-padding">
+    <h4>
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 80px"
+      ></ion-skeleton-text>
+    </h4>
+    <p>
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 1000%"
+      ></ion-skeleton-text>
+    </p>
+    <p>
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 80px"
+      ></ion-skeleton-text>
+    </p>
+  </div>
+
+  <ion-item-divider>
+    <ion-label> </ion-label>
+  </ion-item-divider>
+
+  <div class="ion-padding">
+    <h4>
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 80px"
+      ></ion-skeleton-text>
+    </h4>
+    <p>
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 1000%"
+      ></ion-skeleton-text>
+    </p>
+    <p>
+      <ion-skeleton-text
+        [animated]="true"
+        style="width: 80px"
+      ></ion-skeleton-text>
+    </p>
+  </div>
+</ion-content>

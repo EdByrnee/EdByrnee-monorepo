@@ -1,0 +1,1 @@
+export type DeliveryMethod = 'COLLECTION' | 'NATIONAL_DELIVERY' | 'LOCAL_DELIVERY';

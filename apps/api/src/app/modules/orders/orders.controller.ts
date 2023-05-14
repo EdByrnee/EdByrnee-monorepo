@@ -1,0 +1,122 @@
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  InternalServerErrorException,
+  Logger,
+  Param,
+  Patch,
+  Post,
+  UnprocessableEntityException,
+} from '@nestjs/common';
+import { OrderService } from './orders.service';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { User } from '../auth/utils/user.decorator';
+import { RequestUser } from '../auth/utils/jwt.strategy';
+import { Order } from './order.entity';
+import { DropService } from '../drops/drops.service';
+import { ICreatePaymentIntentRequestBody } from '@shoppr-monorepo/api-interfaces';
+import { AuthService } from '../auth/auth.service';
+import { EmailService } from '../auth/email-service';
+import { SequelizeUow } from '../../core/database/infra/sequelize-uow';
+
+@ApiTags('Orders')
+@Controller('/orders')
+export class OrdersController {
+  private readonly Logger = new Logger(OrderService.name);
+
+  constructor(
+    private orderService: OrderService,
+    private dropService: DropService,
+    private authService: AuthService,
+    private emailService: EmailService,
+    private uow: SequelizeUow
+  ) {}
+
+  @ApiOperation({ summary: 'Create a new order' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Post('/')
+  async createOrder(
+    @User() user: RequestUser,
+    @Body() body: CreateOrderDto
+  ): Promise<void> {
+    return await this.uow.execute(async () => {
+    try {
+      Logger.log(`Creating order for ${user.uuid}`, OrderService.name);
+      const drop = await this.dropService.getDrop(body.dropUuid);
+
+      if (drop.qty_available <= 0) {
+        throw new UnprocessableEntityException('Drop is out of stock');
+      }
+
+      const maker = await this.authService.getProfile(drop.makerUuid);
+
+      await this.orderService.create(user.uuid, drop, body, maker);
+      const order = await this.orderService.get(body.uuid);
+
+      await this.dropService.decrementDropQuantity(drop.uuid, 1);
+
+      await this.emailService.sendBuyerOrderConfirmationEmail(
+        user.uuid,
+        drop as any,
+        body,
+        order
+      );
+      await this.emailService.sendMakerOrderConfirmationEmail(
+        user.uuid,
+        drop as any,
+        body,
+        order
+      );
+    } catch (err) {
+      throw new HttpException('Error creating order', 500)
+    }
+  });
+  }
+
+  @ApiOperation({ summary: 'Create a new payment intent' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Post('/payment-intent')
+  async createPaymentIntent(@Body() body: ICreatePaymentIntentRequestBody) {
+    return await this.uow.execute(async () => {
+    Logger.log(`Payment intent request...`);
+    return await this.orderService.createPaymentIntent(
+      body.deliveryType,
+      body.dropUuid,
+      body.orderTotal
+    );
+    });
+  }
+
+  @ApiOperation({ summary: 'Get a single order' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Get('/:uuid')
+  async getOrder(@Param('uuid') uuid: string): Promise<Order> {
+    return await this.uow.execute(async () => {
+    return await this.orderService.get(uuid);
+    });
+  }
+
+  @ApiOperation({ summary: 'Update order status' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Patch('/:uuid/status')
+  async updateOrderStatus(
+    @Param('uuid') uuid: string,
+    @Body() body: any
+  ): Promise<void> {
+    return await this.uow.execute(async () => {
+    return await this.orderService.updateOrderStatus(uuid, body.order_status);
+    });
+  }
+
+  @ApiOperation({ summary: 'Get all orders' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Get('/')
+  async getAllOrders(@User() user: RequestUser): Promise<Order[]> {
+    return await this.uow.execute(async () => {
+    return await this.orderService.getAllForUser(user.uuid);
+    });
+  }
+}

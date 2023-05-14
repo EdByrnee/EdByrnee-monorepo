@@ -1,0 +1,59 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  width: 170px;
+  margin-right: 12px;
+  margin-top: 0px;
+}
+
+.drop-image {
+  object-fit: cover;
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 7px;
+  position: relative;
+}
+
+ion-card {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 0px;
+}
+
+.card-description {
+  // border: solid red 1px;
+  width: 100%;
+  // wrap
+
+  h6 {
+    margin: 0px;
+    word-wrap: break-word;
+  }
+
+  .bio {
+    margin: 0px;
+    margin-top: 2px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  // Text wrap
+  font-size: 12px;
+  padding: 6px 0px;
+  padding-bottom: 0px;
+}
+
+.location {
+  margin-top: 4px;
+}
+
+img {
+  border: solid 1px #efefef;
+}
+
+.location{
+  font-size: 11px;
+}

@@ -1,0 +1,87 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Messages</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="(messageThreads$ | async) as messageThreads; else loading">
+  <!-- <div class="ion-padding">
+    <ion-segment value="default">
+      <ion-segment-button value="default">
+        <ion-label>Messages</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="segment">
+        <ion-label>Notifications</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div> -->
+
+  <ion-refresher slot="fixed" (ionRefresh)="loadData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Messages</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="ion-padding" *ngIf="messageThreads.length === 0">
+    <p>You have no messages yet.</p>
+    <small style="font-style: italic">
+      You can send messages to other users by clicking on their profile and
+      clicking the "Message" button.
+    </small>
+  </div>
+
+  <ion-card color="secondary" *ngIf="(permissionStatus$ | async) !== 'granted'">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="notifications-outline"></ion-icon>
+        Enable Notifications
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Enable notifications to receive order updates and messages from other
+        users.
+      </p>
+      <br />
+      <ion-button
+        style="width: 100%"
+        color="light"
+        (click)="requestPermissions()"
+      >
+        Enable Notifications
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="messageThreads.length > 0">
+    <ion-item
+      button
+      (click)="goToMessageThread(mt)"
+      *ngFor="let mt of messageThreads"
+    >
+      <ion-avatar slot="start">
+        <img
+          alt="Profile Photo"
+          [src]="mt.participant?.photoUrl ? mt.participant?.photoUrl : 'https://ui-avatars.com/api/?name=' + mt.participant?.name + '&background=random&color=fff&size=256'"
+        />
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ mt.participant.name}}</h3>
+        <p>{{ mt.messages[0].message}}</p>
+        <p slot="end" style="font-size: 10px">
+          {{ mt.threadLatestMessageAt | date:'M/d/yy, h:mm a' }}
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ng-template #loading>
+  <ion-content>
+    <ion-spinner></ion-spinner>
+  </ion-content>
+</ng-template>

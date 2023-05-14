@@ -1,0 +1,65 @@
+h1 {
+  font-size: 120px;
+  margin-bottom: 0px;
+}
+p {
+  font-weight: 300;
+  font-size: 1.5em;
+  padding: 0px 0px;
+  margin-bottom: 12px;
+}
+.content {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.title {
+  text-align: center;
+  // background: #6D8274;
+  position: absolute;
+  transform: translate(-50%);
+  left: 50%;
+}
+img {
+  margin-top: 12px;
+  height: 50px;
+  width: 160px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  margin-right: 12px;
+}
+.txt {
+  background: yellow;
+  padding: 4px;
+  color: #2f2f2f;
+  font-style: italic;
+}
+
+.texts {
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.contact {
+  position: fixed;
+  right: 12px;
+  top: 12px;
+  // border: solid #2f2f2f 1px;
+  padding: 4px;
+  border-radius: 18px;
+
+  a {
+    text-decoration: none;
+    color: #2f2f2f;
+    font-size: 1em;
+    position: relative;
+    top: -11px;
+  }
+}
+
+.contact__img {
+  height: auto;
+  width: 18px;
+  cursor: pointer;
+}

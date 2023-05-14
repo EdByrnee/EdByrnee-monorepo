@@ -1,0 +1,97 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Auth</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Lazy Student Laundry</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!signupRequired" class="ion-padding">
+  <div class="request--header" *ngIf="!codeSent">
+    <h1>Enter your phone number</h1>
+    <p>Enter your phone number below and we'll text you your code</p>
+  </div>
+
+  <div class="sent--header" *ngIf="codeSent">
+    <h1>Enter your OTP</h1>
+    <p>Enter the code that has been sent to your phone</p>
+  </div>
+</ion-content>
+
+<ion-footer color="white" *ngIf="!signupRequired">
+  <ion-toolbar>
+    <ion-input
+      *ngIf="!codeSent"
+      placeholder="Enter your phone number"
+      type="tel"
+    ></ion-input>
+
+    <ion-input
+      *ngIf="codeSent"
+      placeholder="Enter your code"
+      type="tel"
+    ></ion-input>
+
+    <ion-button
+      *ngIf="!codeSent"
+      color="dark"
+      expand="full"
+      (click)="requestOTP()"
+    >
+      Continue
+    </ion-button>
+
+    <ion-button
+      *ngIf="codeSent"
+      color="dark"
+      expand="full"
+      (click)="submitOTP()"
+    >
+      Continue
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-content *ngIf="signupRequired" class="ion-padding">
+  <h1>Complete your profile</h1>
+  <p>Just enter your name and email and we're finished</p>
+
+  <div>
+    <ion-item>
+      <ion-input
+        name="name"
+        type="text"
+        placeholder="Full Name"
+        ngModel
+        required
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        name="email"
+        type="email"
+        placeholder="your@email.com"
+        ngModel
+        required
+      ></ion-input>
+    </ion-item>
+    <!-- <ion-item>
+        <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input name="confirm" type="password" placeholder="Password again" ngModel required></ion-input>
+      </ion-item> -->
+  </div>
+</ion-content>
+
+<ion-footer color="white" *ngIf="signupRequired">
+  <ion-toolbar>
+    <ion-button color="dark" expand="full" (click)="completeProfile()">
+      Finish
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,56 @@
+ion-slides {
+  background-color: white;
+  // background-image: url('/assets/splash/bg1.png');
+  height: 100%;
+  --bullet-background: black;
+  --bullet-background-inactive: white;
+  --bullet-background-active: white;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.floating {
+  position: absolute;
+  top: 20%;
+  left: 16px;
+}
+
+h1,
+p {
+  text-align: left;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+p {
+  font-size: 24px;
+}
+
+.slide--one {
+  background-image: url('/assets/splash/s1.png');
+  background-size: 100%;
+
+  .header {
+    position: absolute;
+    top: 10%;
+    left: 24px;
+  }
+}
+
+video {
+  width: 100vw;
+}
+
+ion-slide {
+  padding: 12px;
+
+  .slide-wrapper {
+    position: relative;
+    height: 100%;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+}

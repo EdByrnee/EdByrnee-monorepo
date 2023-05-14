@@ -1,0 +1,109 @@
+<div class="content" (click)="viewDrop(_drop.uuid)">
+  <ion-thumbnail class="drop-image" [class.disabled]="!isActive">
+    <img
+      class="drop-image"
+      [src]="
+        _drop.photos && _drop.photos[0]
+          ? _drop.photos[0].photo_url
+          : 'https://ionicframework.com/docs/img/demos/ionic-logo.png'
+      "
+    />
+
+    <div class="sold-out-overlay" *ngIf="isSoldOut">
+      <ion-icon name="sad-outline"></ion-icon>
+      <h6>SOLD OUT!</h6>
+    </div>
+  </ion-thumbnail>
+
+  <div class="card-description">
+    <!-- <small>Maker Name</small> -->
+    <h6 [class.disabled]="!isActive" class="listing-header">{{ _drop.name }}</h6>
+    <!-- <div class="location-strapline">
+      <small><strong style="color: #c99530">Near you</strong></small>
+    </div>  -->
+    <div class="" [class.disabled]="!isActive">
+      <ion-text color="secondary">
+        <small>Liverpool, UK</small>
+      </ion-text>
+    </div>
+    <!-- <div class="">
+      <ion-text color="medium">
+        <small>MAKER NAME</small>
+      </ion-text>
+    </div>  -->
+    <div class="display-status" *ngIf="displayStatus">
+      <div *ngIf="status === 'ACTIVE_LISTING'">
+        <ion-text color="success">
+          <small>
+            <ion-icon name="checkmark-outline"></ion-icon>
+            Active
+          </small>
+        </ion-text>
+      </div>
+
+      <ion-text color="warning" *ngIf="status === 'USER_DELISTED'">
+        <small>
+          <ion-icon name="pause-outline"></ion-icon>
+          Paused
+        </small>
+      </ion-text>
+
+      <ion-text color="warning" *ngIf="status === 'AWAITING_APPROVAL'">
+        <small>
+          <ion-icon name="hourglass-outline"></ion-icon>
+          Awaiting Approval
+        </small>
+      </ion-text>
+    </div>
+
+    <div class="collection-types">
+      <!-- Collection icon -->
+      <small class="delivery-option" *ngIf="_drop.collectionEnabled" class="enabled">
+        <ion-icon
+          *ngIf="_drop.collectionEnabled"
+          name="checkmark-circle-outline"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="!_drop.collectionEnabled"
+          name="close-circle-outline"
+        ></ion-icon>
+        Collect
+      </small>
+      <!-- Delivery available icon -->
+      <small class="delivery-option" *ngIf="_drop.localDeliveryEnabled" class="enabled">
+        <ion-icon
+          *ngIf="_drop.localDeliveryEnabled"
+          name="checkmark-circle-outline"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="!_drop.localDeliveryEnabled"
+          name="close-circle-outline"
+        ></ion-icon>
+        Local
+      </small>
+      <!-- National delivery available icon -->
+      <small class="delivery-option" *ngIf="_drop.nationalDeliveryEnabled" class="enabled">
+        <ion-icon
+          *ngIf="_drop.nationalDeliveryEnabled"
+          name="checkmark-circle-outline"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="!_drop.nationalDeliveryEnabled"
+          name="close-circle-outline"
+        ></ion-icon>
+        National
+      </small>
+    </div>
+
+    <div class="display-status">
+      <div *ngIf="_drop.qty_available < 1">
+        <ion-text color="danger">
+          <small>
+            <ion-icon name="sad-outline"></ion-icon>
+            SOLD OUT!
+          </small>
+        </ion-text>
+      </div>
+    </div>
+  </div>
+</div>

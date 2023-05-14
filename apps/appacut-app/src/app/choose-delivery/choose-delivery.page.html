@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Welcome</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="checkoutForm">
+    <h4>Select Delivery</h4>
+
+    <ion-list inset="true">
+      <ion-radio-group value="deliveryMethod" formControlName="deliveryMethod">
+        <ion-item *ngIf="drop.collectionEnabled">
+          <ion-label>Free Collection</ion-label>
+          <ion-radio
+            slot="end"
+            value="COLLECTION"
+            color="secondary"
+          ></ion-radio>
+        </ion-item>
+
+        <ion-item *ngIf="drop.localDeliveryEnabled">
+          <ion-label
+            >{{ drop.localDeliveryCost | currency:"GBP": true }} Local
+            Delivery</ion-label
+          >
+          <ion-radio
+            slot="end"
+            value="LOCAL_DELIVERY"
+            color="secondary"
+          ></ion-radio>
+        </ion-item>
+
+        <ion-item *ngIf="drop.nationalDeliveryEnabled">
+          <ion-label
+            >{{ drop.nationalDeliveryCost | currency:"GBP": true }} National
+            Delivery</ion-label
+          >
+          <ion-radio
+            slot="end"
+            value="NATIONAL_DELIVERY"
+            color="secondary"
+          ></ion-radio>
+        </ion-item>
+        <ion-note slot="error"> You must select a delivery method </ion-note>
+      </ion-radio-group>
+    </ion-list>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button
+      expand="block"
+      color="secondary"
+      (click)="goToCheckout()"
+      [disabled]="!checkoutForm.valid"
+    >
+      Checkout
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

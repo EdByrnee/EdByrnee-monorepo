@@ -1,0 +1,180 @@
+<ion-header [translucent]="true">
+  <!-- <ion-toolbar>
+    <ion-title>
+      <img src="/assets/logo_black.png" width="150px;" />
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onSetLocation()">
+        <ion-icon name="navigate-outline"></ion-icon>
+        <span *ngIf="(postcode$ | async) as postcode"> {{ postcode }} </span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar> -->
+
+  <ion-toolbar style="margin-bottom: -30px;"></ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar
+      animated="true"
+      placeholder="Find anything"
+      show-cancel-button="focus"
+      (ionInput)="search($event)"
+      (ionBlur)="cancelSearchIfBlank($event)"
+      (ionFocus)="searching = true"
+      (ionCancel)="searching = false"
+    ></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="onSetLocation()" color="secondary">
+        <ion-icon name="navigate-outline"></ion-icon>
+        <span *ngIf="(postcode$ | async) as postcode"> {{ postcode }} </span>
+      </ion-button>
+
+      <ion-button (click)="onClickBasket()" color="secondary">
+        <ion-icon name="basket-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="" *ngIf="!searching">
+  <ion-refresher slot="fixed" (ionRefresh)="loadData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Launching soon card -->
+  <div
+    class="launching-soon"
+    *ngIf="showLaunchingSoon"
+    (click)="showLaunchingSoon = false"
+  >
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>We're launching soon!</ion-card-title>
+        <ion-card-subtitle>CHECKOUT IS DISABLED</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        You can see items for sale - but you can't buy anything
+        yet. Check back in a few days!
+      </ion-card-content>
+
+      <!-- <ion-button fill="clear" color="secondary">Remind me</ion-button> -->
+      <ion-button
+        fill="clear"
+        color="secondary"
+        (click)="showLaunchingSoon = true"
+        >Dismiss</ion-button
+      >
+    </ion-card>
+  </div>
+
+  <!-- <div *ngIf="showMakers && (suggestedMakers$ | async) as suggestedMakers">
+    <div class="suggested-makers">
+      <ion-text color="primary">
+        <h6 class="">Meet your Local Makers</h6>
+      </ion-text>
+
+    <div class="suggested-makers__listing horizontal-listing">
+        <div
+          class="avatar-listing"
+          *ngFor="let maker of suggestedMakers"
+          (click)="goToViewMaker(maker.uuid)"
+        >
+          <ion-avatar>
+            <img
+              
+              [src]="maker.photoUrl ? maker.photoUrl : 'https://ui-avatars.com/api/?name=' + maker.name + '&background=random&color=fff&size=256'"
+            />
+          </ion-avatar>
+          <div class="avatar-name">{{ maker.name }}</div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="loading" *ngIf="loading">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <div class="feed-listing" *ngFor="let feed of (dropFeed$ | async)">
+    <ion-text color="primary">
+      <h3 style="padding-left: 12px; margin-bottom: 0px; margin-top: 10px">
+        {{ feed.title }}
+        <span *ngIf="feed.appendWithPostcode"
+          >({{ firstHalfOfPostcode$ | async }})</span
+        >
+        <ion-icon
+          name="chevron-forward-outline"
+          style="position: relative; top: 4px; color: #7f7f7f"
+        ></ion-icon>
+      </h3>
+    </ion-text>
+
+    <!-- NEXT LISTING TYPE -->
+
+    <div class="suggested-makers" *ngIf="feed.listingType === 'Maker'">
+      <div class="suggested-makers__listing horizontal-listing">
+        <shoppr-monorepo-maker-listing
+          *ngFor="let maker of feed.data"
+          [maker]="maker"
+        >
+        </shoppr-monorepo-maker-listing>
+      </div>
+    </div>
+    <!-- END OF DISPLAY DROPS ROUTING -->
+
+    <!-- DISPLAY DROPS ROUTING -->
+    <div
+      class="horizontal-listing padding"
+      *ngIf="feed.listingType === 'Drop_Vertical'"
+    >
+      <shoppr-monorepo-horizontal-listing
+        *ngFor="let drop of feed.data"
+        [drop]="drop"
+      >
+      </shoppr-monorepo-horizontal-listing>
+    </div>
+
+    <!-- NEXT LISTING TYPE -->
+
+    <div
+      class="vertical-listing"
+      *ngIf="feed.listingType === 'Drop_Horizontal'"
+    >
+      <shoppr-monorepo-vertical-listing
+        *ngFor="let drop of feed.data"
+        [drop]="drop"
+      >
+      </shoppr-monorepo-vertical-listing>
+    </div>
+  </div>
+</ion-content>
+
+<ion-content *ngIf="searching">
+  <ion-list class="fade-in">
+    <ion-item>
+      <ion-icon slot="start" name="search-outline"></ion-icon>
+      Search for Drops, Makers & more
+    </ion-item>
+
+    <!-- <div class="ion-padding">
+      <h2 class="fade-in">Search for Drops, Makers & more.</h2>
+      <h2 class="fade-in-slow">Enter your search term above.</h2>
+    </div> -->
+
+    <ion-item
+      *ngFor="let result of searchResults"
+      (click)="viewDrop(result.uuid)"
+    >
+      <ion-thumbnail slot="start">
+        <img class="drop-image" [src]="result.photoUrl" />
+      </ion-thumbnail>
+      <ion-label>
+        <ion-text color="primary">
+          <h2>{{ result.title }}</h2>
+        </ion-text>
+        <p>{{ result.subTitle }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

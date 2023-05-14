@@ -1,0 +1,23 @@
+<ion-content>
+  <ion-slides pager="true" zoom="false" #slides>
+    <ion-slide>
+      <img src="/assets/splash/splash1.png" alt="splash1" />
+
+      <ion-fab vertical="bottom" horizontal="end" slot="next">
+        <ion-fab-button color="dark" (click)="slides.slideNext()">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="/assets/splash/splash2.png" alt="splash2" />
+      <ion-fab vertical="bottom" horizontal="end" slot="next">
+        <ion-fab-button color="dark" (click)="goTabs()">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

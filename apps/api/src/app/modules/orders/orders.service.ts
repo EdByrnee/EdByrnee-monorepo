@@ -1,0 +1,149 @@
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { IRepositoryPort } from '../../core/database/ports/repository-port';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { Order } from './order.entity';
+import { ORDERS_REPOSITORY } from './orders.providers';
+import { InjectStripe } from 'nestjs-stripe';
+import Stripe from 'stripe';
+import { Drop } from '../drops/entities/drop.entity';
+import {
+  DeliveryMethod,
+  DeliveryType,
+  IDrop,
+  OrderStatus,
+} from '@shoppr-monorepo/api-interfaces';
+import { UserProfile } from '../auth/entities/user-profile.entity';
+
+@Injectable()
+export class OrderService {
+  constructor(
+    @Inject(ORDERS_REPOSITORY)
+    private readonly orderRepo: IRepositoryPort<Order>,
+    @InjectStripe() private readonly stripeClient: Stripe
+  ) {}
+
+  async createPaymentIntent(
+    deliveryType: DeliveryType,
+    dropUuid: string,
+    orderTotal: number
+  ) {
+    Logger.log(`Creating payment intent for ${orderTotal}`, OrderService.name);
+    const paymentIntent = await this.stripeClient.paymentIntents.create({
+      amount: Math.round(orderTotal * 100),
+      currency: 'gbp',
+    });
+
+    // WE NEED TO VALIDTE THE PAYMENT INTENT HERE !!
+
+    Logger.log(`Created payment intent ${paymentIntent.id}`, OrderService.name);
+
+    return paymentIntent;
+  }
+
+  calculateOrderTotal(deliveryType: DeliveryMethod, drop: Drop): number {
+    let total = drop.price;
+
+    switch (deliveryType) {
+      case 'COLLECTION':
+        total += 0;
+        break;
+      case 'LOCAL_DELIVERY':
+        total += drop.localDeliveryCost;
+        break;
+      case 'NATIONAL_DELIVERY':
+        total += drop.nationalDeliveryCost;
+        break;
+    }
+
+    return total;
+  }
+
+  async create(
+    currentUserUuid: string,
+    drop: Drop,
+    order: CreateOrderDto,
+    maker: UserProfile
+  ): Promise<void> {
+    Logger.log(`Creating order`, OrderService.name);
+    const newOrder = new Order();
+
+    newOrder.uuid = order.uuid;
+    newOrder.order_total = this.calculateOrderTotal(order.deliveryMethod, drop);
+    newOrder.buyerUuid = currentUserUuid;
+    newOrder.sellerUuid = drop.makerUuid;
+    newOrder.order_status = 'OPEN';
+    newOrder.dropUuid = drop.uuid;
+    newOrder.dropName = drop.name;
+    newOrder.makerName = maker.name;
+
+    switch (order.deliveryMethod) {
+      case 'LOCAL_DELIVERY':
+        newOrder.deliveryMethod = 'LOCAL_DELIVERY';
+        newOrder.deliveryAddressLine1 = order.deliveryAddressLine1;
+        newOrder.deliveryAddressLine2 = order.deliveryAddressLine2;
+        newOrder.deliveryAddressCity = order.deliveryAddressCity;
+        newOrder.deliveryAddressPostcode = order.deliveryAddressPostcode;
+        newOrder.deliveryAddressCountry = order.deliveryAddressCountry;
+        break;
+      case 'NATIONAL_DELIVERY':
+        newOrder.deliveryMethod = 'NATIONAL_DELIVERY';
+        newOrder.deliveryAddressLine1 = order.deliveryAddressLine1;
+        newOrder.deliveryAddressLine2 = order.deliveryAddressLine2;
+        newOrder.deliveryAddressCity = order.deliveryAddressCity;
+        newOrder.deliveryAddressPostcode = order.deliveryAddressPostcode;
+        newOrder.deliveryAddressCountry = order.deliveryAddressCountry;
+        break;
+      case 'COLLECTION':
+        newOrder.deliveryMethod = 'COLLECTION';
+        newOrder.collectionAddressLine1 = drop.collectionAddressLine1;
+        newOrder.collectionAddressLine2 = drop.collectionAddressLine2;
+        newOrder.collectionAddressCity = drop.collectionAddressCity;
+        newOrder.collectionAddressPostcode = drop.collectionAddressPostcode;
+        newOrder.collectionAddressCountry = 'UK';
+        break;
+      default:
+        throw new Error('Invalid delivery method');
+    }
+
+    console.log(`Creating order ${JSON.stringify(newOrder)}`);
+    try {
+      return this.orderRepo.create(newOrder);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  async getAllForUser(userUuid: string): Promise<any> {
+    Logger.log(`Getting all orders for user ${userUuid}`, OrderService.name);
+    const purchases = await this.orderRepo.findAll({
+      where: {
+        buyerUuid: userUuid,
+      },
+      order: [ ['createdAt', 'DESC']]
+    });
+
+    const sales = await this.orderRepo.findAll({
+      where: {
+        sellerUuid: userUuid,
+      },
+      order: [ ['createdAt', 'DESC']]
+    });
+
+    return {
+      forUser: userUuid,
+      purchases: purchases,
+      sales: sales,
+    };
+  }
+
+  async get(uuid: string): Promise<Order> {
+    return await this.orderRepo.get(uuid);
+  }
+
+  async updateOrderStatus(uuid: string, status: OrderStatus): Promise<void> {
+    const order = await this.orderRepo.get(uuid);
+    order.order_status = status;
+    await this.orderRepo.update(order);
+  }
+}

@@ -1,0 +1,164 @@
+<div class="container">
+  <h1>Delli Drops</h1>
+
+  <h2>Total sales in period: {{ totalSales | currency : 'GBP' : true }}</h2>
+
+  <div class="filters">
+    <!-- min qty-->
+    <mat-form-field>
+      <mat-label>Min Qty</mat-label>
+      <input matInput type="number" [(ngModel)]="minQty" />
+    </mat-form-field>
+
+    <!-- Delivery options multi select-->
+    <mat-form-field>
+      <mat-label>Delivery Options</mat-label>
+      <mat-select multiple [(ngModel)]="deliveryOptions">
+        <mat-option *ngFor="let option of deliveryOptionsList" [value]="option">
+          {{ option.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- apply filter button-->
+    <button mat-raised-button color="primary" (click)="applyFilter()">
+      Apply Filter
+    </button>
+  </div>
+
+  <!-- Angular material table -->
+
+  <mat-table
+    [dataSource]="drops$"
+    class="mat-elevation-z8"
+    matSort
+    (matSortChange)="announceSortChange($event)"
+  >
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let drop"> {{ drop.name }} </mat-cell>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+      <mat-cell *matCellDef="let drop"> {{ drop.description }} </mat-cell>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+      <mat-cell *matCellDef="let drop">
+        {{ drop.price / 100 | currency : 'GBP' : true }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="total_sales">
+      <mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by sales"
+      >
+        Total Sales
+      </mat-header-cell>
+      <mat-cell *matCellDef="let drop">
+        {{ drop.total_sales | currency : 'GBP' : true }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Quantity Column -->
+    <ng-container matColumnDef="stock">
+      <mat-header-cell *matHeaderCellDef> Stock </mat-header-cell>
+      <mat-cell *matCellDef="let drop"> {{ drop.stock }} </mat-cell>
+    </ng-container>
+
+    <!-- Likes Column -->
+    <ng-container matColumnDef="likes">
+      <mat-header-cell *matHeaderCellDef> Likes </mat-header-cell>
+      <mat-cell *matCellDef="let drop"> {{ drop.likes }} </mat-cell>
+    </ng-container>
+
+    <!-- Image Column -->
+    <ng-container matColumnDef="image">
+      <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+      <mat-cell *matCellDef="let drop"> {{ drop.image }} </mat-cell>
+    </ng-container>
+
+    <!-- Sales Column-->
+    <ng-container matColumnDef="sales">
+      <mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by sales"
+      >
+        Sales
+      </mat-header-cell>
+      <mat-cell *matCellDef="let drop"> {{ drop.sales }} </mat-cell>
+    </ng-container>
+
+    <!-- Edit Column -->
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+      <mat-cell *matCellDef="let drop">
+        <button mat-button color="primary" (click)="editDrop(drop)">
+          Edit
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Delete Column -->
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+      <mat-cell *matCellDef="let drop">
+        <button mat-button color="warn" (click)="deleteDrop(drop)">
+          Delete
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- collectionAvailable row -->
+    <ng-container matColumnDef="collectionAvailable">
+      <mat-header-cell *matHeaderCellDef> Collection </mat-header-cell>
+      <mat-cell *matCellDef="let drop">
+        <span *ngIf="drop.collectionAvailable"> X </span>
+        <span *ngIf="!drop.collectionAvailable"> - </span>
+      </mat-cell>
+    </ng-container>
+
+    <!-- localDeliveryOption row -->
+    <ng-container matColumnDef="localDeliveryAvailable">
+      <mat-header-cell *matHeaderCellDef> Local Delivery </mat-header-cell>
+      <mat-cell *matCellDef="let drop">
+        <span *ngIf="drop.localDeliveryAvailable"> X </span>
+        <span *ngIf="!drop.localDeliveryAvailable"> - </span>
+      </mat-cell>
+    </ng-container>
+
+    <!-- nationalDeliveryOption row -->
+    <ng-container matColumnDef="nationalDeliveryAvailable">
+      <mat-header-cell *matHeaderCellDef> UK Delivery </mat-header-cell>
+      <mat-cell *matCellDef="let drop">
+        <span *ngIf="drop.nationalDeliveryAvailable"> X </span>
+        <span *ngIf="!drop.nationalDeliveryAvailable"> - </span>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Header Row -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <!-- Data Row -->
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+
+  <button mat-raised-button color="primary" (click)="viewDelliDropScrapeLogs = !viewDelliDropScrapeLogs">
+    View Scrape Logs
+  </button>
+
+  <pre *ngIf="viewDelliDropScrapeLogs" > 
+    {{ delliDropScrapeLogs$ | async | json }}
+  </pre>
+
+</div>

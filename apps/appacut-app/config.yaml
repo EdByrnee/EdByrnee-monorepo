@@ -1,0 +1,16 @@
+vars:
+  BUNDLE_ID:
+    default: market.localshelf
+  PACKAGE_NAME:
+    default: market.localshelf
+
+platforms:
+  ios:
+    targets:
+      App:
+        bundleId: $BUNDLE_ID
+
+        entitlements:
+          - com.apple.developer.associated-domains: ['applinks:localshelf.market']
+  android:
+    packageName: $PACKAGE_NAME

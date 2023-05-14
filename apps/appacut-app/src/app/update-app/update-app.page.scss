@@ -1,0 +1,16 @@
+.content {
+  background: url('https://images.pexels.com/photos/7669791/pexels-photo-7669791.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+}
+ion-card{
+    position: fixed;
+    bottom: 48px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    max-width: 85vw;
+    margin: 0px;
+}

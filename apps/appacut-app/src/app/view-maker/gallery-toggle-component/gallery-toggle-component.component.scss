@@ -1,0 +1,32 @@
+.gallery-images {
+  // Css grid
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  img {
+    height: 33vw;
+    width: 33vw;
+    object-fit: cover;
+  }
+}
+
+.gallery-images-preview {
+  img {
+    height: 70px;
+    width: 100%;
+    object-fit: cover;
+    filter: blur(4px);
+  }
+
+  position: relative;
+
+  &__overlay {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    z-index: 99;
+    color: white;
+    font-weight: 700;
+  }
+}

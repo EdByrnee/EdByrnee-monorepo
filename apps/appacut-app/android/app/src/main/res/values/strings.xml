@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="app_name">Local Shelf</string>
+  <string name="title_activity_main">Local Shelf</string>
+  <string name="package_name">market.localshelf</string>
+  <string name="custom_url_scheme">market.localshelf</string>
+  <string name="ionic_app_id">c67f1e71</string>
+  <string name="ionic_channel_name">Production</string>
+  <string name="ionic_update_method">none</string>
+  <string name="ionic_max_versions">2</string>
+  <string name="ionic_min_background_duration">30</string>
+  <string name="ionic_update_api">https://api.ionicjs.com</string>
+</resources>

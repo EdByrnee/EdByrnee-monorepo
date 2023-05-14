@@ -1,0 +1,21 @@
+ion-content {
+    --background: #f9f9f9;
+  }
+  
+  ion-toolbar {
+    p {
+      margin: 4px 0px;
+      font-family: 'Inter', sans-serif;
+    }
+    h4 {
+      font-weight: 900;
+    }
+  }
+  
+  ion-label{
+      img {
+          height: 30px;
+          border: solid 1px #3e3e3e;
+          border-radius: 5px;
+      }
+  }

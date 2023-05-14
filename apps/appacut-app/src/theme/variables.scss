@@ -1,0 +1,221 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+/* Import fonts to be used in the theme */
+
+@font-face {
+  font-family: 'LigatureSymbols';
+  src: url('../assets/fonts/LigatureSymbols/LigatureSymbols-2.11.eot');
+  src: url('../assets/fonts/LigatureSymbols/LigatureSymbols-2.11.eot?#iefix')
+      format('embedded-opentype'),
+    url('../assets/fonts/LigatureSymbols/LigatureSymbols-2.11.woff')
+      format('woff'),
+    url('../assets/fonts/LigatureSymbols/LigatureSymbols-2.11.ttf')
+      format('truetype'),
+    url('../assets/fonts/LigatureSymbols/LigatureSymbols-2.11.svg#LigatureSymbols')
+      format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Omnes-Regular';
+  src: url('../assets/fonts/Omnes/omnesregularwebfont.eot');
+  src: url('../assets/fonts/Omnes/omnesregularwebfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('../assets/fonts/Omnes/omnesregularwebfont.woff') format('woff'),
+    url('../assets/fonts/Omnes/omnesregularwebfont.ttf') format('truetype'),
+    url('../assets/fonts/Omnes/omnesregularwebfont.svg#Omnes-Regular')
+      format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Omnes-ExtraLight';
+  src: url('../assets/fonts/Omnes/omnes_extralightwebfont.eot');
+  src: url('../assets/fonts/Omnes/omnes_extralightwebfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('../assets/fonts/Omnes/omnes_extralightwebfont.woff') format('woff'),
+    url('../assets/fonts/Omnes/omnes_extralightwebfont.ttf') format('truetype'),
+    url('../assets/fonts/Omnes/omnes_extralightwebfont.svg#Omnes-ExtraLight')
+      format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Omnes-Light';
+  src: url('../assets/fonts/Omnes/omnes_lightwebfont.eot');
+  src: url('../assets/fonts/Omnes/omnes_lightwebfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('../assets/fonts/Omnes/omnes_lightwebfont.woff') format('woff'),
+    url('../assets/fonts/Omnes/omnes_lightwebfont.ttf') format('truetype'),
+    url('../assets/fonts/Omnes/omnes_lightwebfont.svg#Omnes-Light')
+      format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Omnes-Medium';
+  src: url('../assets/fonts/Omnes/omnes_mediumwebfont.eot');
+  src: url('../assets/fonts/Omnes/omnes_mediumwebfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('../assets/fonts/Omnes/omnes_mediumwebfont.woff') format('woff'),
+    url('../assets/fonts/Omnes/omnes_mediumwebfont.ttf') format('truetype'),
+    url('../assets/fonts/Omnes/omnes_mediumwebfont.svg#Omnes-Medium')
+      format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Omnes-Semibold';
+  src: url('../assets/fonts/Omnes/omnessemiboldwebfont.eot');
+  src: url('../assets/fonts/Omnes/omnessemiboldwebfont.eot?#iefix')
+      format('embedded-opentype'),
+    url('../assets/fonts/Omnes/omnessemiboldwebfont.woff') format('woff'),
+    url('../assets/fonts/Omnes/omnessemiboldwebfont.ttf') format('truetype'),
+    url('../assets/fonts/Omnes/omnessemiboldwebfont.svg#Omnes-Semibold')
+      format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SanFrancisco-UltraLight';
+  font-weight: 100;
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-ultralight-webfont.woff');
+}
+@font-face {
+  font-family: 'SanFrancisco-Thin';
+  font-weight: 200;
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-thin-webfont.woff');
+}
+@font-face {
+  font-family: 'SanFrancisco-Regular';
+  font-weight: 400;
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff');
+}
+@font-face {
+  font-family: 'SanFrancisco-Medium';
+  font-weight: 500;
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff');
+}
+@font-face {
+  font-family: 'SanFrancisco-Semibold';
+  font-weight: 600;
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff');
+}
+@font-face {
+  font-family: 'SanFrancisco-Bold';
+  font-weight: 700;
+  src: url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff');
+}
+
+@font-face {
+  font-family: 'Delight Winter';
+  font-weight: 700;
+  src: url('/assets/fonts/delight_winter/Delight Winter.ttf')
+}
+
+@import url('http://fonts.cdnfonts.com/css/coolvetica');
+
+$fonts: (
+  SFUltraLight: 'SanFrancisco-UltraLight',
+  SFThin: 'SanFrancisco-Thin',
+  SFRegular: 'SanFrancisco-Regular',
+  SFMedium: 'SanFrancisco-Medium',
+  SFSemibold: 'SanFrancisco-Semibold',
+  SFBold: 'SanFrancisco-Bold',
+  OmnesRegular: 'Omnes-Regular',
+  OmnesMedium: 'Omnes-Medium',
+  OmnesExtraLight: 'Omnes-ExtraLight',
+  OmnesLight: 'Omnes-Light',
+  OmnesSemibold: 'Omnes-Semibold',
+  LigatureSymbols: 'LigatureSymbols',
+);
+
+/** Ionic CSS Variables **/
+:root {
+  /** base font for the app */
+  // --ion-font-family: 'Coolvetica', sans-serif;
+
+  /** primary **/
+  // --ion-color-primary: #b33939;
+  --ion-color-primary: #2f2f2f;
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #2f2f2f;
+  --ion-color-primary-tint: rgb(87, 87, 87);
+
+  /** secondary **/
+  // --ion-color-secondary: #C99530;
+  --ion-color-secondary: #366F5C;
+  --ion-color-secondary-rgb: 61, 194, 255;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #314d44;
+  --ion-color-secondary-tint: #212e2a;
+
+  /** tertiary **/
+  --ion-color-tertiary: #ED1D24;
+  --ion-color-tertiary-rgb: 82, 96, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #4854e0;
+  --ion-color-tertiary-tint: #6370ff;
+
+  /** success **/
+  --ion-color-success: #2ecc71;
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #28ba62;
+  --ion-color-success-tint: #42d77d;
+
+  /** warning **/
+  --ion-color-warning: #e0ac08;
+  --ion-color-warning-rgb: #e0ac08;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: #e0ac08;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #e0ac08;
+
+  /** danger **/
+  --ion-color-danger: #cf3c4f;
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed576b;
+
+  /** dark **/
+  --ion-color-dark: #2F2F2F;
+  --ion-color-dark-rgb: 34, 36, 40;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
+
+  /** medium **/
+  --ion-color-medium: #92949c;
+  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #808289;
+  --ion-color-medium-tint: #9d9fa6;
+
+  /** light **/
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+  /** light **/
+  --ion-color-facebook: #4267b2;
+  --ion-color-facebook-rgb: 244, 245, 248;
+  --ion-color-facebook-contrast: #000000;
+  --ion-color-facebook-contrast-rgb: 0, 0, 0;
+  --ion-color-facebook-shade: #d7d8da;
+  --ion-color-facebook-tint: #25272e;
+}

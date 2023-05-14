@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Edit Profile</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button
+        (click)="saveChanges()"
+        color="secondary"
+        [disabled]="!changesMade && !photosEdited"
+        >Save</ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="(currentUser$ | async) as currentUser;">
+  <ion-list inset="true">
+    <!-- Avatar -->
+    <ion-item (click)="authService.showChangeProfilePhotoActions()">
+      <ion-avatar slot="start">
+        <img [src]="currentUser.photoUrl" />
+      </ion-avatar>
+      <!-- <ion-label position="fixed">Profile Photo </ion-label> -->
+      <ion-label button>
+        <ion-button>
+          <ion-icon name="camera-outline"></ion-icon>
+          &nbsp; Change Profile Photo
+        </ion-button>
+      </ion-label>
+    </ion-item>
+
+    <form [formGroup]="currentUserForm">
+      <ion-item>
+        <ion-label position="fixed">Username</ion-label>
+        <ion-input placeholder="Enter text" formControlName="username">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="fixed">Display Name</ion-label>
+        <ion-input placeholder="Enter text" formControlName="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="fixed">Website</ion-label>
+        <ion-input
+          placeholder="Enter text"
+          formControlName="website"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Bio</ion-label>
+        <ion-textarea
+          rows="3"
+          placeholder="Eg. fresh maker in Liverpool"
+          formControlName="bio"
+        ></ion-textarea>
+      </ion-item>
+
+      <ion-item *ngIf="currentUser.maker">
+        <ion-label position="stacked">Our Story</ion-label>
+        <ion-textarea
+          rows="8"
+          placeholder="Write a long form story your customers will love to read"
+          formControlName="story"
+        ></ion-textarea>
+      </ion-item>
+    </form>
+  </ion-list>
+
+  <ion-list inset="true">
+    <ion-item *ngIf="currentUser.maker">
+      <!-- <ion-label [position]="'stacked'" *ngIf="newImages.length > 0">
+        Story Photos
+      </ion-label> -->
+      <ion-label [position]="'stacked'"> Story Photos </ion-label>
+      <shoppr-monorepo-upload-component
+        style="width: 100%;"
+        #upload
+        (photosEditedChange)="photosEditedChange($event)"
+        [(photosEdited)]="photosEdited"
+        [(newImages)]="newImages"
+      >
+      </shoppr-monorepo-upload-component>
+      <ion-note slot="helper" class="danger" *ngIf="photosEdited">
+        Please Remember to save your changes
+      </ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<!-- <pre>
+  Changes Made: {{ changesMade }}
+</pre>
+<pre>
+  Photos Edited: {{ photosEdited }}
+</pre> -->

@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>New Address</ion-title>
+
+    <!-- <ion-buttons slot="end">
+      <ion-button color="primary"> Save </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="collectionForm">
+    <ion-list inset="true">
+      <ion-item>
+        <ion-label position="stacked">Address Line 1</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Street name and number"
+          formControlName="collectionAddressLine1"
+        ></ion-input>
+        <ion-note slot="error">Please provide</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Address Line 2 (optional)</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Flat number or house name"
+          formControlName="collectionAddressLine2"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">City</ion-label>
+        <ion-input
+          type="text"
+          placeholder="City"
+          formControlName="collectionAddressCity"
+        ></ion-input>
+        <ion-note slot="error">Please provide</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Postcode</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Postcode"
+          formControlName="collectionAddressPostcode"
+        ></ion-input>
+        <ion-note slot="error">Please provide</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Country</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Country"
+          value="United Kingsdom"
+          disabled
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

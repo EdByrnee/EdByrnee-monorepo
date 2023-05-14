@@ -1,0 +1,47 @@
+<!-- <div class="content" (click)="viewMaker(maker.uuid)">
+  <ion-thumbnail class="drop-image">
+    <img
+      class="drop-image"
+      [src]="maker.userPhotos[0]?.photo_url ? maker.userPhotos[0]?.photo_url : (maker.photoUrl ? maker.photoUrl : 'https://ui-avatars.com/api/?name=' + maker.name + '&background=random&color=fff&size=256')"
+    />
+  </ion-thumbnail>
+
+  <div class="card-description">
+    <h6>{{ maker?.name }}</h6>
+    <p class="bio">
+      {{ maker.bio?.substr(0,100) }}
+    </p>
+    <div class="">
+      <ion-text color="secondary">
+        <small>{{ maker.location}} </small>
+      </ion-text>
+    </div>
+  </div>
+</div> -->
+<div class="content" (click)="viewMaker(maker.uuid)">
+  <ion-card>
+    <img
+      class="drop-image"
+      [src]="
+        maker.userPhotos[0]?.photo_url
+          ? maker.userPhotos[0]?.photo_url
+          : maker.photoUrl
+          ? maker.photoUrl
+          : 'https://ui-avatars.com/api/?name=' +
+            maker.name +
+            '&background=random&color=fff&size=256'
+      "
+    />
+  </ion-card>
+  <div class="card-description">
+    <h6 class="listing-header">{{ maker?.name }}</h6>
+    <p class="bio listing-text">
+      {{ maker.bio?.substr(0,100) }}
+    </p>
+    <div class="location">
+      <ion-text color="secondary">
+        <small class="location">{{ maker.location}} </small>
+      </ion-text>
+    </div>
+  </div>
+</div>

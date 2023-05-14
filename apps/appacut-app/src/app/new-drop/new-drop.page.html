@@ -1,0 +1,179 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Drop</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        color="secondary"
+        [disabled]="!isEverythingValid"
+        (click)="submitDrop()"
+        *ngIf="!editDrop"
+      >
+        Post Now
+      </ion-button>
+      <ion-button
+        color="secondary"
+        [disabled]="!isAnythingDirty"
+        (click)="submitDrop()"
+        *ngIf="editDrop"
+      >
+        Update
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="">
+  <ion-list>
+    <shoppr-monorepo-upload-component [minPhotosRequired]="1" [(newImages)]="newImages">
+    </shoppr-monorepo-upload-component>
+  </ion-list>
+
+  <form [formGroup]="basicInfoForm">
+    <ion-item-divider>
+      <ion-label></ion-label>
+    </ion-item-divider>
+
+    <ion-list inset="false">
+      <ion-item>
+        <ion-label position="stacked">Title</ion-label>
+        <ion-input placeholder="e.g. New Cookie Drop" formControlName="name">
+        </ion-input>
+        <ion-text slot="error">
+          Name is required
+        </ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Describe your item</ion-label>
+        <ion-textarea
+          formControlName="description"
+          rows="6"
+          placeholder="Eg. freshed drop on the block, 100% pure chocolate cookies"
+        ></ion-textarea>
+        <ion-text slot="error">
+          Description is required
+        </ion-text>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item-divider>
+        <ion-label></ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label position="stacked">Price</ion-label>
+        <ion-input
+          type="number"
+          placeholder="Price"
+          formControlName="price"
+        ></ion-input>
+        <ion-text slot="error">
+          Price is required
+        </ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Quantity Available</ion-label>
+        <ion-input
+          type="number"
+          step="1"
+          placeholder="Quantity Available"
+          formControlName="qty_available"
+        ></ion-input>
+        <ion-text slot="error">
+          Quantity is required
+        </ion-text>
+      </ion-item>
+    </ion-list>
+  </form>
+
+  <ion-list>
+    <ion-item-divider>
+      <ion-label></ion-label>
+    </ion-item-divider>
+
+    <ion-item button (click)="goToLogistics()">
+      <ion-label>
+        Delivery/Collection
+        <p class="danger"  *ngIf="!isAllEnabledDeliveryFormsValidAndOneEnabled">
+          Provide at least 1 delivery option
+        </p>
+      </ion-label>
+      <ion-icon
+        name="alert-circle-outline"
+        slot="end"
+        color="danger"
+        *ngIf="!isAllEnabledDeliveryFormsValidAndOneEnabled"
+      ></ion-icon>
+    </ion-item>
+
+    <ion-item button (click)="goToImportantInfo()">
+      <ion-label>
+        Allergy & Important Information
+        <p class="danger"  *ngIf="!importantInfoForm.valid">
+          Please fill in all required fields
+        </p>
+      </ion-label>
+      <ion-icon
+        name="alert-circle-outline"
+        slot="end"
+        color="danger"
+        *ngIf="!importantInfoForm.valid"
+      ></ion-icon>
+    </ion-item>
+
+    <ion-item-divider>
+      <ion-label></ion-label>
+    </ion-item-divider>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button
+      style="width: 100%"
+      [disabled]="!isEverythingValid"
+      (click)="submitDrop()"
+      color="secondary"
+      *ngIf="!editDrop"
+    >
+      List for Sale
+    </ion-button>
+
+    <ion-button
+      style="width: 100%"
+      [disabled]="((!isAnythingDirty && !photosEdited) || !isEverythingValid)"
+      (click)="updateDrop()"
+      color="secondary"
+      *ngIf="editDrop"
+    >
+      <ion-icon name="flash-outline"></ion-icon>&nbsp; Update Drop
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+<div
+  class="diabaled-overlay"
+  *ngIf="isDisabledForNonMakers && (currentUser$ | async)?.maker !== true"
+>
+  <div class="overlay-center-content">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Apply for Maker account </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          To list your items for sale, you need to apply for a Maker account.
+          Maker accounts are completely free.
+        </p>
+      </ion-card-content>
+      <ion-button fill="clear" color="secondary" (click)="applyForMaker()">
+        Apply for Maker account
+      </ion-button>
+    </ion-card>
+  </div>
+</div>

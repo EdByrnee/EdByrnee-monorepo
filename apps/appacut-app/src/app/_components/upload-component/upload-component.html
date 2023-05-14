@@ -1,0 +1,33 @@
+<div class="gallery" *ngIf="newImages && newImages.length > 0">
+  <div
+    class="gallery-image-wrapper"
+    *ngFor="let image of newImages; let i = index"
+  >
+    <img [ngStyle]="{'background-image':'url('+ image.webPath +')'}" />
+    <div class="remove-button" (click)="removePhoto(i)">
+      Remove
+    </div>
+  </div>
+</div>
+
+<div class="gallery-button">
+  <ion-button
+    fill="outline"
+    slot="end"
+    color="secondary"
+    (click)="addPhoto()"
+  >
+    <ion-icon name="add-outline"></ion-icon>
+    Upload Photos
+  </ion-button>
+</div>
+<ion-note>
+  <div
+    *ngIf="newImages && (!photoFormValid && minPhotosRequired > newImages.length)"
+    class="danger"
+    style="text-align: center; padding: 4px"
+  >
+    <ion-icon name="alert-circle-outline"></ion-icon>
+    Please upload at least 1 photo
+  </div>
+</ion-note>

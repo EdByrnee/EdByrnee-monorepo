@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <!-- <ion-back-button></ion-back-button> -->
+    </ion-buttons>
+    <ion-title>Select Delivery Radius</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" color="secondary">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true">
+  <google-map #mapRef [width]="'100%'" [height]="'100%'" [options]="mapOptions">
+    <!-- <map-circle #circleRef [options]="circleOptions"></map-circle> -->
+  </google-map>
+
+  <div class="map-circle-overlay"></div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <!-- set range -->
+    <div class="ion-padding">
+      <strong>Set your delivery area</strong>
+    </div>
+
+    <div class="ion-padding">
+      Use two fingers to move the map and select your delivery radius
+    </div>
+
+    <!-- <ion-range
+      min="0"
+      max="10"
+      step="1"
+      snaps="true"
+      color="secondary"
+      [value]="radius"
+      (ionChange)="onRangeChange($event)"
+    >
+    </ion-range> -->
+
+    <!-- Set the center address by postcode -->
+    <!-- <div class="ion-padding">
+      <ion-item>
+        <ion-label position="floating">Enter your postcode</ion-label>
+        <ion-input type="text" [(ngModel)]="postcode"></ion-input>
+
+        <ion-button slot="end">Search</ion-button>
+
+      </ion-item>
+    </div> -->
+
+    <!-- <div class="">
+      <ion-button slot="end" expand="block" (click)="confirm()" expand="fill" style="width: 100%">Confirm</ion-button>
+    </div> -->
+  </ion-toolbar>
+</ion-footer>

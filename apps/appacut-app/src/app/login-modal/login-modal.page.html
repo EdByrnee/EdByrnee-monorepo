@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>LoginModal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-subtitle>Enter your email address</ion-card-subtitle>
+  <ion-card-title>Enter your email to log in or sign up</ion-card-title>
+
+  <ion-item>
+    <ion-label position="floating">Email</ion-label>
+    <ion-input
+      type="email"
+      autofocus="true"
+      #email
+      placeholder="foodie@email.com"
+    ></ion-input>
+  </ion-item>
+
+<div class="ion-padding">
+  <ion-button
+    expand="full"
+    color="primary"
+    (click)="requestMagicLink(email.value)"
+  >
+    Sign in
+  </ion-button>
+</div>
+
+</ion-content>

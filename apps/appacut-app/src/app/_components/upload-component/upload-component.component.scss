@@ -1,0 +1,53 @@
+.gallery-image-wrapper {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.remove-button {
+  margin-bottom: 0px;
+}
+
+.gallery-button {
+  width: 100%;
+  display: flex;
+  flex-direction: center;
+  justify-content: center;
+
+  ion-button {
+    margin: 12px;
+  }
+}
+
+.gallery-image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.danger {
+  color: var(--ion-color-danger);
+}
+
+img {
+  height: 70px;
+  width: 70px;
+  object-fit: cover;
+  display: inline-block;
+  background-size: cover;
+}
+
+.close-icon {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  font-size: 20px;
+  color: white;
+  ion-icon {
+    background: black;
+  }
+}
+.remove-button {
+  padding: 4px;
+  text-align: center;
+  font-size: 12px;
+  background: #ff6961;
+  color: white;
+}

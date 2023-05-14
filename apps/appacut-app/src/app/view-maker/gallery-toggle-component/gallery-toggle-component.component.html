@@ -1,0 +1,26 @@
+<p>gallery-toggle-component works!</p>
+<div class="gallery-images-preview" *ngIf="!viewGallery" (click)="viewGallery = true">
+    <img
+      class=""
+      src="https://localfoodstories.com/wp-content/uploads/2021/03/Ko_1-2048x1366.jpg"
+    />
+    <div class="gallery-images__overlay">
+      <!-- White view gallery outline button -->
+      <ion-button
+        color="light"
+        fill="outline"
+        size="small"
+        
+      >
+        <ion-icon name="images-outline"></ion-icon>
+        &nbsp; View Gallery
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="gallery-images" *ngIf="viewGallery">
+    <img
+      class=""
+      src="https://localfoodstories.com/wp-content/uploads/2021/03/Ko_1-2048x1366.jpg"
+    />
+  </div>

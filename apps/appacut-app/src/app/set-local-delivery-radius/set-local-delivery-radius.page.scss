@@ -1,0 +1,12 @@
+.map-circle-overlay {
+  position: absolute;
+  width: 100%;
+  padding-top: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1000px;
+  border: solid 1px #8a0606;
+  background: rgba(254, 52, 52, 0.3);
+  pointer-events: none;
+}

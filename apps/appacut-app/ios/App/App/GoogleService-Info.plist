@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>523601161911-c0jbe9mv7652lg5uv9qjc6eo2fdl94vp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.523601161911-c0jbe9mv7652lg5uv9qjc6eo2fdl94vp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBP4nC2qWHeJKsPWsOEFMLuIJCZaqlo00I</string>
+	<key>GCM_SENDER_ID</key>
+	<string>523601161911</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>market.localshelf</string>
+	<key>PROJECT_ID</key>
+	<string>polar-program-379410</string>
+	<key>STORAGE_BUCKET</key>
+	<string>polar-program-379410.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:523601161911:ios:d1753833753fdf14082732</string>
+</dict>
+</plist>

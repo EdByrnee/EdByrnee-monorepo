@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "admin": "apps/admin",
+    "admin-e2e": "apps/admin-e2e",
+    "api": "apps/api",
+    "api-interfaces": "libs/api-interfaces",
+    "appacut-app": "apps/appacut-app",
+    "appacut-app-e2e": "apps/appacut-app-e2e",
+    "site": "apps/site",
+    "site-e2e": "apps/site-e2e"
+  },
+  "defaultProject": "appacut-app"
+}

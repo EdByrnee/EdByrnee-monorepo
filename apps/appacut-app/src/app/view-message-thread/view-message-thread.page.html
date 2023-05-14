@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>View Message Thread</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="loadData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="(messageThread$ | async) as messageThread; else loading">
+    <ion-list>
+      <ion-item *ngFor="let message of messageThread.messages; let i = index;">
+        
+        <ion-avatar slot="start" *ngIf="message.sender">
+          <img
+            [src]="(currentUser$ | async)?.photoUrl ? (currentUser$ | async)?.photoUrl : 'https://ui-avatars.com/api/?name=' + (currentUser$ | async)?.name + '&background=random&color=fff&size=256'"
+          />
+        </ion-avatar>
+
+        <ion-avatar slot="end" *ngIf="!message.sender" (click)="viewMaker(messageThread.participant.uuid)">
+          <img
+            [src]="messageThread.participant.photoUrl ? messageThread.participant.photoUrl :'https://ui-avatars.com/api/?name=' + messageThread.participant.name + '&background=random&color=fff&size=256'"
+          />
+        </ion-avatar>
+
+        <ion-label text-wrap>
+          {{message.message}}
+          <p>
+            <small>
+              <span *ngIf="message.sender">You</span>
+              <span *ngIf="!message.sender">Recipient</span>
+              {{message.createdAt | date: 'dd MMM hh:mm'}}</small
+            >
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <ng-template #loading>
+    <ion-spinner name="crescent"></ion-spinner>
+  </ng-template>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-input
+        placeholder="Type a message"
+        text-wrap
+        [(ngModel)]="message"
+      ></ion-input>
+      <ion-button slot="end" color="secondary" (click)="sendMessage()"
+        >Send</ion-button
+      >
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

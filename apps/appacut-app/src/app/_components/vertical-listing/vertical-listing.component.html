@@ -1,0 +1,72 @@
+<div class="">
+  <ion-card (click)="viewDrop(drop.uuid)" style="margin-top: 12px">
+    <ion-thumbnail class="drop-image">
+      <img
+        class="drop-image"
+        [src]="
+          drop.photos && drop.photos[0]
+            ? drop.photos[0].photo_url
+            : 'https://ionicframework.com/docs/img/demos/ionic-logo.png'
+        "
+      />
+      <div class="sold-out-overlay" *ngIf="isSoldOut">
+        <ion-icon name="sad-outline"></ion-icon>
+        <h6>SOLD OUT!</h6>
+      </div>
+    </ion-thumbnail>
+
+    <div class="card-description">
+      <h6 class="listing-header">{{ drop.name }}</h6>
+      <!-- <div>
+        <ion-text color="secondary">
+          <small>
+            Liverpool, UK
+          </small>
+        </ion-text>
+      </div> -->
+      <p class="listing-text" *ngIf="drop.description.length > 100" style="text-overflow: ellipsis">
+        {{ drop.description.substring(0, 70) + '...' }}
+      </p>
+      <p *ngIf="drop.description.length < 100" class="listing-text" >{{ drop.description }}</p>
+
+      <p class="card-description__bottom">
+        <!-- Collection icon -->
+        <small [class.enabled]="drop.collectionEnabled">
+          <ion-icon
+            *ngIf="drop.collectionEnabled"
+            name="checkmark-circle-outline"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="!drop.collectionEnabled"
+            name="close-circle-outline"
+          ></ion-icon>
+          Collect
+        </small>
+        <!-- Delivery available icon -->
+        <small [class.enabled]="drop.localDeliveryEnabled">
+          <ion-icon
+            *ngIf="drop.localDeliveryEnabled"
+            name="checkmark-circle-outline"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="!drop.localDeliveryEnabled"
+            name="close-circle-outline"
+          ></ion-icon>
+          Local
+        </small>
+        <!-- National delivery available icon -->
+        <small [class.enabled]="drop.nationalDeliveryEnabled">
+          <ion-icon
+            *ngIf="drop.nationalDeliveryEnabled"
+            name="checkmark-circle-outline"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="!drop.nationalDeliveryEnabled"
+            name="close-circle-outline"
+          ></ion-icon>
+          National
+        </small>
+      </p>
+    </div>
+  </ion-card>
+</div>

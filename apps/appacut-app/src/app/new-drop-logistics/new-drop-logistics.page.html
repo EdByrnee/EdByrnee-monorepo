@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Logistics</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" (click)="save()">Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="">
+  <ion-list [inset]="true">
+    <!-- <ion-item-divider>
+      <ion-label>Delivery (Local)</ion-label>
+    </ion-item-divider> -->
+
+    <ion-item>
+      <ion-label class="header"> Local Delivery </ion-label>
+      <ion-toggle
+        #localDelivery
+        slot="end"
+        (click)="toggleLocalDelivery()"
+        [checked]="localDeliveryFormEnabled"
+      ></ion-toggle>
+    </ion-item>
+
+    <form *ngIf="localDeliveryForm.enabled" [formGroup]="localDeliveryForm">
+      <ion-item>
+        <ion-label position="stacked">Cost</ion-label>
+        <ion-input
+          type="number"
+          placeholder="£0.00"
+          formControlName="localDeliveryCost"
+        ></ion-input>
+        <ion-note slot="error"
+          >Please provide a cost for local delivery</ion-note
+        >
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Delivery Guidelines</ion-label>
+        <ion-textarea
+          rows="4"
+          placeholder="Eg. Deliveries dispatched within 1-2 days, next day delivery provided the order is receievd by 5pm (EOD)."
+          formControlName="localDeliveryGuidelines"
+        ></ion-textarea>
+        <ion-note slot="error">Please provide a delivery estimate</ion-note>
+      </ion-item>
+
+      <ion-item button (click)="goToSetLocalDeliveryArea()">
+        <ion-label>Local Delivery Area</ion-label>
+        <ion-note slot="helper" color="danger" *ngIf="!dropService.isLocalDeliveryAreaSet">Provide a delivery area</ion-note>
+      </ion-item>
+    </form>
+
+    <!-- <ion-item-divider>
+      <ion-label>Delivery (UK)</ion-label>
+    </ion-item-divider> -->
+
+    <ion-item>
+      <ion-label class="header"> UK Delivery </ion-label>
+      <ion-toggle
+        #nationalDelivery
+        slot="end"
+        (click)="toggleNationalDelivery()"
+        [checked]="nationalDeliveryFormEnabled"
+      ></ion-toggle>
+    </ion-item>
+
+    <form
+      *ngIf="nationalDeliveryForm.enabled"
+      [formGroup]="nationalDeliveryForm"
+    >
+      <ion-item>
+        <ion-label position="stacked">Cost</ion-label>
+        <ion-input
+          type="number"
+          placeholder="£0.00"
+          formControlName="nationalDeliveryCost"
+        ></ion-input>
+        <ion-note slot="error"
+          >Please provide a cost for local delivery</ion-note
+        >
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Delivery Guielines</ion-label>
+        <ion-textarea
+          rows="4"
+          placeholder="Eg. Deliveries dispatched within 1-2 days, next day delivery provided the order is receievd by 5pm (EOD)."
+          formControlName="nationalDeliveryGuidelines"
+        ></ion-textarea>
+        <ion-note slot="error">Please provide a delivery estimate</ion-note>
+      </ion-item>
+    </form>
+
+    <!-- <ion-item-divider>
+      <ion-label>Collection</ion-label>
+    </ion-item-divider> -->
+
+    <ion-item>
+      <ion-label class="header"> Collection </ion-label>
+      <ion-toggle
+        #collection
+        slot="end"
+        [checked]="collectionFormEnabled"
+        (click)="toggleCollectionForm()"
+      ></ion-toggle>
+    </ion-item>
+
+    <form *ngIf="collectionForm.enabled" [formGroup]="collectionForm">
+      <ion-item>
+        <ion-label position="stacked">Collection Guidelines</ion-label>
+        <ion-textarea
+          rows="4"
+          placeholder="Eg. Free collection at our store, collection available between 9am-5pm Monday-Friday."
+          formControlName="collectionGuidelines"
+        ></ion-textarea>
+      </ion-item>
+
+      <ion-item button (click)="addCollectionAddress()">
+        <ion-label>Change Collection Address</ion-label>
+        <!-- <ion-note
+          style="color: red"
+          *ngIf="
+          !collectionForm.controls['collectionAddressLine1.valid'] && 
+          !collectionForm.controls['collectionAddressLine2.valid'] && 
+          !collectionForm.controls['collectionAddressCity.valid'] && 
+          !collectionForm.controls['collectionAddressPostcode.valid']"
+          >Please provide a delivery estimate</ion-note
+        > -->
+      </ion-item>
+      <ion-note color="warning" *ngIf="!collectionForm.valid"
+        >Please provide a delivery estimate and address</ion-note
+      >
+    </form>
+
+    <ion-list
+      inset="true"
+      *ngIf="!localDeliveryForm.enabled && !nationalDeliveryForm.enabled && !collectionForm.enabled"
+    >
+      <ion-item>
+        <ion-label text-wrap color="warning"
+          >You must provide at least one delivery method</ion-label
+        >
+      </ion-item>
+    </ion-list>
+  </ion-list>
+</ion-content>

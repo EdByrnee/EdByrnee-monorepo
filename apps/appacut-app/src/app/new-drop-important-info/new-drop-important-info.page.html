@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Drop</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="save()">Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="">
+  <form [formGroup]="importantInfoForm">
+    <ion-list inset="false">
+
+      <ion-item>
+        <ion-label position="stacked">Ingredients</ion-label>
+        <ion-textarea
+          formControlName="ingredients"
+          placeholder="E.g. Cocoa, sugar, milk, etc."
+        ></ion-textarea>
+        <ion-note slot="error"
+          >You must provide basic nutritional information</ion-note
+        >
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Alergens</ion-label>
+        <ion-input
+          placeholder="E.g. diary, nuts, gluten, etc."
+          formControlName="allergens"
+        ></ion-input>
+        <ion-note slot="error"
+          >You must specify 'none' if there are none</ion-note
+        >
+      </ion-item>
+      <ion-item-divider>
+        <ion-label> </ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label> Age Restricted (18+)</ion-label>
+        <ion-toggle slot="end" formControlName="age_restricted"></ion-toggle>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label></ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-label text-wrap>
+          <ion-text>Local Food Authority</ion-text>
+          <p style="color: red;">I have registered with the relevant local food authority.</p>
+        </ion-label>
+        <ion-toggle slot="end" formControlName="food_authgranted"></ion-toggle>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

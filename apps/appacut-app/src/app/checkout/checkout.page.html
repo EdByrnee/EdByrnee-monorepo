@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="close()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h4>Confirm Total</h4>
+
+  <ion-list inset="true" class="amount-summary-list">
+    <ion-item>
+      <ion-label slot="start">Item Total</ion-label>
+      <ion-label slot="end">
+        <strong>{{ drop.price | currency:"GBP": true }} </strong>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label slot="start">Delivery Fee</ion-label>
+      <ion-label slot="end">
+        <strong>{{ delieveryPrice | currency:"GBP": true }} </strong>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label slot="start">Order Total</ion-label>
+      <ion-label slot="end">
+        <strong>{{ orderTotal | currency:"GBP": true }}</strong>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <br />
+  <h4>Shipping & Contact</h4>
+
+  <ion-text color="warning">
+    Specify your delivery address and contact details using Apple Pay (next
+    screen)
+  </ion-text>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar *ngIf="(demoMode$ | async) === false">
+    <ion-button color="primary" expand="block" (click)="why()" fill="clear">
+      Purchases are currently disabled
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="(demoMode$ | async) === true">
+    <ion-button
+      color="secondary"
+      expand="block"
+      (click)="pay('false')"
+      [disabled]="loadingApplePay"
+    >
+      <!-- Spinner -->
+      <ion-spinner *ngIf="loadingApplePay" name="crescent"></ion-spinner>
+
+      <ion-icon name="logo-apple"></ion-icon>
+      &nbsp; Pay with Apple Pay
+    </ion-button>
+
+    <ion-button color="primary" expand="block" (click)="pay('true')">
+      Demo Pay
+    </ion-button>
+
+    <!-- <ngx-stripe-payment-request-button
+      #requestButton
+      [paymentOptions]="paymentRequestOptions"
+      [stripe]="stripe"
+    ></ngx-stripe-payment-request-button> -->
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,21 @@
+{
+  "appId": "market.localshelf",
+  "appName": "appacut-app",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "../../dist/apps/appacut-app",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 20000,
+      "autoHide" : false,
+      "showSpinner" : true,
+      "iosSpinnerStyle" : "large",
+      "androidSpinnerStyle": "large"
+    },
+    "FirebaseMessaging": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  },
+  "hideLogs": false,
+  "cordova": {}
+}

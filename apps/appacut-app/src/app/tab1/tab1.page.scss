@@ -1,0 +1,95 @@
+.suggested-makers {
+  border-bottom: solid #f6f6f6 1px;
+  padding: 12px;
+  padding-bottom: 6px;
+  padding-right: 0px;
+
+  h6{
+    margin: 0px 0px 8px 0px;
+  }
+
+  &__listing {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 4px;
+  }
+}
+
+.avatar-listing {
+  text-align: center;
+  margin-right: 10px;
+  // border: solid green 1px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+ion-avatar{
+  border: solid #e3e3e3 1px;
+  width: 70px;
+  height: 70px;
+}
+
+.avatar-name {
+  font-size: 0.6rem;
+  margin-top: 4px;
+  // border: solid red 1px;
+  position: absolute;
+  height: 12px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow-y: hidden;
+  font-weight: 400;
+}
+
+ion-title {
+  font-family: 'Delight Winter', sans-serif;
+  font-size: 36px;
+  --padding-top: 8px;
+}
+
+.padding{
+  padding: 16px;
+}
+
+.horizontal-listing {
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
+  white-space: nowrap;
+
+  shoppr-monorepo-horizontal-listing{
+    margin-right: 16px;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 3s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in-slow {
+  animation: fadeIn 10s;
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
