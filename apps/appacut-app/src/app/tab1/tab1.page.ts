@@ -14,6 +14,7 @@ import { AuthService } from '../../core/auth';
 import { DropsService } from '../../core/drops';
 import { SetLocationPage } from '../set-location/set-location.page';
 import { ViewBasketPage } from '../view-basket/view-basket.page';
+import { BasketService } from '../../core/basket.service';
 
 @Component({
   selector: 'shoppr-monorepo-tab1',
@@ -26,7 +27,8 @@ export class Tab1Page {
     private dropService: DropsService,
     public authService: AuthService,
     private modalCtrl: ModalController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private basketService: BasketService
   ) {}
 
   public showLaunchingSoon = true;
@@ -46,6 +48,8 @@ export class Tab1Page {
   public searchResults: any[];
 
   public postcode$: Observable<string | null> = this.authService.postcode$;
+
+  public basketTotal$: Observable<number> = this.basketService.basketTotal$;
 
   public firstHalfOfPostcode$: Observable<string | null> = this.postcode$.pipe(
     map((postcode) => {

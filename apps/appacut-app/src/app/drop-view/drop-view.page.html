@@ -179,12 +179,12 @@
             size="small"
             [disabled]="drop.qty_available < 1"
             color="secondary"
-            (click)="addToBasket()"
+            (click)="removeFromBasket()"
           >
             -
           </ion-button>
           <span class="">
-            0
+            {{ qty_of_item_in_basket$ | async }}
           </span>
           <ion-button
             *ngIf="drop.makerUuid !== (currentUser$ | async)?.uuid"

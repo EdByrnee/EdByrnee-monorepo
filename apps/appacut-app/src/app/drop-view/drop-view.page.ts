@@ -19,12 +19,13 @@ import {
   IDrop,
   IUserProfile,
 } from '@shoppr-monorepo/api-interfaces';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { DropsService } from '../../core/drops';
 import { ChooseDeliveryPage } from '../choose-delivery/choose-delivery.page';
 import { AuthService } from '../../core/auth';
 import { MapsService } from '../../core/maps.service';
 import { AnalyticsService } from '../../core/analytics';
+import { BasketService, IBasketItem } from '../../core/basket.service';
 
 @Component({
   selector: 'shoppr-monorepo-drop-view',
@@ -46,6 +47,19 @@ export class DropViewPage implements OnInit {
 
   currentUser$: Observable<IUserProfile | null> = this.authService.currentUser$;
 
+  basket$: Observable<IBasketItem[]> = this.basketService.basket$;
+
+  qty_of_item_in_basket$: Observable<number> = this.basket$.pipe(
+    map((basket) => {
+      const item = basket.find((i) => i.drop.uuid === this.drop.uuid);
+      if (item) {
+        return item.qty;
+      } else {
+        return 0;
+      }
+    })
+  );
+
   localDeliveryMapOptions: any;
   localDeliveryCircleOptions: any;
 
@@ -65,15 +79,20 @@ export class DropViewPage implements OnInit {
     private alertController: AlertController,
     private toastController: ToastController,
     private analyticsService: AnalyticsService,
-    private mappingService: MapsService
+    private mappingService: MapsService,
+    private basketService: BasketService
   ) {
     this.id = this.router.snapshot.paramMap.get('id') || '';
   }
 
   ngOnInit() {}
 
-  addToBasket(){
+  addToBasket() {
+    this.basketService.addToBasket(this.drop);
+  }
 
+  removeFromBasket() {
+    this.basketService.removeFromBasket(this.drop);
   }
 
   ionViewWillEnter() {
@@ -131,19 +150,20 @@ export class DropViewPage implements OnInit {
   async loadData() {
     this.loading = true;
     this.dropsService.getDrop(this.id).subscribe(async (drop: IDrop) => {
-
       // Set data
       this.userProfile$ = this.authService.getUserProfile(drop.makerUuid);
       this.drop = drop;
 
       // Set local delivery map options
       this.localDeliveryMapOptions = this.mappingService.buildMapOptions(drop);
-      this.localDeliveryCircleOptions = this.mappingService.buildLocalDeliveryCircle(drop);
-  
+      this.localDeliveryCircleOptions =
+        this.mappingService.buildLocalDeliveryCircle(drop);
+
       // Set collection map options if collection is enabled and local delivery is disabled
       // Call this async so it will show map if eventually it loads
       if (this.drop.localDeliveryEnabled) this.showLocalDeliveryMap = true;
-      else if (this.drop.collectionEnabled) this.buildCollectionMapOptions(drop);
+      else if (this.drop.collectionEnabled)
+        this.buildCollectionMapOptions(drop);
 
       // Finish up
       this.loading = false;
@@ -154,8 +174,11 @@ export class DropViewPage implements OnInit {
     {
       try {
         this.showCollectionMap = false;
-        this.collectionMapOptions = await this.mappingService.buildCollectionMapOptions(drop);
-        this.collectionMapPin = this.mappingService.buildCollectionMapPin(this.collectionMapOptions);
+        this.collectionMapOptions =
+          await this.mappingService.buildCollectionMapOptions(drop);
+        this.collectionMapPin = this.mappingService.buildCollectionMapPin(
+          this.collectionMapOptions
+        );
         this.showCollectionMap = true;
       } catch (err) {
         console.log(err);
@@ -163,7 +186,6 @@ export class DropViewPage implements OnInit {
       }
     }
   }
-
 
   goToMaker() {
     this.navController.navigateForward(['view-maker', this.drop.makerUuid]);

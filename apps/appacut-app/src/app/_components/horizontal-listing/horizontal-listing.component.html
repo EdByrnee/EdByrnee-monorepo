@@ -16,21 +16,13 @@
   </ion-thumbnail>
 
   <div class="card-description">
-    <!-- <small>Maker Name</small> -->
+
     <h6 [class.disabled]="!isActive" class="listing-header">{{ _drop.name }}</h6>
-    <!-- <div class="location-strapline">
-      <small><strong style="color: #c99530">Near you</strong></small>
-    </div>  -->
-    <div class="" [class.disabled]="!isActive">
-      <ion-text color="secondary">
-        <small>Liverpool, UK</small>
-      </ion-text>
-    </div>
-    <!-- <div class="">
-      <ion-text color="medium">
-        <small>MAKER NAME</small>
-      </ion-text>
-    </div>  -->
+
+    <p>
+      Please place the description here
+    </p>
+
     <div class="display-status" *ngIf="displayStatus">
       <div *ngIf="status === 'ACTIVE_LISTING'">
         <ion-text color="success">
@@ -56,44 +48,6 @@
       </ion-text>
     </div>
 
-    <div class="collection-types">
-      <!-- Collection icon -->
-      <small class="delivery-option" *ngIf="_drop.collectionEnabled" class="enabled">
-        <ion-icon
-          *ngIf="_drop.collectionEnabled"
-          name="checkmark-circle-outline"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="!_drop.collectionEnabled"
-          name="close-circle-outline"
-        ></ion-icon>
-        Collect
-      </small>
-      <!-- Delivery available icon -->
-      <small class="delivery-option" *ngIf="_drop.localDeliveryEnabled" class="enabled">
-        <ion-icon
-          *ngIf="_drop.localDeliveryEnabled"
-          name="checkmark-circle-outline"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="!_drop.localDeliveryEnabled"
-          name="close-circle-outline"
-        ></ion-icon>
-        Local
-      </small>
-      <!-- National delivery available icon -->
-      <small class="delivery-option" *ngIf="_drop.nationalDeliveryEnabled" class="enabled">
-        <ion-icon
-          *ngIf="_drop.nationalDeliveryEnabled"
-          name="checkmark-circle-outline"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="!_drop.nationalDeliveryEnabled"
-          name="close-circle-outline"
-        ></ion-icon>
-        National
-      </small>
-    </div>
 
     <div class="display-status">
       <div *ngIf="_drop.qty_available < 1">

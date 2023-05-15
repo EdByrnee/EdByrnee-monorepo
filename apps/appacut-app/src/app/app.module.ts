@@ -18,6 +18,7 @@ import { AnalyticsService } from '../core/analytics';
 import { UpdateService } from '../core/update.service';
 import { NotificationService } from '../core/notifications';
 import { ConfigService } from '../core/config';
+import { BasketService } from '../core/basket.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -66,6 +67,7 @@ import { ConfigService } from '../core/config';
       useClass: PaymentService,
     },
     UpdateService,
+    BasketService
   ],
   bootstrap: [AppComponent],
 })

@@ -28,45 +28,6 @@
         {{ drop.description.substring(0, 70) + '...' }}
       </p>
       <p *ngIf="drop.description.length < 100" class="listing-text" >{{ drop.description }}</p>
-
-      <p class="card-description__bottom">
-        <!-- Collection icon -->
-        <small [class.enabled]="drop.collectionEnabled">
-          <ion-icon
-            *ngIf="drop.collectionEnabled"
-            name="checkmark-circle-outline"
-          ></ion-icon>
-          <ion-icon
-            *ngIf="!drop.collectionEnabled"
-            name="close-circle-outline"
-          ></ion-icon>
-          Collect
-        </small>
-        <!-- Delivery available icon -->
-        <small [class.enabled]="drop.localDeliveryEnabled">
-          <ion-icon
-            *ngIf="drop.localDeliveryEnabled"
-            name="checkmark-circle-outline"
-          ></ion-icon>
-          <ion-icon
-            *ngIf="!drop.localDeliveryEnabled"
-            name="close-circle-outline"
-          ></ion-icon>
-          Local
-        </small>
-        <!-- National delivery available icon -->
-        <small [class.enabled]="drop.nationalDeliveryEnabled">
-          <ion-icon
-            *ngIf="drop.nationalDeliveryEnabled"
-            name="checkmark-circle-outline"
-          ></ion-icon>
-          <ion-icon
-            *ngIf="!drop.nationalDeliveryEnabled"
-            name="close-circle-outline"
-          ></ion-icon>
-          National
-        </small>
-      </p>
     </div>
   </ion-card>
 </div>

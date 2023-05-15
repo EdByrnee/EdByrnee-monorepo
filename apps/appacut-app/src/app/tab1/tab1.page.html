@@ -31,6 +31,7 @@
 
       <ion-button (click)="onClickBasket()" color="secondary">
         <ion-icon name="basket-outline"></ion-icon>
+        {{ basketTotal$ | async | currency:"GBP":true }}
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
