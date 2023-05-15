@@ -30,8 +30,8 @@ export class BasketService {
       currentValue.push({ drop: item, qty: 1 });
     }
     const updatedValue = currentValue;
-    this.updateBasketTotal();
     this._basket$.next(updatedValue);
+    this.updateBasketTotal();
   }
 
   removeFromBasket(item: IDrop) {
@@ -52,7 +52,7 @@ export class BasketService {
   updateBasketTotal() {
     const currentValue = this._basket$.value;
     const total = currentValue.reduce((acc, item) => {
-      return acc + item.drop.price;
+      return acc + (item.drop.price * item.qty);
     }, 0);
     this._basketTotal$.next(total);
   }

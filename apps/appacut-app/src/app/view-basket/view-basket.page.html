@@ -29,6 +29,16 @@
       </ion-item>
     </ion-list>
   </form>
+
+
+  <ion-list inset="true">
+    <ion-item *ngFor="let basketItem of (basket$ | async)">
+      <ion-label>
+        <h4>Item Total</h4>
+        <p>{{ basketTotal$ | async | currency:"GBP":true }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
 
 <ion-footer>

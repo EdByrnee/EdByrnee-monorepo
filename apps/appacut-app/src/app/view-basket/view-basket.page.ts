@@ -41,6 +41,7 @@ export class ViewBasketPage {
   ) {}
 
   basket$: Observable<IBasketItem[]> = this.basketService.basket$;
+  basketTotal$: Observable<number> = this.basketService.basketTotal$;
 
   getOrderTotal(): number {
     return this.drop.price + Number(this.delieveryPrice);
