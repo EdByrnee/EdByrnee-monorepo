@@ -11,15 +11,21 @@
     <h4>Your Basket</h4>
 
     <ion-list inset="true">
-      <ion-item>
+      <ion-item *ngFor="let basketItem of (basket$ | async)">
         <ion-label>
-          <h4>Item Title</h4>
-          <p>Any Extras</p>
+          <h4>{{ basketItem.drop.name }}</h4>
+          <p>{{ basketItem.drop.description }}</p>
         </ion-label>
         <!-- <ion-icon name="trash-outline"></ion-icon> -->
-        <ion-icon name="remove-circle-outline"></ion-icon>
-        &nbsp; 1 &nbsp; 
-        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-icon
+          name="remove-circle-outline"
+          (click)="removeFromBasket(basketItem.drop)"
+        ></ion-icon>
+        &nbsp; {{ basketItem.qty }} &nbsp;
+        <ion-icon
+          name="add-circle-outline"
+          (click)="addToBasket(basketItem.drop)"
+        ></ion-icon>
       </ion-item>
     </ion-list>
   </form>

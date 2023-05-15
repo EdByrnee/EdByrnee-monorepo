@@ -10,6 +10,8 @@ import { ICreateOrder, IDrop } from '@shoppr-monorepo/api-interfaces';
 import { OrdersService } from '../../core/orders';
 import * as uuid from 'uuid';
 import { CheckoutPage } from '../checkout/checkout.page';
+import { BasketService, IBasketItem } from '../../core/basket.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'shoppr-monorepo-view-basket',
@@ -34,8 +36,11 @@ export class ViewBasketPage {
     private loadingController: LoadingController,
     private navController: NavController,
     private orderService: OrdersService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private basketService: BasketService
   ) {}
+
+  basket$: Observable<IBasketItem[]> = this.basketService.basket$;
 
   getOrderTotal(): number {
     return this.drop.price + Number(this.delieveryPrice);
@@ -48,6 +53,14 @@ export class ViewBasketPage {
     if (deliveryMethod === 'LOCATION_DELIVERY')
       return Number(this.drop.localDeliveryCost);
     return 0;
+  }
+
+  addToBasket(drop: IDrop) {
+    this.basketService.addToBasket(drop);
+  }
+
+  removeFromBasket(drop: IDrop) {
+    this.basketService.removeFromBasket(drop);
   }
 
   cancel() {
