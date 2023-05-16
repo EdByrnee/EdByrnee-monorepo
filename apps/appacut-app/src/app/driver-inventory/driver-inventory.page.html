@@ -5,29 +5,41 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-
   <ion-button (click)="replenishStock()" style="width: 100%">
     <ion-icon name="scan-circle-outline"></ion-icon>&nbsp; Scan Barcode
   </ion-button>
 
+  <h4>You have selected</h4>
 
   <ion-list [inset]="true">
     <ion-item *ngFor="let item of (allDrops$ | async)">
       <ion-label>
-        <h4>{{item.name}}</h4>
-        <p class="primary">
-          You have: 0
-        </p>
-        <p>
-          All Driver Stock: 0
-        </p>
-        <p>
-          Warehouse Stock: 0
-        </p>
+        <h4>
+          ({{ item.itemCode }})
+          {{item.name}}
+        </h4>
+        <p class="primary">You have: 0</p>
+        <p>All Driver Stock: 0</p>
+        <p>Warehouse Stock: 0</p>
       </ion-label>
     </ion-item>
   </ion-list>
 
+  <h4>Inventory</h4>
+
+  <ion-list [inset]="true">
+    <ion-item *ngFor="let item of (allDrops$ | async)">
+      <ion-label>
+        <h4>
+          ({{ item.itemCode }})
+          {{item.name}}
+        </h4>
+        <p class="primary">You have: 0</p>
+        <p>All Driver Stock: 0</p>
+        <p>Warehouse Stock: 0</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
 
 <ion-footer>
