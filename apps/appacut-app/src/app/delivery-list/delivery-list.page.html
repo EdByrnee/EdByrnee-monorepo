@@ -22,10 +22,7 @@
   <div class="sales" *ngIf="orderFilter === 'sales'" style="margin-top: -24px">
     <div class="ion-padding">
       <h2>Open Deliveries</h2>
-      <p>
-        Here is a list of all purchases within the past year. Click on a
-        purchase to view more detail.
-      </p>
+      <p>Please assign a deliery</p>
       <p>
         <!-- <ion-text color="warning">
           ({{ (openSales$ | async)?.length }})
@@ -40,14 +37,17 @@
     </div>
     <ion-list [inset]="true">
       <ion-item
-        *ngFor="let order of (orders$ | async)"
+        *ngFor="let order of (deliveries$ | async)"
         (click)="viewOrder(order.uuid)"
         button
       >
         <ion-label>
-          <h2>
-            order.dropName by order.makerName
-          </h2>
+          <h2>{{ order.deliveryAddressPostcode }}, 1.5 miles</h2>
+          <p>
+            5 minutes ago
+            <small> {{ order.createdAt | date: 'dd MMM HH:mm' }}</small>
+          </p>
+          <p>{{ order.multiOrderLines?.length }} items</p>
           <p>{{ order.order_total | currency:"GBP":true }}</p>
           <p>
             <ion-text color="warning" *ngIf="order.order_status === 'OPEN'">
@@ -55,29 +55,6 @@
             </ion-text>
             <ion-text color="success" *ngIf="order.order_status === 'CLOSED'">
               Completed
-            </ion-text>
-          </p>
-
-          <p>
-            <ion-text *ngIf="order.deliveryMethod === 'NATIONAL_DELIVERY'">
-              National Delivery,
-              <small>
-                {{ order.createdAt | date: 'dd MMM HH:mm' }}
-              </small>
-            </ion-text>
-
-            <ion-text *ngIf="order.deliveryMethod === 'LOCAL_DELIVERY'">
-              Local Delivery,
-              <small>
-                {{ order.createdAt | date: 'dd MMM HH:mm' }}
-              </small>
-            </ion-text>
-
-            <ion-text *ngIf="order.deliveryMethod === 'COLLECTION'">
-              Collection,
-              <small>
-                {{ order.createdAt | date: 'dd MMM HH:mm' }}
-              </small>
             </ion-text>
           </p>
 

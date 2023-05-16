@@ -97,6 +97,13 @@ export class MultiOrder extends Model<MultiOrder> {
   })
   collectionAddressCountry: string;
 
+  // Buyeruuid
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  buyerUuid: string;
+
   // Has Many order lines
   @HasMany(() => MultiOrderLine, 'multiOrderId')
   order_lines: MultiOrderLine[];

@@ -75,6 +75,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'view-order-driver',
+    loadChildren: () =>
+      import('./view-order-driver/view-order.module').then(
+        (m) => m.ViewOrderPageModule
+      ),
+  },
+  {
     path: 'list-orders',
     loadChildren: () =>
       import('./list-orders/list-orders.module').then(

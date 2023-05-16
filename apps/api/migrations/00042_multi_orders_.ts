@@ -6,7 +6,7 @@ export async function up(sequelize: Sequelize) {
 
   try {
     await sequelize.getQueryInterface().createTable(
-      'MultiOrder',
+      'MultiOrders',
       {
         id: {
           type: DataType.INTEGER,
@@ -103,7 +103,7 @@ export async function down(sequelize: Sequelize) {
     // Delete
     await sequelize
       .getQueryInterface()
-      .dropTable('MultiOrder', { transaction: tx });
+      .dropTable('MultiOrders', { transaction: tx });
 
     await tx.commit();
   } catch (err) {

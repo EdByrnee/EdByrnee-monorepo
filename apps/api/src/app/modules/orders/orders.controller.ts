@@ -114,4 +114,13 @@ export class OrdersController {
       return await this.orderService.getAllForUser(user.uuid);
     });
   }
+
+  @ApiOperation({ summary: 'Get all orders' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Get('/')
+  async getAllDeliveries(@User() user: RequestUser): Promise<MultiOrder[]> {
+    return await this.uow.execute(async () => {
+      return await this.orderService.getAllDeliveries()
+    });
+  }
 }

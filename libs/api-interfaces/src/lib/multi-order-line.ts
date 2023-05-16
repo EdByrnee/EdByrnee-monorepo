@@ -5,6 +5,6 @@ export interface IMultiOrderLine {
   unit_price: number;
   quantity: number;
   line_total: number;
-  multiOrder: IMultiOrder;
+  multiOrder: IMultiOrder | null;
   line_title: string;
 }

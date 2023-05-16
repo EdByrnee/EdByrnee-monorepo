@@ -71,7 +71,6 @@ export class OrderService {
     return total + deliveryCost;
   }
 
-
   async createMulti(
     currentUserUuid: string,
     drops: Drop[],
@@ -81,11 +80,9 @@ export class OrderService {
     const newOrder = new MultiOrder();
 
     newOrder.uuid = order.uuid;
-    newOrder.order_total = this.calculateMultiOrderTotal(
-      0,
-      drops
-    );
+    newOrder.order_total = this.calculateMultiOrderTotal(0, drops);
     newOrder.order_status = 'OPEN';
+    newOrder.buyerUuid = currentUserUuid;
 
     switch (order.deliveryMethod) {
       case 'LOCAL_DELIVERY':
@@ -127,31 +124,33 @@ export class OrderService {
 
   async getAllForUser(userUuid: string): Promise<any> {
     Logger.log(`Getting all orders for user ${userUuid}`, OrderService.name);
-    const purchases = await this.orderRepo.findAll({
+    const orders = await this.orderRepo.findAll({
       where: {
         buyerUuid: userUuid,
       },
       order: [['createdAt', 'DESC']],
     });
 
-    const sales = await this.orderRepo.findAll({
+    return {
+      forUser: userUuid,
+      sales: orders,
+    };
+  }
+
+  async getAllDeliveries(): Promise<any> {
+    const orders = await this.orderRepo.findAll({
       where: {
-        sellerUuid: userUuid,
+        // Only get todays
       },
       order: [['createdAt', 'DESC']],
     });
 
-    return {
-      forUser: userUuid,
-      purchases: purchases,
-      sales: sales,
-    };
+    return orders;
   }
 
   async get(uuid: string): Promise<MultiOrder> {
     return await this.orderRepo.get(uuid);
   }
-
 
   async updateOrderStatus(uuid: string, status: OrderStatus): Promise<void> {
     const order = await this.orderRepo.get(uuid);
