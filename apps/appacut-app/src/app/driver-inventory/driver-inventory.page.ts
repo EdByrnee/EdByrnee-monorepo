@@ -4,6 +4,8 @@ import { DropsService } from '../../core/drops';
 import { Observable } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { SelectDropPage } from '../select-drop/select-drop.page';
+import { DriverReplenishWarehouseStockPageModule } from '../driver-replenish-warehouse-stock/driver-replenish-warehouse-stock.module';
+import { DriverReplenishWarehouseStockPage } from '../driver-replenish-warehouse-stock/driver-replenish-warehouse-stock.page';
 
 @Component({
   selector: 'shoppr-monorepo-driver-inventory',
@@ -23,11 +25,21 @@ export class DriverInventoryPage implements OnInit {
     this.dropsService.getDrops().subscribe();
   }
 
-  addDriverInventory() {}
+  addDriverInventory() {
+    const driverWarehouseWareshouseStockModal = this.modalController.create({
+      component: DriverReplenishWarehouseStockPageModule
+    });
+    driverWarehouseWareshouseStockModal.then((modal) => modal.present());
+  }
 
-  editDriverInventory() {}
+  replenishStock() {
+    const driverWarehouseWareshouseStockModal = this.modalController.create({
+      component: DriverReplenishWarehouseStockPage
+    });
+    driverWarehouseWareshouseStockModal.then((modal) => modal.present());
+  }
 
-  async replenishStock() {
+  async replenishStock2() {
     const selectDropModal = await this.modalController.create({
       component: SelectDropPage,
     });

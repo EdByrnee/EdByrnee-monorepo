@@ -10,6 +10,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'driver-replenish-warehouse-stock',
+    loadChildren: () =>
+      import(
+        './driver-replenish-warehouse-stock/driver-replenish-warehouse-stock.module'
+      ).then((m) => m.DriverReplenishWarehouseStockPageModule),
+  },
+  {
     path: 'complete-profile',
     loadChildren: () =>
       import('./complete-profile/complete-profile.module').then(
