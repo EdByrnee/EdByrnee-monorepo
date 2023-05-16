@@ -12,16 +12,16 @@
 
   <ion-list inset="true" class="amount-summary-list">
     <ion-item>
-      <ion-label slot="start">Item Total</ion-label>
+      <ion-label slot="start">Basket Total</ion-label>
       <ion-label slot="end">
-        <strong>{{ drop.price | currency:"GBP": true }} </strong>
+        <strong>{{ _basketTotal$ | async | currency:"GBP": true }} </strong>
       </ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label slot="start">Delivery Fee</ion-label>
+      <ion-label slot="start">Delivery</ion-label>
       <ion-label slot="end">
-        <strong>{{ delieveryPrice | currency:"GBP": true }} </strong>
+        <strong>FREE</strong>
       </ion-label>
     </ion-item>
 

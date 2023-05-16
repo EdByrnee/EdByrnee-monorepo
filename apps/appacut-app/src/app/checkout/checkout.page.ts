@@ -37,6 +37,8 @@ export class CheckoutPage implements OnInit {
 
   demoMode$ = this.authService.demoMode$;
 
+  _basketTotal$ = this.basketService.basketTotal$;
+
   constructor(
     private modalCtrl: ModalController,
     private loadingController: LoadingController,
