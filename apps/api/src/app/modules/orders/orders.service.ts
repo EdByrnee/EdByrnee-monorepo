@@ -1,8 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { IRepositoryPort } from '../../core/database/ports/repository-port';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { Order } from './entity/order.entity';
-import { MULTI_ORDER_REPOSITORY, ORDERS_REPOSITORY } from './orders.providers';
+import { MULTI_ORDER_REPOSITORY } from './orders.providers';
 import { InjectStripe } from 'nestjs-stripe';
 import Stripe from 'stripe';
 import { Drop } from '../drops/entities/drop.entity';
@@ -20,10 +19,8 @@ import { MultiOrderLine } from './entity/multi-order-line';
 @Injectable()
 export class OrderService {
   constructor(
-    @Inject(ORDERS_REPOSITORY)
-    private readonly orderRepo: IRepositoryPort<Order>,
-    @Inject(ORDERS_REPOSITORY)
-    private readonly multiOrderRepo: IRepositoryPort<MultiOrder>,
+    @Inject(MULTI_ORDER_REPOSITORY)
+    private readonly orderRepo: IRepositoryPort<MultiOrder>,
     @Inject(MULTI_ORDER_REPOSITORY)
     private readonly multiOrderLineRepo: IRepositoryPort<MultiOrderLine>,
     @InjectStripe() private readonly stripeClient: Stripe
@@ -74,61 +71,6 @@ export class OrderService {
     return total + deliveryCost;
   }
 
-  async create(
-    currentUserUuid: string,
-    drop: Drop,
-    order: CreateOrderDto,
-    maker: UserProfile
-  ): Promise<void> {
-    Logger.log(`Creating order`, OrderService.name);
-    const newOrder = new Order();
-
-    newOrder.uuid = order.uuid;
-    newOrder.order_total = this.calculateOrderTotal(order.deliveryMethod, drop);
-    newOrder.buyerUuid = currentUserUuid;
-    newOrder.sellerUuid = drop.makerUuid;
-    newOrder.order_status = 'OPEN';
-    newOrder.dropUuid = drop.uuid;
-    newOrder.dropName = drop.name;
-    newOrder.makerName = maker.name;
-
-    switch (order.deliveryMethod) {
-      case 'LOCAL_DELIVERY':
-        newOrder.deliveryMethod = 'LOCAL_DELIVERY';
-        newOrder.deliveryAddressLine1 = order.deliveryAddressLine1;
-        newOrder.deliveryAddressLine2 = order.deliveryAddressLine2;
-        newOrder.deliveryAddressCity = order.deliveryAddressCity;
-        newOrder.deliveryAddressPostcode = order.deliveryAddressPostcode;
-        newOrder.deliveryAddressCountry = order.deliveryAddressCountry;
-        break;
-      case 'NATIONAL_DELIVERY':
-        newOrder.deliveryMethod = 'NATIONAL_DELIVERY';
-        newOrder.deliveryAddressLine1 = order.deliveryAddressLine1;
-        newOrder.deliveryAddressLine2 = order.deliveryAddressLine2;
-        newOrder.deliveryAddressCity = order.deliveryAddressCity;
-        newOrder.deliveryAddressPostcode = order.deliveryAddressPostcode;
-        newOrder.deliveryAddressCountry = order.deliveryAddressCountry;
-        break;
-      case 'COLLECTION':
-        newOrder.deliveryMethod = 'COLLECTION';
-        newOrder.collectionAddressLine1 = drop.collectionAddressLine1;
-        newOrder.collectionAddressLine2 = drop.collectionAddressLine2;
-        newOrder.collectionAddressCity = drop.collectionAddressCity;
-        newOrder.collectionAddressPostcode = drop.collectionAddressPostcode;
-        newOrder.collectionAddressCountry = 'UK';
-        break;
-      default:
-        throw new Error('Invalid delivery method');
-    }
-
-    console.log(`Creating order ${JSON.stringify(newOrder)}`);
-    try {
-      return this.orderRepo.create(newOrder);
-    } catch (err) {
-      console.log(err);
-      throw err;
-    }
-  }
 
   async createMulti(
     currentUserUuid: string,
@@ -160,9 +102,9 @@ export class OrderService {
 
     console.log(`Creating order ${JSON.stringify(newOrder)}`);
     try {
-      await this.multiOrderRepo.create(newOrder);
+      await this.orderRepo.create(newOrder);
 
-      const newMultiOrder = await this.multiOrderRepo.get(newOrder.uuid);
+      const newMultiOrder = await this.orderRepo.get(newOrder.uuid);
 
       // Create order lines
       const orderLines = drops.map((drop) => {
@@ -206,13 +148,10 @@ export class OrderService {
     };
   }
 
-  async get(uuid: string): Promise<Order> {
+  async get(uuid: string): Promise<MultiOrder> {
     return await this.orderRepo.get(uuid);
   }
 
-  async getMulti(uuid: string): Promise<MultiOrder> {
-    return await this.multiOrderRepo.get(uuid);
-  }
 
   async updateOrderStatus(uuid: string, status: OrderStatus): Promise<void> {
     const order = await this.orderRepo.get(uuid);

@@ -11,11 +11,7 @@ import { IOrder } from '@shoppr-monorepo/api-interfaces';
   styleUrls: ['./delivery-list.page.scss'],
 })
 export class DeliveryListPage implements OnInit {
-  purchases$: Observable<IOrder[]> = this.ordersService.purchases;
-  sales$: Observable<IOrder[]> = this.ordersService.sales;
-
-  openSales$;
-  closedSales$;
+  orders$ = this.ordersService.orders;
 
   orderFilter: string;
 
@@ -25,12 +21,6 @@ export class DeliveryListPage implements OnInit {
     private route: ActivatedRoute
   ) {
     this.orderFilter = this.route.snapshot.params['filter'] || 'sales';
-    this.openSales$ = this.sales$.pipe(
-      map((sales) => sales.filter((sale) => sale.order_status === 'OPEN'))
-    );
-    this.closedSales$ = this.sales$.pipe(
-      map((sales) => sales.filter((sale) => sale.order_status === 'CLOSED'))
-    );
   }
 
   ngOnInit() {

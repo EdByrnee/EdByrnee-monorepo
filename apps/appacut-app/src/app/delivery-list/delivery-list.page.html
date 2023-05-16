@@ -27,7 +27,7 @@
         purchase to view more detail.
       </p>
       <p>
-        <ion-text color="warning">
+        <!-- <ion-text color="warning">
           ({{ (openSales$ | async)?.length }})
           Open Orders
         </ion-text> 
@@ -35,18 +35,18 @@
         <ion-text color="success">
           ({{ (closedSales$ | async)?.length }})
           Closed Orders
-        </ion-text> 
+        </ion-text>  -->
       </p>
     </div>
     <ion-list [inset]="true">
       <ion-item
-        *ngFor="let order of (sales$ | async)"
+        *ngFor="let order of (orders$ | async)"
         (click)="viewOrder(order.uuid)"
         button
       >
         <ion-label>
           <h2>
-            {{ order.dropName }} by {{ order.makerName }}
+            order.dropName by order.makerName
           </h2>
           <p>{{ order.order_total | currency:"GBP":true }}</p>
           <p>

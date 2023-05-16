@@ -16,6 +16,7 @@ import * as confetti from 'canvas-confetti';
 import * as uuid from 'uuid';
 import { AnalyticsService } from '../../core/analytics';
 import { AuthService } from '../../core/auth';
+import { BasketService } from '../../core/basket.service';
 
 @Component({
   selector: 'shoppr-monorepo-checkout',
@@ -44,7 +45,8 @@ export class CheckoutPage implements OnInit {
     private alertController: AlertController,
     private paymentService: PaymentService,
     private analyticsService: AnalyticsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private basketService: BasketService
   ) {}
 
   why(){
@@ -61,7 +63,7 @@ export class CheckoutPage implements OnInit {
         await this.paymentService.demoPay(
           newOrderUuid,
           this.orderTotal,
-          this.drop.uuid,
+          this.basketService.getDropUuids(),
           this.deliveryMethod,
           this.drop.makerUuid
         );
@@ -71,7 +73,7 @@ export class CheckoutPage implements OnInit {
         await this.paymentService.presentApplePay(
           newOrderUuid,
           this.orderTotal,
-          this.drop.uuid,
+          this.basketService.getDropUuids(),
           this.deliveryMethod,
           this.drop.makerUuid
         );

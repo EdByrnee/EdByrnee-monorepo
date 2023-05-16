@@ -6,7 +6,7 @@ import {
   ShippingContact,
   DidSelectShippingContact,
 } from '@capacitor-community/stripe';
-import { DeliveryMethod, ICreateOrder } from '@shoppr-monorepo/api-interfaces';
+import { DeliveryMethod, ICreateMultiOrder, ICreateOrder } from '@shoppr-monorepo/api-interfaces';
 import { first } from 'rxjs';
 import { environment } from '../environments/environment';
 import { OrdersService } from './orders';
@@ -38,7 +38,7 @@ export class PaymentService {
   public async demoPay(
     newOrderUuid: string,
     orderTotal: number,
-    dropUuid: string,
+    dropUuids: string[],
     deliveryMethod: DeliveryMethod,
     sellerUuid: string
   ): Promise<void> {
@@ -48,16 +48,16 @@ export class PaymentService {
     await creatingOrder.present();
 
     console.log(`Demo pay transaction approved for ${orderTotal}`);
-    const createOrderObj = this.getDemoCreateOrderObj(
+    const createMultiOrderObj: ICreateMultiOrder = this.getDemoCreateOrderObj(
       newOrderUuid,
       deliveryMethod,
-      dropUuid
+      dropUuids,
     );
 
     // Happy path
     return this.createOrder(
       creatingOrder,
-      createOrderObj,
+      createMultiOrderObj,
       orderTotal,
       deliveryMethod,
       sellerUuid
@@ -70,7 +70,7 @@ export class PaymentService {
   public async presentApplePay(
     newOrderUuid: string,
     orderTotal: number,
-    dropUuid: string,
+    dropUuids: string[],
     deliveryMethod: DeliveryMethod,
     sellerUuid: string
   ): Promise<void> {
@@ -100,10 +100,10 @@ export class PaymentService {
       console.log(`Apple pay transaction approved for ${orderTotal}`);
       console.log(`Stored contact details BEING USED`);
       console.log(this.contactDetails);
-      const createOrderObj: ICreateOrder = {
+      const createMultiOrderObj: ICreateMultiOrder = {
         uuid: newOrderUuid,
         deliveryMethod: deliveryMethod,
-        dropUuid: dropUuid,
+        dropUuids: dropUuids,
         stripeToken: 'NOT_IMPLEMENTED',
         deliveryAddressLine1: this.contactDetails.street || '',
         deliveryAddressLine2: '',
@@ -113,11 +113,11 @@ export class PaymentService {
       };
 
       console.log(`FINAL ORDER DETAILS`);
-      console.log(createOrderObj);
+      console.log(createMultiOrderObj);
 
       return this.createOrder(
         creatingOrder,
-        createOrderObj,
+        createMultiOrderObj,
         orderTotal,
         deliveryMethod,
         sellerUuid
@@ -131,12 +131,12 @@ export class PaymentService {
     // Connect to your backend endpoint, and get paymentIntent.
     const paymentIntent = await this.getPaymentIntent(
       orderTotal,
-      dropUuid,
+      dropUuids,
       deliveryMethod
     );
 
     console.log(`Presenting Apple Pay to user`);
-    await this.createApplePay(paymentIntent, dropUuid, orderTotal);
+    await this.createApplePay(paymentIntent, dropUuids, orderTotal);
 
     await Stripe.presentApplePay();
   }
@@ -147,25 +147,25 @@ export class PaymentService {
 
   private async getPaymentIntent(
     orderTotal: number,
-    dropUuid: string,
+    dropUuids: string[],
     deliveryMethod: DeliveryMethod
   ): Promise<{ client_secret: string }> {
     return this.ordersService
-      .getPaymentIntent(orderTotal, dropUuid, deliveryMethod)
+      .getPaymentIntent(orderTotal, dropUuids, deliveryMethod)
       .pipe(first())
       .toPromise(Promise) as Promise<{ client_secret: string }>;
   }
 
   private async createApplePay(
     paymentIntent: { client_secret: string },
-    dropUuid: string,
+    dropUuids: string[],
     orderTotal: number
   ): Promise<void> {
     return Stripe.createApplePay({
       paymentIntentClientSecret: paymentIntent?.client_secret || '',
       paymentSummaryItems: [
         {
-          label: `LocalShelf Drop ${dropUuid}`,
+          label: `LocalShelf Drop ${dropUuids}`,
           amount: orderTotal,
         },
       ],
@@ -184,12 +184,12 @@ export class PaymentService {
   private getDemoCreateOrderObj(
     newOrderUuid: string,
     deliveryMethod: DeliveryMethod,
-    dropUuid: string
+    dropUuids: string[]
   ) {
-    const createOrderObj: ICreateOrder = {
+    const createOrderObj: ICreateMultiOrder = {
       uuid: newOrderUuid,
       deliveryMethod: deliveryMethod,
-      dropUuid: dropUuid,
+      dropUuids: dropUuids,
       stripeToken: 'NOT_IMPLEMENTED',
       deliveryAddressLine1: 'Demo address Line 1',
       deliveryAddressLine2: '',
@@ -202,13 +202,13 @@ export class PaymentService {
 
   private createOrder(
     creatingOrder: HTMLIonLoadingElement,
-    createOrderObj: ICreateOrder,
+    createMultiOrderObj: ICreateMultiOrder,
     orderTotal: number,
     deliveryMethod: DeliveryMethod,
     sellerUuid: string
   ) {
     return this.ordersService
-      .createOrder(createOrderObj, orderTotal, deliveryMethod, sellerUuid)
+      .createOrder(createMultiOrderObj, orderTotal, deliveryMethod)
       .toPromise(Promise)
       .then((ok) => {
         return creatingOrder.dismiss().then((ok) => {

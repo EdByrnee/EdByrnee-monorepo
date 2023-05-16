@@ -56,6 +56,20 @@ export class BasketService {
     }, 0);
     this._basketTotal$.next(total);
   }
+
+  getDropUuids(){
+    const currentValue = this._basket$.value;
+    const dropUuids = currentValue.map((item) => item.drop.uuid);
+    return dropUuids;
+  }
+
+  getOrderTotal(){
+    const currentValue = this._basket$.value;
+    const total = currentValue.reduce((acc, item) => {
+      return acc + (item.drop.price * item.qty);
+    }, 0);
+    return total;
+  }
 }
 
 export interface IBasketItem {

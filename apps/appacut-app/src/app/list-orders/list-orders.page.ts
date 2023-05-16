@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { IOrder } from '@shoppr-monorepo/api-interfaces';
+import { IMultiOrder, IOrder } from '@shoppr-monorepo/api-interfaces';
 import { map, Observable } from 'rxjs';
 import { OrdersService } from '../../core/orders';
 
@@ -13,8 +13,8 @@ import { OrdersService } from '../../core/orders';
 })
 
 export class ListOrdersPage implements OnInit {
-  purchases$: Observable<IOrder[]> = this.ordersService.purchases;
-  sales$: Observable<IOrder[]> = this.ordersService.sales;
+  purchases$: Observable<IMultiOrder[]> = this.ordersService.orders;
+  sales$: Observable<IMultiOrder[]> = this.ordersService.orders;
 
   openSales$;
   closedSales$;

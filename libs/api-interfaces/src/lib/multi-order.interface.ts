@@ -9,8 +9,6 @@ export interface IMultiOrder {
   order_status: OrderStatus;
   createdAt: Date;
   updatedAt: Date;
-  buyerUuid: string;
-  sellerUuid: string;
   deliveryAddressLine1?: string;
   deliveryAddressLine2?: string;
   deliveryAddressCity?: string;

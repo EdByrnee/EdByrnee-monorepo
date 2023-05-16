@@ -44,7 +44,7 @@ export class ViewBasketPage {
   basketTotal$: Observable<number> = this.basketService.basketTotal$;
 
   getOrderTotal(): number {
-    return this.drop.price + Number(this.delieveryPrice);
+    return this.basketService.getOrderTotal() + Number(this.delieveryPrice);
   }
 
   get delieveryPrice(): number | null {
