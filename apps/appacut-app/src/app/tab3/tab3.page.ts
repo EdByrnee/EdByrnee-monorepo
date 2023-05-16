@@ -184,6 +184,10 @@ export class Tab3Page {
     );
   }
 
+  async goToDriverInventory() {
+    this.navControl.navigateForward('/driver-inventory');
+  }
+
   async requestMagicLink() {
     const email = this.emailForm.controls['email'].value;
     const pleaseWait = await this.loadingController.create({

@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Driver Inventory</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of (allDrops$ | async)">
+      <ion-label>{{item.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Buttons -->
+  <div class="buttons">
+    <ion-button (click)="addDriverInventory()">Add Driver Inventory</ion-button>
+    <ion-button (click)="editDriverInventory()"
+      >Edit Driver Inventory</ion-button
+    >
+  </div>
+</ion-content>

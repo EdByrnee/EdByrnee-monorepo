@@ -18,6 +18,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'driver-inventory',
+    loadChildren: () =>
+      import('./driver-inventory/driver-inventory.module').then(
+        (m) => m.DriverInventoryPageModule
+      ),
+  },
+  {
     path: 'delivery-list',
     loadChildren: () =>
       import('./delivery-list/delivery-list.module').then(
