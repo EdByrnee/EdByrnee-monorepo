@@ -15,12 +15,13 @@ import { OrderService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { User } from '../auth/utils/user.decorator';
 import { RequestUser } from '../auth/utils/jwt.strategy';
-import { Order } from './order.entity';
+import { Order } from './entity/order.entity';
 import { DropService } from '../drops/drops.service';
 import { ICreatePaymentIntentRequestBody } from '@shoppr-monorepo/api-interfaces';
 import { AuthService } from '../auth/auth.service';
 import { EmailService } from '../auth/email-service';
 import { SequelizeUow } from '../../core/database/infra/sequelize-uow';
+import { CreateMultiOrderDto } from './dto/create-multi-order.dto';
 
 @ApiTags('Orders')
 @Controller('/orders')
@@ -43,37 +44,72 @@ export class OrdersController {
     @Body() body: CreateOrderDto
   ): Promise<void> {
     return await this.uow.execute(async () => {
-    try {
-      Logger.log(`Creating order for ${user.uuid}`, OrderService.name);
-      const drop = await this.dropService.getDrop(body.dropUuid);
+      try {
+        Logger.log(`Creating order for ${user.uuid}`, OrderService.name);
+        const drop = await this.dropService.getDrop(body.dropUuid);
 
-      if (drop.qty_available <= 0) {
-        throw new UnprocessableEntityException('Drop is out of stock');
+        if (drop.qty_available <= 0) {
+          throw new UnprocessableEntityException('Drop is out of stock');
+        }
+
+        const maker = await this.authService.getProfile(drop.makerUuid);
+
+        await this.orderService.create(user.uuid, drop, body, maker);
+        const order = await this.orderService.get(body.uuid);
+
+        await this.dropService.decrementDropQuantity(drop.uuid, 1);
+
+        await this.emailService.sendBuyerOrderConfirmationEmail(
+          user.uuid,
+          drop as any,
+          body,
+          order
+        );
+        await this.emailService.sendMakerOrderConfirmationEmail(
+          user.uuid,
+          drop as any,
+          body,
+          order
+        );
+      } catch (err) {
+        throw new HttpException('Error creating order', 500);
       }
+    });
+  }
 
-      const maker = await this.authService.getProfile(drop.makerUuid);
+  @ApiOperation({ summary: 'Create a new order' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Post('/')
+  async createMultiOrder(
+    @User() user: RequestUser,
+    @Body() body: CreateMultiOrderDto
+  ): Promise<void> {
+    return await this.uow.execute(async () => {
+      try {
+        Logger.log(`Creating order for ${user.uuid}`, OrderService.name);
+        const drops = await this.dropService.getDrops({
+          uuid: body.dropUuids,
+        });
 
-      await this.orderService.create(user.uuid, drop, body, maker);
-      const order = await this.orderService.get(body.uuid);
+        for (const drop of drops) {
+          if (drop.qty_available <= 0) {
+            throw new UnprocessableEntityException('Drop is out of stock');
+          }
+          await this.dropService.decrementDropQuantity(drop.uuid, 1);
+        }
 
-      await this.dropService.decrementDropQuantity(drop.uuid, 1);
-
-      await this.emailService.sendBuyerOrderConfirmationEmail(
-        user.uuid,
-        drop as any,
-        body,
-        order
-      );
-      await this.emailService.sendMakerOrderConfirmationEmail(
-        user.uuid,
-        drop as any,
-        body,
-        order
-      );
-    } catch (err) {
-      throw new HttpException('Error creating order', 500)
-    }
-  });
+        await this.orderService.createMulti(user.uuid, drops, body);
+        const multiOrder = await this.orderService.getMulti(body.uuid);
+        await this.emailService.sendOrderConfirmationEmail(
+          user.uuid,
+          drops as any,
+          body,
+          multiOrder
+        );
+      } catch (err) {
+        throw new HttpException('Error creating order', 500);
+      }
+    });
   }
 
   @ApiOperation({ summary: 'Create a new payment intent' })
@@ -81,12 +117,12 @@ export class OrdersController {
   @Post('/payment-intent')
   async createPaymentIntent(@Body() body: ICreatePaymentIntentRequestBody) {
     return await this.uow.execute(async () => {
-    Logger.log(`Payment intent request...`);
-    return await this.orderService.createPaymentIntent(
-      body.deliveryType,
-      body.dropUuid,
-      body.orderTotal
-    );
+      Logger.log(`Payment intent request...`);
+      return await this.orderService.createPaymentIntent(
+        body.deliveryType,
+        body.dropUuid,
+        body.orderTotal
+      );
     });
   }
 
@@ -95,7 +131,7 @@ export class OrdersController {
   @Get('/:uuid')
   async getOrder(@Param('uuid') uuid: string): Promise<Order> {
     return await this.uow.execute(async () => {
-    return await this.orderService.get(uuid);
+      return await this.orderService.get(uuid);
     });
   }
 
@@ -107,7 +143,7 @@ export class OrdersController {
     @Body() body: any
   ): Promise<void> {
     return await this.uow.execute(async () => {
-    return await this.orderService.updateOrderStatus(uuid, body.order_status);
+      return await this.orderService.updateOrderStatus(uuid, body.order_status);
     });
   }
 
@@ -116,7 +152,7 @@ export class OrdersController {
   @Get('/')
   async getAllOrders(@User() user: RequestUser): Promise<Order[]> {
     return await this.uow.execute(async () => {
-    return await this.orderService.getAllForUser(user.uuid);
+      return await this.orderService.getAllForUser(user.uuid);
     });
   }
 }

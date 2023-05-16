@@ -24,8 +24,8 @@ export class DropService {
     @Inject(DROP_PHOTO_REPOSITORY)
     private readonly dropPhotoRepository: IRepositoryPort<DropPhoto>
   ) {}
-  async getDrops(): Promise<Drop[]> {
-    return this.dropRepository.findAll({});
+  async getDrops(filter?: any): Promise<Drop[]> {
+    return this.dropRepository.findAll(filter);
   }
 
   async getDropsByMaker(userUuid: string, makerId: string): Promise<Drop[]> {

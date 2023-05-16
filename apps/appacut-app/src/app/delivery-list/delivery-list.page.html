@@ -10,82 +10,18 @@
 <ion-content>
   <div class="ion-padding">
     <ion-segment [(ngModel)]="orderFilter">
-      <ion-segment-button [value]="'purchases'">
-        <ion-label>Purchases</ion-label>
+      <ion-segment-button [value]="'sales'">
+        <ion-label>Open</ion-label>
       </ion-segment-button>
       <ion-segment-button [value]="'sales'">
-        <ion-label>Sales</ion-label>
+        <ion-label>Complete</ion-label>
       </ion-segment-button>
     </ion-segment>
   </div>
 
-  <div
-    class="purchases"
-    *ngIf="orderFilter === 'purchases'"
-    style="margin-top: -24px"
-  >
-    <div class="ion-padding">
-      <h2>My Purchases</h2>
-      <p>
-        Here is a list of all purchases within the past year. Click on a
-        purchase to view more detail.
-      </p>
-    </div>
-    <ion-list [inset]="true">
-      <ion-item
-        *ngFor="let order of (purchases$ | async)"
-        (click)="viewOrder(order.uuid)"
-        button
-      >
-      <ion-label>
-        <h2>
-          {{ order.dropName }} by {{ order.makerName }}
-        </h2>
-        <p>
-          {{ order.order_total | currency:"GBP":true }}
-        </p>
-
-        <p>
-          <ion-text color="warning" *ngIf="order.order_status === 'OPEN'">
-            Open
-          </ion-text>
-          <ion-text color="success" *ngIf="order.order_status === 'CLOSED'">
-            Completed
-          </ion-text>
-        </p>
-
-        <p>
-          <ion-text *ngIf="order.deliveryMethod === 'NATIONAL_DELIVERY'">
-            National Delivery,
-            <small>
-              {{ order.createdAt | date: 'dd MMM HH:mm' }}
-            </small>
-          </ion-text>
-
-          <ion-text *ngIf="order.deliveryMethod === 'LOCAL_DELIVERY'">
-            Local Delivery,
-            <small>
-              {{ order.createdAt | date: 'dd MMM HH:mm' }}
-            </small>
-          </ion-text>
-
-          <ion-text *ngIf="order.deliveryMethod === 'COLLECTION'">
-            Collection,
-            <small>
-              {{ order.createdAt | date: 'dd MMM HH:mm' }}
-            </small>
-          </ion-text>
-        </p>
-
-        <!-- <ion-button slot="end"> Mark complete </ion-button> -->
-      </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
-
   <div class="sales" *ngIf="orderFilter === 'sales'" style="margin-top: -24px">
     <div class="ion-padding">
-      <h2>My Sales</h2>
+      <h2>Open Deliveries</h2>
       <p>
         Here is a list of all purchases within the past year. Click on a
         purchase to view more detail.

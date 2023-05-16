@@ -15,3 +15,6 @@ export * from './lib/create-payment-intent-request-body';
 export * from './lib/interface/delivery-method.interface';
 export * from './lib/interface/drop-status.interface';
 export * from './lib/update-drop.interface';
+export * from './lib/create-multi-order.interface';
+export * from '/lib/multi-order.interface';
+export * from './lib/multi-order-line';

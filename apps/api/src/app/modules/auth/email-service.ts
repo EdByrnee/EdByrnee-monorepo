@@ -24,6 +24,8 @@ import * as uuid from 'uuid';
 import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { create } from 'domain';
 import { Order } from '../orders/order.entity';
+import { CreateMultiOrderDto } from '../orders/dto/create-multi-order.dto';
+import { MultiOrder } from '../orders/entity/multi-order.entity';
 
 @Injectable()
 export class EmailService {
@@ -69,6 +71,43 @@ export class EmailService {
       deliveryType: this.deliveryTypeToText(createOrder.deliveryMethod),
       deliveryAddress: 'drop.delivery_address',
       orderTotal: '£' + order.order_total,
+      orderDate: new Date().toLocaleDateString('en-GB', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }),
+    };
+
+    this.emailGateway.sendEmailTemplate(
+      email,
+      subject,
+      templateName,
+      templateData
+    );
+  }
+
+  public async sendOrderConfirmationEmail(
+    buyerUuid: string,
+    drops: IDrop[],
+    createOrder: CreateMultiOrderDto,
+    multiOrder: MultiOrder
+  ): Promise<void> {
+    const userProfile: IUserProfile = await this.userRepo.get(buyerUuid);
+    if (userProfile == null) {
+      throw new NotFoundException(OBJECT_NOT_FOUND_ERROR);
+    }
+
+    const email = userProfile.email;
+    const subject = `Order Confirmation`;
+    const templateName = 'buyer-order-confirmation.hbs';
+    const templateData = {
+      myOrdersUrl: 'https://shoppr.com/orders',
+      dropName: drops[0].name,
+      dropDescription: drops[0].description,
+      customerName: userProfile.name,
+      deliveryType: this.deliveryTypeToText(createOrder.deliveryMethod),
+      deliveryAddress: 'drop.delivery_address',
+      orderTotal: '£' + multiOrder.order_total,
       orderDate: new Date().toLocaleDateString('en-GB', {
         year: 'numeric',
         month: 'long',

@@ -17,7 +17,20 @@ const routes: Routes = [
         (m) => m.CompleteProfilePageModule
       ),
   },
-
+  {
+    path: 'delivery-list',
+    loadChildren: () =>
+      import('./delivery-list/delivery-list.module').then(
+        (m) => m.DeliveryListPageModule
+      ),
+  },
+  {
+    path: 'list-orders',
+    loadChildren: () =>
+      import('./list-orders/list-orders.module').then(
+        (m) => m.ListOrdersPageModule
+      ),
+  },
   {
     path: 'view-basket',
     loadChildren: () =>
