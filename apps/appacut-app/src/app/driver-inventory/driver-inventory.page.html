@@ -4,18 +4,40 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content class="ion-padding">
+
+  <ion-button (click)="replenishStock()" style="width: 100%">
+    <ion-icon name="scan-circle-outline"></ion-icon>&nbsp; Scan Barcode
+  </ion-button>
+
+
+  <ion-list [inset]="true">
     <ion-item *ngFor="let item of (allDrops$ | async)">
-      <ion-label>{{item.name}}</ion-label>
+      <ion-label>
+        <h4>{{item.name}}</h4>
+        <p class="primary">
+          You have: 0
+        </p>
+        <p>
+          All Driver Stock: 0
+        </p>
+        <p>
+          Warehouse Stock: 0
+        </p>
+      </ion-label>
     </ion-item>
   </ion-list>
 
-  <!-- Buttons -->
-  <div class="buttons">
-    <ion-button (click)="addDriverInventory()">Add Driver Inventory</ion-button>
-    <ion-button (click)="editDriverInventory()"
-      >Edit Driver Inventory</ion-button
-    >
-  </div>
 </ion-content>
+
+<ion-footer>
+  <div class="buttons">
+    <ion-button color="primary" (click)="addDriverInventory()">
+      <ion-icon name="arrow-down-circle-outline"></ion-icon>&nbsp; Assign to
+      Driver
+    </ion-button>
+    <ion-button (click)="replenishStock()">
+      <ion-icon name="home-outline"></ion-icon>&nbsp; Replenish Warehouse Stock
+    </ion-button>
+  </div>
+</ion-footer>

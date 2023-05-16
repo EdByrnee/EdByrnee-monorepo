@@ -43,6 +43,7 @@ export class ViewOrderPage implements OnInit {
     //   }
     // );
     this.order = demoMultiOrder1;
+    this.loading = false;
   }
 
   async updateOrderStatus(status: OrderStatus) {

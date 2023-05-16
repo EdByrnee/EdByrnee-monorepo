@@ -1,6 +1,7 @@
 import { DropStatus } from '@shoppr-monorepo/api-interfaces';
 import { Table, Model, Column, DataType, HasMany } from 'sequelize-typescript';
 import { DropPhoto } from './drop-photo.entity';
+import { DropInventoryAssignment } from './drop-inventory-assignment';
 
 @Table({ tableName: 'Drops', timestamps: true })
 export class Drop extends Model<Drop> {
@@ -32,9 +33,13 @@ export class Drop extends Model<Drop> {
   description: string;
 
   @Column({
-    type: DataType.ENUM('AWAITING_APPROVAL' , 'ACTIVE_LISTING' , 'DELISTED_FOR_HOLIDAY'),
+    type: DataType.ENUM(
+      'AWAITING_APPROVAL',
+      'ACTIVE_LISTING',
+      'DELISTED_FOR_HOLIDAY'
+    ),
     allowNull: false,
-    defaultValue: 'AWAITING_APPROVAL'
+    defaultValue: 'AWAITING_APPROVAL',
   })
   status: DropStatus;
 
@@ -138,6 +143,12 @@ export class Drop extends Model<Drop> {
   collectionAddressPostcode: string;
 
   @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  itemCode: string;
+
+  @Column({
     type: DataType.BOOLEAN,
   })
   localDeliveryEnabled: boolean;
@@ -170,4 +181,7 @@ export class Drop extends Model<Drop> {
     allowNull: true,
   })
   localDeliveryRadius: number;
+
+  @HasMany(() => DropInventoryAssignment, 'dropId')
+  dropInventoryAssignments: DropInventoryAssignment[];
 }

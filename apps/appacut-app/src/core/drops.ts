@@ -64,8 +64,15 @@ export class DropsService {
     });
   }
 
-  async getDrops() {
-    return this.http.get<IDrop[]>(this.api + '/api/drops');
+  getDrops() {
+    console.log(`getDrops()`)
+    return this.http.get<IDrop[]>(this.api + '/api/drops').pipe(
+      tap((res: IDrop[]) => {
+        console.log(`Here are all the drops`)
+        console.log(res);
+        this.allDrops$.next(res);
+      })
+    )
   }
 
   updateStatus(uuid: string, status: DropStatus) {

@@ -1,5 +1,10 @@
+ion-content{
+    --background: #f4f5f8;
+}
 .buttons {
-    display: flex;
-    flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
+}
+.primary {
+    color: #466D1D;
 }

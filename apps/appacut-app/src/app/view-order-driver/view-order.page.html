@@ -49,25 +49,6 @@
         <h2>{{ order.uuid }}</h2>
       </ion-label>
     </ion-item>
-
-    <ion-item>
-      <ion-label>Shipping Method</ion-label>
-      <ion-label>
-        <h2>
-          <ion-text *ngIf="order.deliveryMethod === 'NATIONAL_DELIVERY'">
-            National Delivery
-          </ion-text>
-
-          <ion-text *ngIf="order.deliveryMethod === 'LOCAL_DELIVERY'">
-            Local Delivery
-          </ion-text>
-
-          <ion-text *ngIf="order.deliveryMethod === 'COLLECTION'">
-            Collection
-          </ion-text>
-        </h2>
-      </ion-label>
-    </ion-item>
   </ion-list>
 
 

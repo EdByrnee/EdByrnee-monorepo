@@ -31,4 +31,5 @@ export interface IDrop {
   localDeliveryLat?: number;
   localDeliveryLng?: number;
   localDeliveryRadius?: number;
+  itemCode: string;
 }

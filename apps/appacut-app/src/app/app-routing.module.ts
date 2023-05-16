@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { TutorialGuard } from './app-intro.guard';
 
 const routes: Routes = [
   {
@@ -15,6 +14,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./complete-profile/complete-profile.module').then(
         (m) => m.CompleteProfilePageModule
+      ),
+  },
+  {
+    path: 'select-drop',
+    loadChildren: () =>
+      import('./select-drop/select-drop.module').then(
+        (m) => m.SelectDropPageModule
       ),
   },
   {

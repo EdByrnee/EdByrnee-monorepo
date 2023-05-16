@@ -18,14 +18,17 @@ import { DropUpdatesDto, UpdateDropDto } from './dto/update-drop.dto';
 
 @Injectable()
 export class DropService {
+
   constructor(
     @Inject(DROP_REPOSITORY)
     private readonly dropRepository: IRepositoryPort<Drop>,
     @Inject(DROP_PHOTO_REPOSITORY)
     private readonly dropPhotoRepository: IRepositoryPort<DropPhoto>
   ) {}
+
+  
   async getDrops(filter?: any): Promise<Drop[]> {
-    return this.dropRepository.findAll(filter);
+    return this.dropRepository.findAll(filter || {});
   }
 
   async getDropsByMaker(userUuid: string, makerId: string): Promise<Drop[]> {
