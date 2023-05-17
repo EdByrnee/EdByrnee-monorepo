@@ -15,59 +15,15 @@ import { AuthService } from './auth';
 import Stripe from 'stripe';
 import { AnalyticsService } from './analytics';
 
-export const demoOrderLine1: IMultiOrderLine = {
-  uuid: 'uuid1',
-  unit_price: 3.99,
-  quantity: 2,
-  line_total: 7.98,
-  multiOrder: null,
-  line_title: 'Test Product 1',
-};
-
-export const demoMultiOrder1: IMultiOrder = {
-  uuid: 'uuid1',
-  deliveryMethod: 'COLLECTION',
-  order_total: 1.0,
-  order_status: 'OPEN',
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  deliveryAddressLine1: '1 Test Street',
-  deliveryAddressLine2: '1 Test Street',
-  deliveryAddressCity: 'Liverpool',
-  deliveryAddressPostcode: 'L12 8RD',
-  deliveryAddressCountry: 'UK',
-  multiOrderLines: [demoOrderLine1, demoOrderLine1],
-};
-
-export const demoMultiOrder2: IMultiOrder = {
-  uuid: 'uuid2',
-  deliveryMethod: 'COLLECTION',
-  order_total: 1.0,
-  order_status: 'OPEN',
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  deliveryAddressLine1: '1 Test Street',
-  deliveryAddressLine2: '1 Test Street',
-  deliveryAddressCity: 'Liverpool',
-  deliveryAddressPostcode: 'L13 3DE',
-  deliveryAddressCountry: 'UK',
-  multiOrderLines: [demoOrderLine1, demoOrderLine1],
-};
-
 @Injectable({
   providedIn: 'root',
 })
 export class OrdersService {
   public api = environment.api;
 
-  orders: BehaviorSubject<IMultiOrder[]> = new BehaviorSubject<any[]>([
-    demoMultiOrder1,
-  ]);
+  orders: BehaviorSubject<IMultiOrder[]> = new BehaviorSubject<any[]>([]);
 
-  deliveries: BehaviorSubject<IMultiOrder[]> = new BehaviorSubject<any[]>([
-    demoMultiOrder1,
-    demoMultiOrder2,
-  ]);
+  deliveries: BehaviorSubject<IMultiOrder[]> = new BehaviorSubject<any[]>([]);
 
   constructor(
     private http: HttpClient,
@@ -75,7 +31,7 @@ export class OrdersService {
     private analyticsService: AnalyticsService
   ) {}
 
-  getOrders() {
+  getOrdersForUser() {
     return this.http.get<any>(this.api + '/api/orders').pipe(
       tap((res) => {
         this.orders.next(res);
@@ -90,7 +46,6 @@ export class OrdersService {
       })
     );
   }
-
 
   getOrder(id: string) {
     return this.http.get<IOrder>(this.api + '/api/orders/' + id);
@@ -110,14 +65,14 @@ export class OrdersService {
       environment.api + '/api/orders/payment-intent',
       {
         dropUuids: dropUuids,
-        orderTotal: orderTotal
+        orderTotal: orderTotal,
       }
     );
   }
 
   createOrder(
     createMultiOrderObj: ICreateMultiOrder,
-    orderTotal: number,
+    orderTotal: number
   ): Observable<IOrder[]> {
     return this.http
       .post<IOrder[]>(this.api + '/api/orders', createMultiOrderObj)

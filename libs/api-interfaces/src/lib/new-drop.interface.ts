@@ -4,6 +4,7 @@ export interface INewDrop {
   description: string;
   price: string;
   qty_available: string;
+  itemCode: string;
   size?: string;
   ingredients: string;
   age_restricted: boolean;

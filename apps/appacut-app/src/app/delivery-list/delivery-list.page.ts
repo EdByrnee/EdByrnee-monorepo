@@ -22,7 +22,7 @@ export class DeliveryListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.ordersService.getOrders().subscribe();
+    this.ordersService.getDeliveries().subscribe();
   }
 
   viewOrder(orderUuid: string) {

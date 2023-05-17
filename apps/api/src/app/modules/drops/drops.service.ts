@@ -217,6 +217,7 @@ export class DropService {
     newDrop.createdAt = new Date();
     newDrop.updatedAt = new Date();
     newDrop.makerUuid = makerUuid;
+    newDrop.itemCode = drop.itemCode;
 
     // Delivery info
     newDrop.localDeliveryEnabled = drop.localDeliveryEnabled;

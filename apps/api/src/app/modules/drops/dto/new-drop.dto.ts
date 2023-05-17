@@ -112,6 +112,10 @@ export class NewDropDto implements INewDrop {
   @IsNumber()
   @IsOptional()
   localDeliveryRadius?: number;
+
+  @IsString()
+  @IsNotEmpty()
+  itemCode: string;
 }
 
 export class CreateDropDto {

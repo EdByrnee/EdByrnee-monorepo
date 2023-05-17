@@ -35,6 +35,7 @@ export class NewDropPage implements OnInit {
     description: new FormControl<string | null>(null, Validators.required),
     price: new FormControl<number | null>(null, Validators.required),
     qty_available: new FormControl<number | null>(null, Validators.required),
+    itemCode: new FormControl<string | null>(null),
   });
 
   get photoFormValid() {

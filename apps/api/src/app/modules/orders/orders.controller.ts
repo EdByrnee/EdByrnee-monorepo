@@ -36,6 +36,24 @@ export class OrdersController {
     private uow: SequelizeUow
   ) {}
 
+  @ApiOperation({ summary: 'Get all orders' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Get('/deliveries')
+  async getAllDeliveries(@User() user: RequestUser): Promise<MultiOrder[]> {
+    return await this.uow.execute(async () => {
+      return await this.orderService.getAllDeliveries();
+    });
+  }
+
+  @ApiOperation({ summary: 'Get all orders' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Get('/')
+  async getAllOrders(@User() user: RequestUser): Promise<MultiOrder[]> {
+    return await this.uow.execute(async () => {
+      return await this.orderService.getAllForUser(user.uuid);
+    });
+  }
+
   @ApiOperation({ summary: 'Create a new order' })
   @ApiResponse({ status: 200, description: 'Success' })
   @Post('/')
@@ -106,24 +124,6 @@ export class OrdersController {
   ): Promise<void> {
     return await this.uow.execute(async () => {
       return await this.orderService.updateOrderStatus(uuid, body.order_status);
-    });
-  }
-
-  @ApiOperation({ summary: 'Get all orders' })
-  @ApiResponse({ status: 200, description: 'Success' })
-  @Get('/')
-  async getAllOrders(@User() user: RequestUser): Promise<MultiOrder[]> {
-    return await this.uow.execute(async () => {
-      return await this.orderService.getAllForUser(user.uuid);
-    });
-  }
-
-  @ApiOperation({ summary: 'Get all orders' })
-  @ApiResponse({ status: 200, description: 'Success' })
-  @Get('/')
-  async getAllDeliveries(@User() user: RequestUser): Promise<MultiOrder[]> {
-    return await this.uow.execute(async () => {
-      return await this.orderService.getAllDeliveries()
     });
   }
 }

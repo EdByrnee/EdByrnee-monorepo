@@ -4,7 +4,6 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { IMultiOrder, IOrder, OrderStatus } from '@shoppr-monorepo/api-interfaces';
 import { AuthService } from '../../core/auth';
 import { OrdersService } from '../../core/orders';
-import { demoMultiOrder1 } from '../../core/orders';
 @Component({
   selector: 'shoppr-monorepo-view-order',
   templateUrl: './view-order.page.html',
@@ -32,18 +31,16 @@ export class ViewOrderPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.orderService.getOrder(this.uuid).subscribe(
-    //   (order) => {
-    //     this.order = order;
-    //     this.loading = false;
-    //   },
-    //   (err) => {
-    //     this.error = true;
-    //     this.loading = false;
-    //   }
-    // );
-    this.order = demoMultiOrder1;
-    this.loading = false;
+    this.orderService.getOrder(this.uuid).subscribe(
+      (order) => {
+        this.order = order;
+        this.loading = false;
+      },
+      (err) => {
+        this.error = true;
+        this.loading = false;
+      }
+    );
   }
 
   async updateOrderStatus(status: OrderStatus) {

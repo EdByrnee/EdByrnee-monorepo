@@ -32,7 +32,7 @@ export class ListOrdersPage implements OnInit {
     }
 
   ngOnInit() {
-    this.ordersService.getOrders().subscribe();
+    this.ordersService.getOrdersForUser().subscribe();
   }
 
   viewOrder(orderUuid: string){

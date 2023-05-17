@@ -13,6 +13,11 @@ const routes: Routes = [
           import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
       },
       {
+        path: 'new-drop',
+        loadChildren: () =>
+          import('../new-drop/new-drop.module').then((m) => m.NewDropPageModule),
+      },
+      {
         path: 'list-orders',
         loadChildren: () =>
           import('../new-drop/new-drop.module').then((m) => m.NewDropPageModule),

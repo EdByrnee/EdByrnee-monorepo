@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { IRepositoryPort } from '../../core/database/ports/repository-port';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { MULTI_ORDER_REPOSITORY } from './orders.providers';
+import { MULTI_ORDER_LINES, MULTI_ORDER_REPOSITORY } from './orders.providers';
 import { InjectStripe } from 'nestjs-stripe';
 import Stripe from 'stripe';
 import { Drop } from '../drops/entities/drop.entity';
@@ -22,7 +22,7 @@ export class OrderService {
   constructor(
     @Inject(MULTI_ORDER_REPOSITORY)
     private readonly orderRepo: IRepositoryPort<MultiOrder>,
-    @Inject(MULTI_ORDER_REPOSITORY)
+    @Inject(MULTI_ORDER_LINES)
     private readonly multiOrderLineRepo: IRepositoryPort<MultiOrderLine>,
     @InjectStripe() private readonly stripeClient: Stripe
   ) {}
@@ -69,7 +69,7 @@ export class OrderService {
     for (const drop of drops) {
       total += drop.price;
     }
-    Logger.log(`Calculating multi order total ${total}`)
+    Logger.log(`Calculating multi order total ${total}`);
     return total + deliveryCost;
   }
 
