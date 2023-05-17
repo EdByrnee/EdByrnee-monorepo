@@ -26,7 +26,7 @@ export class MultiOrder extends Model<MultiOrder> {
   order_total: number;
 
   @Column({
-    type: DataType.ENUM('OPEN', 'CLOSED'),
+    type: DataType.ENUM('OPEN','ASSIGNED_TO_DRIVER', 'CLOSED'),
     allowNull: false,
   })
   order_status: OrderStatus;

@@ -12,7 +12,7 @@ export class CreateMultiOrderDto implements ICreateMultiOrder {
   deliveryMethod: DeliveryMethod;
 
   @IsNotEmpty()
-  dropUuids: string;
+  dropUuids: string[];
 
   @Optional()
   qty?: number;

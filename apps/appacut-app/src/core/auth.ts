@@ -31,7 +31,7 @@ export class AuthService {
     string | null
   >(this.getPostcode());
 
-  public demoMode$ = new BehaviorSubject<boolean>(false);
+  public demoMode$ = new BehaviorSubject<boolean>(true);
 
   constructor(
     private navController: NavController,

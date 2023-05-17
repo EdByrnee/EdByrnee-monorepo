@@ -103,7 +103,7 @@ export class CheckoutPage implements OnInit {
     this.analyticsService.logEvent({
       name: 'checkout_view',
       params: {
-        drop_id: this.drop.uuid,
+        // drop_ids: this.drop.uuid,
       }
     })
     this.paymentService.isApplePayAvailable();
