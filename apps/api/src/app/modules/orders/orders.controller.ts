@@ -50,6 +50,8 @@ export class OrdersController {
           uuid: body.dropUuids,
         });
 
+        Logger.log(`Successfully returned ${drops.length} drops`);
+
         for (const drop of drops) {
           if (drop.qty_available <= 0) {
             throw new UnprocessableEntityException('Drop is out of stock');
@@ -66,6 +68,7 @@ export class OrdersController {
           multiOrder
         );
       } catch (err) {
+        Logger.error(err);
         throw new HttpException('Error creating order', 500);
       }
     });

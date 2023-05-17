@@ -61,23 +61,19 @@ export class CheckoutPage implements OnInit {
 
     try {
       if (isDemo === 'true') {
-        console.log(`Presenting apply pay in non-demo mode`);
+        console.log(`Presenting apply pay in -demo mode`);
         await this.paymentService.demoPay(
           newOrderUuid,
           this.orderTotal,
           this.basketService.getDropUuids(),
-          this.deliveryMethod,
-          this.drop.makerUuid
         );
       } else {
-        console.log(`Presenting apply pay in demo mode`);
+        console.log(`Presenting apply pay in non-demo mode`);
         this.loadingApplePay = true;
         await this.paymentService.presentApplePay(
           newOrderUuid,
           this.orderTotal,
           this.basketService.getDropUuids(),
-          this.deliveryMethod,
-          this.drop.makerUuid
         );
         this.loadingApplePay = false;
       }

@@ -38,9 +38,7 @@ export class PaymentService {
   public async demoPay(
     newOrderUuid: string,
     orderTotal: number,
-    dropUuids: string[],
-    deliveryMethod: DeliveryMethod,
-    sellerUuid: string
+    dropUuids: string[]
   ): Promise<void> {
     const creatingOrder = await this.loadingController.create({
       message: 'Creating order...',
@@ -50,17 +48,14 @@ export class PaymentService {
     console.log(`Demo pay transaction approved for ${orderTotal}`);
     const createMultiOrderObj: ICreateMultiOrder = this.getDemoCreateOrderObj(
       newOrderUuid,
-      deliveryMethod,
-      dropUuids,
+      dropUuids
     );
 
     // Happy path
     return this.createOrder(
       creatingOrder,
       createMultiOrderObj,
-      orderTotal,
-      deliveryMethod,
-      sellerUuid
+      orderTotal
     ).then((ok) => {
       this.clearModalsAndNavigate(newOrderUuid);
       this.fireConfetti1();
@@ -70,9 +65,7 @@ export class PaymentService {
   public async presentApplePay(
     newOrderUuid: string,
     orderTotal: number,
-    dropUuids: string[],
-    deliveryMethod: DeliveryMethod,
-    sellerUuid: string
+    dropUuids: string[]
   ): Promise<void> {
     if (this.isApplePayAvailable() === undefined) return; // disable to use Google Pay return;
 
@@ -102,7 +95,6 @@ export class PaymentService {
       console.log(this.contactDetails);
       const createMultiOrderObj: ICreateMultiOrder = {
         uuid: newOrderUuid,
-        deliveryMethod: deliveryMethod,
         dropUuids: dropUuids,
         stripeToken: 'NOT_IMPLEMENTED',
         deliveryAddressLine1: this.contactDetails.street || '',
@@ -118,9 +110,7 @@ export class PaymentService {
       return this.createOrder(
         creatingOrder,
         createMultiOrderObj,
-        orderTotal,
-        deliveryMethod,
-        sellerUuid
+        orderTotal
       ).then((ok) => {
         this.clearModalsAndNavigate(newOrderUuid);
         this.fireConfetti1();
@@ -131,8 +121,7 @@ export class PaymentService {
     // Connect to your backend endpoint, and get paymentIntent.
     const paymentIntent = await this.getPaymentIntent(
       orderTotal,
-      dropUuids,
-      deliveryMethod
+      dropUuids
     );
 
     console.log(`Presenting Apple Pay to user`);
@@ -147,11 +136,10 @@ export class PaymentService {
 
   private async getPaymentIntent(
     orderTotal: number,
-    dropUuids: string[],
-    deliveryMethod: DeliveryMethod
+    dropUuids: string[]
   ): Promise<{ client_secret: string }> {
     return this.ordersService
-      .getPaymentIntent(orderTotal, dropUuids, deliveryMethod)
+      .getPaymentIntent(orderTotal, dropUuids)
       .pipe(first())
       .toPromise(Promise) as Promise<{ client_secret: string }>;
   }
@@ -183,12 +171,10 @@ export class PaymentService {
 
   private getDemoCreateOrderObj(
     newOrderUuid: string,
-    deliveryMethod: DeliveryMethod,
     dropUuids: string[]
   ) {
     const createOrderObj: ICreateMultiOrder = {
       uuid: newOrderUuid,
-      deliveryMethod: deliveryMethod,
       dropUuids: dropUuids,
       stripeToken: 'NOT_IMPLEMENTED',
       deliveryAddressLine1: 'Demo address Line 1',
@@ -203,12 +189,10 @@ export class PaymentService {
   private createOrder(
     creatingOrder: HTMLIonLoadingElement,
     createMultiOrderObj: ICreateMultiOrder,
-    orderTotal: number,
-    deliveryMethod: DeliveryMethod,
-    sellerUuid: string
+    orderTotal: number
   ) {
     return this.ordersService
-      .createOrder(createMultiOrderObj, orderTotal, deliveryMethod)
+      .createOrder(createMultiOrderObj, orderTotal)
       .toPromise(Promise)
       .then((ok) => {
         return creatingOrder.dismiss().then((ok) => {

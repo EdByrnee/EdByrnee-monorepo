@@ -15,6 +15,7 @@ import { UserProfile } from '../auth/entities/user-profile.entity';
 import { CreateMultiOrderDto } from './dto/create-multi-order.dto';
 import { MultiOrder } from './entity/multi-order.entity';
 import { MultiOrderLine } from './entity/multi-order-line';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class OrderService {
@@ -68,6 +69,7 @@ export class OrderService {
     for (const drop of drops) {
       total += drop.price;
     }
+    Logger.log(`Calculating multi order total ${total}`)
     return total + deliveryCost;
   }
 
@@ -79,12 +81,14 @@ export class OrderService {
     Logger.log(`Creating order`, OrderService.name);
     const newOrder = new MultiOrder();
 
+    const deliveryMethod: DeliveryMethod = 'LOCAL_DELIVERY';
+
     newOrder.uuid = order.uuid;
     newOrder.order_total = this.calculateMultiOrderTotal(0, drops);
     newOrder.order_status = 'OPEN';
     newOrder.buyerUuid = currentUserUuid;
 
-    switch (order.deliveryMethod) {
+    switch (deliveryMethod) {
       case 'LOCAL_DELIVERY':
         newOrder.deliveryMethod = 'LOCAL_DELIVERY';
         newOrder.deliveryAddressLine1 = order.deliveryAddressLine1;
@@ -106,6 +110,7 @@ export class OrderService {
       // Create order lines
       const orderLines = drops.map((drop) => {
         const orderLine = new MultiOrderLine();
+        orderLine.uuid = uuid.v4();
         orderLine.unit_price = drop.price;
         orderLine.quantity = 1;
         orderLine.line_total = orderLine.unit_price * orderLine.quantity;

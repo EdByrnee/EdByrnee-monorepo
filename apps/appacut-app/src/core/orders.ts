@@ -104,15 +104,13 @@ export class OrdersService {
 
   getPaymentIntent(
     orderTotal: number,
-    dropUuids: string[],
-    deliveryMethod: DeliveryMethod
+    dropUuids: string[]
   ): Observable<Stripe.Response<Stripe.PaymentIntent>> {
     return this.http.post<Stripe.Response<Stripe.PaymentIntent>>(
       environment.api + '/api/orders/payment-intent',
       {
         dropUuids: dropUuids,
-        orderTotal: orderTotal,
-        deliveryMethod: deliveryMethod,
+        orderTotal: orderTotal
       }
     );
   }
@@ -120,15 +118,14 @@ export class OrdersService {
   createOrder(
     createMultiOrderObj: ICreateMultiOrder,
     orderTotal: number,
-    deliveryMethod: DeliveryMethod
   ): Observable<IOrder[]> {
     return this.http
-      .post<IOrder[]>(this.api + '/api/orders/multi', createMultiOrderObj)
+      .post<IOrder[]>(this.api + '/api/orders', createMultiOrderObj)
       .pipe(
         tap((res: any) => {
           const newMultiOrder: IMultiOrder = {
             uuid: createMultiOrderObj.uuid,
-            deliveryMethod: createMultiOrderObj.deliveryMethod,
+            deliveryMethod: 'LOCAL_DELIVERY',
             order_total: orderTotal,
             order_status: 'OPEN',
             createdAt: new Date(),

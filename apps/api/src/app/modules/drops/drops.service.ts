@@ -28,7 +28,9 @@ export class DropService {
 
   
   async getDrops(filter?: any): Promise<Drop[]> {
-    return this.dropRepository.findAll(filter || {});
+    return this.dropRepository.findAll({
+      where: (filter || {})
+    });
   }
 
   async getDropsByMaker(userUuid: string, makerId: string): Promise<Drop[]> {

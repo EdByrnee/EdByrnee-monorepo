@@ -2,7 +2,6 @@ import { DeliveryMethod } from "./interface/delivery-method.interface";
 
 export interface ICreateMultiOrder {
   uuid: string;
-  deliveryMethod: DeliveryMethod;
   dropUuids: string[];
   qty?: number;
   stripeToken: string;

@@ -8,10 +8,6 @@ export class CreateMultiOrderDto implements ICreateMultiOrder {
   uuid: string;
 
   @IsNotEmpty()
-  @IsString()
-  deliveryMethod: DeliveryMethod;
-
-  @IsNotEmpty()
   dropUuids: string[];
 
   @Optional()
