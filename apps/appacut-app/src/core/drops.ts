@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { DropStatus, IDrop, IDropFeed, IUpdateDrop } from '@shoppr-monorepo/api-interfaces';
+import {
+  DropStatus,
+  ICreateDropItem,
+  IDrop,
+  IDropFeed,
+  IUpdateDrop,
+} from '@shoppr-monorepo/api-interfaces';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -49,14 +55,17 @@ export class DropsService {
     collectionAddressPostcode: new FormControl(null, [Validators.required]),
   });
 
-
   constructor(private http: HttpClient) {
     this.localDeliveryForm.disable();
     this.nationalDeliveryForm.disable();
     this.collectionForm.disable();
 
     this.localDeliveryForm.valueChanges.subscribe((res) => {
-      if (res.localDeliveryLat && res.localDeliveryLng && res.localDeliveryRadius) {
+      if (
+        res.localDeliveryLat &&
+        res.localDeliveryLng &&
+        res.localDeliveryRadius
+      ) {
         this.isLocalDeliveryAreaSet = true;
       } else {
         this.isLocalDeliveryAreaSet = false;
@@ -65,18 +74,20 @@ export class DropsService {
   }
 
   getDrops() {
-    console.log(`getDrops()`)
+    console.log(`getDrops()`);
     return this.http.get<IDrop[]>(this.api + '/api/drops').pipe(
       tap((res: IDrop[]) => {
-        console.log(`Here are all the drops`)
+        console.log(`Here are all the drops`);
         console.log(res);
         this.allDrops$.next(res);
       })
-    )
+    );
   }
 
   updateStatus(uuid: string, status: DropStatus) {
-    return this.http.patch(this.api + '/api/drops/' + uuid + '/status', { status });
+    return this.http.patch(this.api + '/api/drops/' + uuid + '/status', {
+      status,
+    });
   }
 
   getDropsByMaker(id: string): Observable<IDrop[]> {
@@ -95,7 +106,11 @@ export class DropsService {
     );
   }
 
-  replenishStock(dropUuid: string, quantity: number) {
+  replenishWareshouseStock(dropUuid: string, newDropItems: ICreateDropItem[]) {
+    return this.http.patch(
+      this.api + '/api/drops/' + dropUuid + '/replenish-warehouse',
+      newDropItems
+    );
   }
 
   private convertFileToBlob(file: File): Blob {
@@ -123,7 +138,7 @@ export class DropsService {
   updateDrop(
     updates: IUpdateDrop,
     dropUuid: string,
-    newImages: Blob[],
+    newImages: Blob[]
   ): Observable<any> {
     // Attach the photo array to the create drop request
     const formData = new FormData();
@@ -135,9 +150,14 @@ export class DropsService {
     // Create and send the request
     console.log(`Loggin formData`);
     console.log(formData);
-    const req = new HttpRequest('PATCH', this.api + '/api/drops/' + dropUuid, formData, {
-      // reportProgress: true,
-    });
+    const req = new HttpRequest(
+      'PATCH',
+      this.api + '/api/drops/' + dropUuid,
+      formData,
+      {
+        // reportProgress: true,
+      }
+    );
     return this.http.request(req);
   }
 

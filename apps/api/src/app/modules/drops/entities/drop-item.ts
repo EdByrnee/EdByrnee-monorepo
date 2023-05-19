@@ -27,15 +27,28 @@ export class DropItem extends Model<DropItem> {
   uuid: string;
 
   @Column({
-    type: DataType.STRING,
-    allowNull: false,
+    type: DataType.DATE,
+    allowNull: true,
   })
   expiration_date: string;
+
+  /* Drop Item is either attached to a location or a driver */
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  })
+  withDriver: boolean;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  driverUuid: string;
 
   @ForeignKey(() => DropItemLocation)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
+    allowNull: true,
   })
   locationId: number;
 

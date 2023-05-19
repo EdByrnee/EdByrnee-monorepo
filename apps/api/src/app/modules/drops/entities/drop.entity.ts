@@ -2,6 +2,7 @@ import { DropStatus } from '@shoppr-monorepo/api-interfaces';
 import { Table, Model, Column, DataType, HasMany } from 'sequelize-typescript';
 import { DropPhoto } from './drop-photo.entity';
 import { DropItem } from './drop-item';
+// import { DropItemLocationSummary } from './drop-item-location-summary';
 
 @Table({ tableName: 'Drops', timestamps: true })
 export class Drop extends Model<Drop> {
@@ -184,4 +185,8 @@ export class Drop extends Model<Drop> {
 
   @HasMany(() => DropItem, 'dropId')
   dropItems: DropItem[];
+
+
+  // @HasMany(() => DropItemLocationSummary, 'dropId')
+  // locationSummaries: DropItemLocationSummary[];
 }

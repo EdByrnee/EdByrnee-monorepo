@@ -1,4 +1,4 @@
 export interface ICreateDropItem {
   uuid: string;
-  expirationDate: string;
+  expirationDate: string | null;
 }

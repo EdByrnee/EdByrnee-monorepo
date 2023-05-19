@@ -8,11 +8,19 @@ export const DROP_REPOSITORY = 'DROP_REPOSITORY';
 export const DROP_PHOTO_REPOSITORY = 'DROP_PHOTO_REPOSITORY';
 export const DROP_ITEM_REPO = 'DROP_ITEM_REPO';
 export const DROP_ITEM_LOCATION_REPO = 'DROP_ITEM_LOCATION_REPO';
+// export const DROP_ITEM_LOACTION_SUMMARY_REPO = 'DROP_ITEM_LOACTION_SUMMARY_REPO';
 
 export const dropRepoProviders = [
   {
     provide: DROP_REPOSITORY,
-    useFactory: () => new SequelizeRepo<Drop>(Drop, [DropPhoto]),
+    useFactory: () =>
+      new SequelizeRepo<Drop>(Drop, [
+        DropPhoto,
+        {
+          model: DropItem,
+          include: [DropItemLocation],
+        },
+      ]),
   },
   {
     provide: DROP_PHOTO_REPOSITORY,
@@ -26,4 +34,8 @@ export const dropRepoProviders = [
     provide: DROP_ITEM_LOCATION_REPO,
     useFactory: () => new SequelizeRepo<DropItemLocation>(DropItemLocation),
   },
+  // {
+  //   provide: DROP_ITEM_LOACTION_SUMMARY_REPO,
+  //   useFactory: () => new SequelizeRepo<DropItemLocation>(DropItemLocation),
+  // }
 ];

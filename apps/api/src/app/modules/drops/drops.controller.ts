@@ -29,6 +29,7 @@ import { Public } from '../auth/utils/no-auth.attribute';
 import { UpdateDropDto } from './dto/update-drop.dto';
 import { SequelizeUow } from '../../core/database/infra/sequelize-uow';
 import { AuthService } from '../auth/auth.service';
+import { CreateDropItemDto } from './dto/new-drop-items';
 
 @ApiTags('Authentication')
 @Controller('/drops')
@@ -41,6 +42,19 @@ export class DropsController {
     private uow: SequelizeUow,
     private authService: AuthService
   ) {}
+
+  @Patch('/:dropUuid/replenish-warehouse/')
+  async replenishDropQuantityToWarehouse(
+    @Param('dropUuid') dropUuid: string,
+    @Body() replenishDropQuantityToWarehouseDto: CreateDropItemDto[]
+  ) {
+    return await this.uow.execute(async () => {
+      return await this.dropService.replenishDropQuantityToWarehouse(
+        dropUuid,
+        replenishDropQuantityToWarehouseDto
+      );
+    });
+  }
 
   @Get('/maker/:makerId')
   async getDropsByMaker(

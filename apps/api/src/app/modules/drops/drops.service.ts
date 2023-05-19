@@ -213,20 +213,20 @@ export class DropService {
     newDropItems: ICreateDropItem[]
   ) {
     const drop: Drop = await this.dropRepository.get(dropUuid);
-    const warehouseUuid = 'warehouseUuid';
+    const warehouseLocation: DropItemLocation = await this.dropItemLocationRepository.findOne({
+        location_name: 'Warehouse',
+    });
 
     // Replenish summary data
-    drop.qty_available = drop.qty_available + dropItemUuids.length;
+    drop.qty_available = drop.qty_available + newDropItems.length;
 
-    // We also need to account for this in stock levels
-    const warehouseDropItemLocation: DropItemLocation =
-      await this.dropItemLocationRepository.get(warehouseUuid);
     const dropItems = newDropItems.map((newDropItem) => {
       const dropItem = new DropItem();
       dropItem.uuid = newDropItem.uuid;
       dropItem.dropId = drop.id;
-      dropItem.expiration_date = newDropItem.expirationDate;
-      dropItem.locationId = warehouseDropItemLocation.id;
+      dropItem.expiration_date = newDropItem.expirationDate || null;
+      dropItem.locationId = warehouseLocation.id;
+      dropItem.withDriver = false;
       dropItem.createdAt = new Date();
       dropItem.updatedAt = new Date();
       return dropItem;
@@ -237,8 +237,16 @@ export class DropService {
     await this.dropRepository.update(drop);
   }
 
-  // async transferDropLocation(dropItemUuid: string, newLocationUuid: string){
-  // }
+  async transferDropLocation(dropItemUuid: string, newLocationUuid: string) {
+    const dropItem: DropItem = await this.dropItemRepository.get(dropItemUuid);
+    const newLocation: DropItemLocation =
+      await this.dropItemLocationRepository.get(newLocationUuid);
+
+    dropItem.locationId = newLocation.id;
+    await this.dropItemRepository.update(dropItem);
+
+    // Update summary totals
+  }
 
   async createDrop(
     drop: Partial<Drop>,

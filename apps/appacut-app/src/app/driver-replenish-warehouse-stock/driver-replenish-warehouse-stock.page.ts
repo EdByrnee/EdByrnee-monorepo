@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { IDrop } from '@shoppr-monorepo/api-interfaces';
+import { AlertController, ModalController } from '@ionic/angular';
+import { ICreateDropItem, IDrop } from '@shoppr-monorepo/api-interfaces';
 import { DropsService } from '../../core/drops';
 
 @Component({
@@ -9,24 +9,52 @@ import { DropsService } from '../../core/drops';
   styleUrls: ['./driver-replenish-warehouse-stock.page.scss'],
 })
 export class DriverReplenishWarehouseStockPage implements OnInit {
-
   drop: IDrop;
 
   quantity = 1;
-  
+
   constructor(
     private modalController: ModalController,
-    private dropService: DropsService
-    ) {}
+    private dropService: DropsService,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {}
 
-  dismiss(){
+  dismiss() {
     this.modalController.dismiss();
   }
 
-  confirm(){
-    this.dropService.replenishStock(this.drop.uuid, this.quantity);
+  confirm() {
+    // Generate
+    const newDropItems: ICreateDropItem[] | any[] = [];
+
+    for (let i = 0; i < this.quantity; i++) {
+      newDropItems.push({
+        uuid: this.drop.uuid,
+        expirationDate: null,
+      });
+    }
+
+    this.dropService.replenishWareshouseStock(this.drop.uuid, newDropItems).subscribe(async (ok)=>{
+
+      const alert = await this.alertController.create({
+        header: 'Success Replenishing Warehouse Stock',
+        message: 'Perfect !',
+        buttons: ['OK'],
+      });
+      await alert.present();
+
+    }, async (err)=>{
+
+      const alert = await this.alertController.create({
+        header: 'Error Replenishing Warehouse Stock',
+        message: err.error.message,
+        buttons: ['OK'],
+      });
+      await alert.present();
+
+    });
     this.dismiss();
   }
 }

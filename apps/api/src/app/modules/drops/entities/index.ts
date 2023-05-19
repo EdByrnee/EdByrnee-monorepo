@@ -8,4 +8,4 @@ export const DROP_ENTITIES = [
   DropPhoto,
   DropItem,
   DropItemLocation
-];
+]
