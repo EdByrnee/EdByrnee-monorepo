@@ -16,7 +16,6 @@
   </div>
 
   <ion-list inset="true">
-
     <ion-item>
       <ion-label>Order Date</ion-label>
       <ion-label>
@@ -51,22 +50,21 @@
     </ion-item>
   </ion-list>
 
-
-  <div class="ion-padding">
-    <h4>Items</h4>
-  </div>
-
   <ion-list inset="true">
 
+    <ion-list-header>
+      <ion-label>Items For Order</ion-label>
+    </ion-list-header>
+
+
     <ion-item *ngFor="let orderLine of order.multiOrderLines">
-      <ion-label>Item Name</ion-label>
       <ion-label>
         <h2>
+          {{ orderLine.quantity }} x 
           {{ orderLine.line_title }}
         </h2>
       </ion-label>
     </ion-item>
-
   </ion-list>
 
   <ion-list

@@ -8,7 +8,7 @@ export const MULTI_ORDER_LINES = 'MULTI_ORDER_LINES';
 export const ordersProviders = [
   {
     provide: MULTI_ORDER_REPOSITORY,
-    useFactory: () => new SequelizeRepo<MultiOrder>(MultiOrder),
+    useFactory: () => new SequelizeRepo<MultiOrder>(MultiOrder, [MultiOrderLine]),
   },
   {
     provide: MULTI_ORDER_LINES,

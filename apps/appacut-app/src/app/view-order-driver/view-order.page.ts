@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
-import { IMultiOrder, IOrder, OrderStatus } from '@shoppr-monorepo/api-interfaces';
+import {
+  IMultiOrder,
+  IOrder,
+  OrderStatus,
+} from '@shoppr-monorepo/api-interfaces';
 import { AuthService } from '../../core/auth';
 import { OrdersService } from '../../core/orders';
+import { DropItemsService } from '../../core/drop-items';
 @Component({
   selector: 'shoppr-monorepo-view-order',
   templateUrl: './view-order.page.html',
@@ -24,7 +29,8 @@ export class ViewOrderPage implements OnInit {
     private orderService: OrdersService,
     private authService: AuthService,
     private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private dropItemService: DropItemsService
   ) {
     this.uuid = this.route.snapshot.paramMap.get('id') || '';
     this.currentUserUuid = this.authService.currentUser$.value?.uuid || '';
@@ -41,6 +47,10 @@ export class ViewOrderPage implements OnInit {
         this.loading = false;
       }
     );
+
+    this.dropItemService.getDropItemsForCurrentUser().subscribe((ok) => {
+      // Populate IDrop with atHand here so show how many of a given item are currently availabel to a dliver
+    });
   }
 
   async updateOrderStatus(status: OrderStatus) {

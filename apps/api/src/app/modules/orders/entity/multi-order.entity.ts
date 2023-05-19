@@ -106,5 +106,5 @@ export class MultiOrder extends Model<MultiOrder> {
 
   // Has Many order lines
   @HasMany(() => MultiOrderLine, 'multiOrderId')
-  order_lines: MultiOrderLine[];
+  multiOrderLines: MultiOrderLine[];
 }
