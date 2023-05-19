@@ -15,12 +15,9 @@
   <h4>You have selected</h4>
 
   <ion-list [inset]="true">
-    <ion-item *ngFor="let item of (allDrops$ | async)">
+    <ion-item *ngIf="selectedDrop">
       <ion-label>
-        <h4>
-          ({{ item.itemCode }})
-          {{item.name}}
-        </h4>
+        <h4>({{ selectedDrop.itemCode }}) {{selectedDrop.name}}</h4>
         <p class="primary">You have: 0</p>
         <p>All Driver Stock: 0</p>
         <p>Warehouse Stock: 0</p>
@@ -33,10 +30,7 @@
   <ion-list [inset]="true">
     <ion-item *ngFor="let item of (allDrops$ | async)">
       <ion-label>
-        <h4>
-          ({{ item.itemCode }})
-          {{item.name}}
-        </h4>
+        <h4>({{ item.itemCode }}) {{item.name}}</h4>
         <p class="primary">You have: 0</p>
         <p>All Driver Stock: 0</p>
         <p>Warehouse Stock: 0</p>

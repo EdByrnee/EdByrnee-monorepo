@@ -95,6 +95,9 @@ export class DropsService {
     );
   }
 
+  replenishStock(dropUuid: string, quantity: number) {
+  }
+
   private convertFileToBlob(file: File): Blob {
     const fileBlob = new Blob([file], { type: file.type });
     return fileBlob;

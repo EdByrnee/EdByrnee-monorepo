@@ -3,12 +3,14 @@ import {
   Model,
   Column,
   DataType,
+  ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
+import { DropItemLocation } from './drop-item-location';
 import { Drop } from './drop.entity';
 
-@Table({ tableName: 'DropInventoryAssignments', timestamps: true })
-export class DropInventoryAssignment extends Model<DropInventoryAssignment> {
+@Table({ tableName: 'DropItems', timestamps: true })
+export class DropItem extends Model<DropItem> {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -25,23 +27,28 @@ export class DropInventoryAssignment extends Model<DropInventoryAssignment> {
   uuid: string;
 
   @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  qty: number;
-
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  dropId: string;
-
-  @BelongsTo(() => Drop, 'dropId')
-  drop: Drop;
-
-  @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  driverUuid: string;
+  expiration_date: string;
+
+  @ForeignKey(() => DropItemLocation)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  locationId: number;
+
+  @BelongsTo(() => DropItemLocation, 'locationId')
+  location: DropItemLocation;
+
+  @ForeignKey(() => Drop)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  dropId: number;
+
+  @BelongsTo(() => Drop, 'dropId')
+  drop: Drop;
 }

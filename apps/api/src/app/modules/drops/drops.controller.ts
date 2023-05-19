@@ -113,12 +113,19 @@ export class DropsController {
         data: (await this.dropService.getPopularDrops()) as any[],
       };
 
-      return [dealsFeed, cookiesFeed, browniesFeed, cakesFeed, drinksFeed, iceCreamFeed];
+      return [
+        dealsFeed,
+        cookiesFeed,
+        browniesFeed,
+        cakesFeed,
+        drinksFeed,
+        iceCreamFeed,
+      ];
     });
   }
 
   // Public so user can see the feed without being logged in
-  @ApiOperation({deprecated: true})
+  @ApiOperation({ deprecated: true })
   @Public()
   @Get('/feed')
   async getDropFeed(): Promise<IDropFeed[]> {

@@ -15,6 +15,8 @@ import { DriverReplenishWarehouseStockPage } from '../driver-replenish-warehouse
 export class DriverInventoryPage implements OnInit {
   allDrops$: Observable<IDrop[]> = this.dropsService.allDrops$;
 
+  selectedDrop:IDrop | null  = null;
+
   constructor(
     private dropsService: DropsService,
     private modalController: ModalController
@@ -22,7 +24,9 @@ export class DriverInventoryPage implements OnInit {
 
   ngOnInit() {
     console.log(`Loading all drops...`)
-    this.dropsService.getDrops().subscribe();
+    this.dropsService.getDrops().subscribe(drops=>{
+      this.selectedDrop = drops[0];
+    });
   }
 
   addDriverInventory() {
@@ -34,7 +38,10 @@ export class DriverInventoryPage implements OnInit {
 
   replenishStock() {
     const driverWarehouseWareshouseStockModal = this.modalController.create({
-      component: DriverReplenishWarehouseStockPage
+      component: DriverReplenishWarehouseStockPage,
+      componentProps: {
+        drop: this.selectedDrop
+      }
     });
     driverWarehouseWareshouseStockModal.then((modal) => modal.present());
   }

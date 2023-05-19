@@ -6,30 +6,39 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { DropStatus, IDrop, IDropFeed } from '@shoppr-monorepo/api-interfaces';
+import { DropStatus, ICreateDropItem } from '@shoppr-monorepo/api-interfaces';
 import { IRepositoryPort } from '../../core/database/ports/repository-port';
-import { DROP_REPOSITORY, DROP_PHOTO_REPOSITORY } from './drops.providers';
+import {
+  DROP_REPOSITORY,
+  DROP_PHOTO_REPOSITORY,
+  DROP_ITEM_REPO,
+  DROP_ITEM_LOCATION_REPO,
+} from './drops.providers';
 import { DropPhoto } from './entities/drop-photo.entity';
 import { Drop } from './entities/drop.entity';
 import * as uuid from 'uuid';
 import { IUploadResult } from '../files/interfaces/upload-result.interface';
 import { Op } from 'sequelize';
-import { DropUpdatesDto, UpdateDropDto } from './dto/update-drop.dto';
+import { DropUpdatesDto } from './dto/update-drop.dto';
+import { DropItemLocation } from './entities/drop-item-location';
+import { DropItem } from './entities/drop-item';
 
 @Injectable()
 export class DropService {
-
   constructor(
+    @Inject(DROP_ITEM_REPO)
+    private readonly dropItemRepository: IRepositoryPort<DropItem>,
+    @Inject(DROP_ITEM_LOCATION_REPO)
+    private readonly dropItemLocationRepository: IRepositoryPort<DropItemLocation>,
     @Inject(DROP_REPOSITORY)
     private readonly dropRepository: IRepositoryPort<Drop>,
     @Inject(DROP_PHOTO_REPOSITORY)
     private readonly dropPhotoRepository: IRepositoryPort<DropPhoto>
   ) {}
 
-  
   async getDrops(filter?: any): Promise<Drop[]> {
     return this.dropRepository.findAll({
-      where: (filter || {})
+      where: filter || {},
     });
   }
 
@@ -198,6 +207,38 @@ export class DropService {
     drop.qty_available = drop.qty_available - quantity;
     await this.dropRepository.update(drop);
   }
+
+  async replenishDropQuantityToWarehouse(
+    dropUuid: string,
+    newDropItems: ICreateDropItem[]
+  ) {
+    const drop: Drop = await this.dropRepository.get(dropUuid);
+    const warehouseUuid = 'warehouseUuid';
+
+    // Replenish summary data
+    drop.qty_available = drop.qty_available + dropItemUuids.length;
+
+    // We also need to account for this in stock levels
+    const warehouseDropItemLocation: DropItemLocation =
+      await this.dropItemLocationRepository.get(warehouseUuid);
+    const dropItems = newDropItems.map((newDropItem) => {
+      const dropItem = new DropItem();
+      dropItem.uuid = newDropItem.uuid;
+      dropItem.dropId = drop.id;
+      dropItem.expiration_date = newDropItem.expirationDate;
+      dropItem.locationId = warehouseDropItemLocation.id;
+      dropItem.createdAt = new Date();
+      dropItem.updatedAt = new Date();
+      return dropItem;
+    });
+
+    // Commit the updates
+    await this.dropItemRepository.bulkCreate(dropItems);
+    await this.dropRepository.update(drop);
+  }
+
+  // async transferDropLocation(dropItemUuid: string, newLocationUuid: string){
+  // }
 
   async createDrop(
     drop: Partial<Drop>,
