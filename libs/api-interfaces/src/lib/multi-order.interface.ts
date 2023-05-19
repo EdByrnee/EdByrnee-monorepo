@@ -20,4 +20,5 @@ export interface IMultiOrder {
   collectionAddressPostcode?: string;
   collectionAddressCountry?: string;
   multiOrderLines?: IMultiOrderLine[];
+  distance?: number;
 }

@@ -14,6 +14,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AuthService } from './auth';
 import Stripe from 'stripe';
 import { AnalyticsService } from './analytics';
+import { MapsService } from './maps.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,8 @@ export class OrdersService {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private mapsService: MapsService
   ) {}
 
   getOrdersForUser() {
@@ -45,6 +47,23 @@ export class OrdersService {
         this.deliveries.next(res);
       })
     );
+  }
+
+  async updateDeliveriesWithDistance() {
+    const currentDeliveries = this.deliveries.getValue();
+
+    for (const delivery of currentDeliveries) {
+      const distance =
+        await this.mapsService.getDistanceBetweenCurrentLocationAndPostcode(
+          delivery.deliveryAddressPostcode as string
+        );
+
+      delivery.distance = distance / 1000;
+      // Round to 1 dp 
+      delivery.distance = Math.round(delivery.distance * 10) / 10;
+    }
+
+    this.deliveries.next(currentDeliveries);
   }
 
   getOrder(id: string) {

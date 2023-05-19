@@ -154,17 +154,6 @@ export class DropViewPage implements OnInit {
       this.userProfile$ = this.authService.getUserProfile(drop.makerUuid);
       this.drop = drop;
 
-      // Set local delivery map options
-      this.localDeliveryMapOptions = this.mappingService.buildMapOptions(drop);
-      this.localDeliveryCircleOptions =
-        this.mappingService.buildLocalDeliveryCircle(drop);
-
-      // Set collection map options if collection is enabled and local delivery is disabled
-      // Call this async so it will show map if eventually it loads
-      if (this.drop.localDeliveryEnabled) this.showLocalDeliveryMap = true;
-      else if (this.drop.collectionEnabled)
-        this.buildCollectionMapOptions(drop);
-
       // Finish up
       this.loading = false;
     });

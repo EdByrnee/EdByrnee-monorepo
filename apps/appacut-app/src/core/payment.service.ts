@@ -177,11 +177,11 @@ export class PaymentService {
       uuid: newOrderUuid,
       dropUuids: dropUuids,
       stripeToken: 'NOT_IMPLEMENTED',
-      deliveryAddressLine1: 'Demo address Line 1',
+      deliveryAddressLine1: '26 Kingscourt Road',
       deliveryAddressLine2: '',
-      deliveryAddressCity: 'Demo City' || '',
-      deliveryAddressPostcode: 'this.contactDetails.postalCode' || '',
-      deliveryAddressCountry: 'this.contactDetails.country' || '',
+      deliveryAddressCity: 'Liverpool',
+      deliveryAddressPostcode: 'L12 8RD',
+      deliveryAddressCountry: 'England'
     };
     return createOrderObj;
   }

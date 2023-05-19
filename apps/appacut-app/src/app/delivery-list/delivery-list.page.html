@@ -3,12 +3,26 @@
     <ion-buttons>
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Orders</ion-title>
+    <ion-title>Deliveries</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
+
+  <div class="map">
+    <google-map
+      class="delivery-map"
+      [options]="deliveryMapOptions"
+      [width]="'100%'"
+      [height]="'100%'"
+    >
+      <!-- <map-circle [options]="localDeliveryCircleOptions"></map-circle> -->
+    </google-map>
+  </div>
+
+
+
+  <!-- <div class="ion-padding">
     <ion-segment [(ngModel)]="orderFilter">
       <ion-segment-button [value]="'sales'">
         <ion-label>Open</ion-label>
@@ -17,12 +31,12 @@
         <ion-label>Complete</ion-label>
       </ion-segment-button>
     </ion-segment>
-  </div>
+  </div> -->
 
   <div class="sales" *ngIf="orderFilter === 'sales'" style="margin-top: -24px">
     <div class="ion-padding">
       <h2>Open Deliveries</h2>
-      <p>Please assign a deliery</p>
+      <p>Please assign a delivery</p>
       <p>
         <!-- <ion-text color="warning">
           ({{ (openSales$ | async)?.length }})
@@ -42,7 +56,7 @@
         button
       >
         <ion-label>
-          <h2>{{ order.deliveryAddressPostcode }}, 1.5 miles</h2>
+          <h2>{{ order.deliveryAddressPostcode }}, {{ order.distance }} miles</h2>
           <p>
             5 minutes ago
             <small> {{ order.createdAt | date: 'dd MMM HH:mm' }}</small>

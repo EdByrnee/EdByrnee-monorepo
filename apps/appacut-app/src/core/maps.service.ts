@@ -50,6 +50,41 @@ export class MapsService {
     };
   }
 
+  async getDistanceBetweenCurrentLocationAndPostcode(postcode: string){
+    const currentLocation = await this.getCurrentLocation();
+
+    const geoCode: any = (await this.geocode(postcode));
+
+    const distance = await this.getDistanceBetweenTwoPoints(
+      currentLocation.lat,
+      currentLocation.lng,
+      geoCode.results[0].geometry.location.lat(),
+      geoCode.results[0].geometry.location.lng()
+    );
+    console.log(`Distance: ${distance}`)
+    return distance;
+  }
+
+  async getDistanceBetweenTwoPoints(
+    lat1: number,
+    lng1: number,
+    lat2: number,
+    lng2: number
+  ): Promise<number> {
+    const origin = new google.maps.LatLng(lat1, lng1);
+    const destination = new google.maps.LatLng(lat2, lng2);
+
+    const service = new google.maps.DistanceMatrixService();
+    const distanceMatrix = await service.getDistanceMatrix({
+      origins: [origin],
+      destinations: [destination],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.IMPERIAL,
+    });
+
+    return distanceMatrix.rows[0].elements[0].distance.value;
+  }
+
   async buildCollectionMapOptions(drop: IDrop): Promise<any> {
     const latLng: any = await this.geocode(
       drop.collectionAddressPostcode || ''
@@ -81,20 +116,33 @@ export class MapsService {
     };
   }
 
+  getCurrentLocation(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
 
-  buildMapOptions(drop: IDrop): any {
+  async buildMapOptions(): Promise<any> {
+    const currentLocation = await this.getCurrentLocation();
+
     return {
       center: {
-        lat: drop.localDeliveryLat || 0,
-        lng: drop.localDeliveryLng || 0,
+        lat: currentLocation.lat || 0,
+        lng: currentLocation.lng || 0,
       },
-      zoom: this.calculateZoom(
-        drop.localDeliveryRadius || 0,
-        drop.localDeliveryLat || 0,
-        drop.localDeliveryLng || 0
-      ),
+      zoom: 11,
       gestureHandling: 'none',
-      isFractionalZoomEnabled: true
+      isFractionalZoomEnabled: true,
     };
   }
 }
