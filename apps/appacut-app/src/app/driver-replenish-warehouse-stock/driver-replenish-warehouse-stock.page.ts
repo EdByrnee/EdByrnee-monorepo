@@ -13,6 +13,8 @@ export class DriverReplenishWarehouseStockPage implements OnInit {
 
   quantity = 1;
 
+  expirationDate: string;
+
   constructor(
     private modalController: ModalController,
     private dropService: DropsService,
@@ -32,7 +34,7 @@ export class DriverReplenishWarehouseStockPage implements OnInit {
     for (let i = 0; i < this.quantity; i++) {
       newDropItems.push({
         uuid: this.drop.uuid,
-        expirationDate: null,
+        expirationDate: this.expirationDate
       });
     }
 

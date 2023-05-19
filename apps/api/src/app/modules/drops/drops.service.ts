@@ -36,6 +36,13 @@ export class DropService {
     private readonly dropPhotoRepository: IRepositoryPort<DropPhoto>
   ) {}
 
+  async getDropItemsForCurrentUser(userUuid: string): Promise<DropItem[]> {
+    const items = await this.dropItemRepository.findAll({
+      makerUuid: userUuid,
+    });
+    return items;
+  }
+
   async getDrops(filter?: any): Promise<Drop[]> {
     return this.dropRepository.findAll({
       where: filter || {},
@@ -213,9 +220,10 @@ export class DropService {
     newDropItems: ICreateDropItem[]
   ) {
     const drop: Drop = await this.dropRepository.get(dropUuid);
-    const warehouseLocation: DropItemLocation = await this.dropItemLocationRepository.findOne({
+    const warehouseLocation: DropItemLocation =
+      await this.dropItemLocationRepository.findOne({
         location_name: 'Warehouse',
-    });
+      });
 
     // Replenish summary data
     drop.qty_available = drop.qty_available + newDropItems.length;
@@ -237,15 +245,26 @@ export class DropService {
     await this.dropRepository.update(drop);
   }
 
-  async transferDropLocation(dropItemUuid: string, newLocationUuid: string) {
+  async transferDropLocation(
+    dropItemUuid: string,
+    locationOrDriverUuid: string,
+    withDriver: boolean
+  ) {
     const dropItem: DropItem = await this.dropItemRepository.get(dropItemUuid);
-    const newLocation: DropItemLocation =
-      await this.dropItemLocationRepository.get(newLocationUuid);
 
-    dropItem.locationId = newLocation.id;
+    if (withDriver) {
+      dropItem.withDriver = true;
+      dropItem.locationId = null;
+      dropItem.driverUuid = locationOrDriverUuid;
+    } else {
+      const newLocation: DropItemLocation =
+        await this.dropItemLocationRepository.get(locationOrDriverUuid);
+      dropItem.locationId = newLocation.id;
+      dropItem.driverUuid = null;
+      dropItem.withDriver = false;
+    }
+
     await this.dropItemRepository.update(dropItem);
-
-    // Update summary totals
   }
 
   async createDrop(

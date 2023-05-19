@@ -28,7 +28,7 @@ export const dropRepoProviders = [
   },
   {
     provide: DROP_ITEM_REPO,
-    useFactory: () => new SequelizeRepo<DropItem>(DropItem),
+    useFactory: () => new SequelizeRepo<DropItem>(DropItem, [Drop]),
   },
   {
     provide: DROP_ITEM_LOCATION_REPO,

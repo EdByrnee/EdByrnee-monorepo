@@ -19,6 +19,7 @@ import { UpdateService } from '../core/update.service';
 import { NotificationService } from '../core/notifications';
 import { ConfigService } from '../core/config';
 import { BasketService } from '../core/basket.service';
+import { DropItemsService } from '../core/drop-items';
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,6 +52,7 @@ import { BasketService } from '../core/basket.service';
     RoutingService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     DropsService,
+    DropItemsService,
     AuthService,
     ConfigService,
     OrdersService,

@@ -30,6 +30,7 @@ import { UpdateDropDto } from './dto/update-drop.dto';
 import { SequelizeUow } from '../../core/database/infra/sequelize-uow';
 import { AuthService } from '../auth/auth.service';
 import { CreateDropItemDto } from './dto/new-drop-items';
+import { DropItem } from './entities/drop-item';
 
 @ApiTags('Authentication')
 @Controller('/drops')
@@ -43,6 +44,13 @@ export class DropsController {
     private authService: AuthService
   ) {}
 
+  @Get('/items/current-user')
+  async getDropItemsForCurrentUser(@User() user: RequestUser): Promise<DropItem[]> {
+    return await this.uow.execute(async () => {
+      return await this.dropService.getDropItemsForCurrentUser(user.uuid);
+    });
+  }
+
   @Patch('/:dropUuid/replenish-warehouse/')
   async replenishDropQuantityToWarehouse(
     @Param('dropUuid') dropUuid: string,
@@ -52,6 +60,20 @@ export class DropsController {
       return await this.dropService.replenishDropQuantityToWarehouse(
         dropUuid,
         replenishDropQuantityToWarehouseDto
+      );
+    });
+  }
+
+  @Patch('/items/:dropItemUuid/location')
+  async updateDropItemLocation(
+    @Param('dropItemUuid') dropItemUuid: string,
+    @Body() body: { locationOrDriverUuid: string; withDriver: boolean }
+  ) {
+    return await this.uow.execute(async () => {
+      return await this.dropService.transferDropLocation(
+        dropItemUuid,
+        body.locationOrDriverUuid,
+        body.withDriver
       );
     });
   }

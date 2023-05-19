@@ -13,6 +13,14 @@
   <h4>Enter quantity to replenish to warehouse stock</h4>
 
   <ion-input type="number" size="48" [(ngModel)]="quantity"></ion-input>
+  <br>
+
+  <!-- Expiration date input -->
+  <ion-item>
+    <ion-label>Expiration Date</ion-label>
+    <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="expirationDate"></ion-datetime>
+  </ion-item>
+
 </ion-content>
 
 <ion-footer>

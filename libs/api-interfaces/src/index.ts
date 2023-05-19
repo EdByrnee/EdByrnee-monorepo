@@ -19,3 +19,4 @@ export * from './lib/create-multi-order.interface';
 export * from './lib/multi-order.interface';
 export * from './lib/multi-order-line';
 export * from './lib/create-drop-item.interface';
+export * from './lib/drop-item.interface';

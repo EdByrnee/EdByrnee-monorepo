@@ -106,6 +106,16 @@ export class DropsService {
     );
   }
 
+  updateItemDropLocation(dropItemUuid: string, locationOrDriverUuid: string, withDriver: boolean) {
+    return this.http.patch(
+      this.api + '/api/drops/items/' + dropItemUuid + '/location',
+      {
+        locationOrDriverUuid,
+        withDriver
+      }
+    );
+  }
+
   replenishWareshouseStock(dropUuid: string, newDropItems: ICreateDropItem[]) {
     return this.http.patch(
       this.api + '/api/drops/' + dropUuid + '/replenish-warehouse',
