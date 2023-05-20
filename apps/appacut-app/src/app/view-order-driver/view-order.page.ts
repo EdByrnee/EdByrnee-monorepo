@@ -55,8 +55,8 @@ export class ViewOrderPage implements OnInit {
 
   async updateOrderStatus(status: OrderStatus) {
     const confirmUpdate = await this.alertController.create({
-      header: 'Confirm Update',
-      message: `Are you sure you want to update this order to ${status}?`,
+      header: 'Take Delivery',
+      message: `Are you sure you want to assign this deliery to yourself?`,
       buttons: [
         {
           text: 'Cancel',
