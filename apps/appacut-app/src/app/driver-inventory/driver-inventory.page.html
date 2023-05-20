@@ -28,18 +28,18 @@
     </ion-item>
   </ion-list>
 
-  <h4>Driver Inventory</h4>
+  <h4>Inventory</h4>
 <!-- 
   <pre>
     {{ currentUserDropItems$ | async | json }}
   </pre> -->
 
   <ion-list [inset]="true">
-    <ion-item *ngFor="let item of (currentUserDropItems$ | async)">
+    <ion-item *ngFor="let item of (allDrops$ | async)">
       <ion-label>
-        <h4>({{ item.drop.itemCode }}) {{item.drop.name}}</h4>
+        <h4>({{ item.itemCode }}) {{item.name}}</h4>
         <p class="primary">You have: 0</p>
-        <p>All Driver Stock: 0</p>
+        <p>All Driver Stock: {{ item.qty_available }}</p>
         <p>Warehouse Stock: 0</p>
       </ion-label>
     </ion-item>

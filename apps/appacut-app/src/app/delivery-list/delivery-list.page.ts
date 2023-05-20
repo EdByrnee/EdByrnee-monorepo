@@ -14,7 +14,15 @@ export class DeliveryListPage implements OnInit {
 
   orderFilter: string;
 
-  deliveryMapOptions: any;
+  deliveryMapOptions: any = {
+    center: {
+      lat: 53.4242,
+      lng: 2.8989
+    },
+    zoom: 8,
+    gestureHandling: 'none',
+    isFractionalZoomEnabled: true,
+  }
 
   constructor(
     private ordersService: OrdersService,
@@ -23,6 +31,7 @@ export class DeliveryListPage implements OnInit {
     private mappingService: MapsService
   ) {
     this.orderFilter = this.route.snapshot.params['filter'] || 'sales';
+    this.buildCollectionMapOptions();
   }
 
   ngOnInit() {

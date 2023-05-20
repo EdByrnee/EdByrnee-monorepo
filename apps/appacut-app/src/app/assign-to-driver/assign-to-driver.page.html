@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- cancel button -->
+
+      <ion-button (click)="dismiss()"> Cancel </ion-button>
+    </ion-buttons>
+    <ion-title>Assign to Driver</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h4>Enter quantity to replenish to warehouse stock (non-perishable only)</h4>
+
+  <ion-input type="number" size="48" [(ngModel)]="quantity"></ion-input>
+  <br>
+
+  <h4>You are assigning to self</h4>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button style="width: 100%" (click)="confirm()"> Confirm </ion-button>
+  </ion-toolbar>
+</ion-footer>

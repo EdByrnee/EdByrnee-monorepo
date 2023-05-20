@@ -10,6 +10,14 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'assign-to-driver',
+    loadChildren: () =>
+      import('./assign-to-driver/assign-to-driver.module').then(
+        (m) => m.AssignToDriverPageModule
+      ),
+  },
+
+  {
     path: 'driver-replenish-warehouse-stock',
     loadChildren: () =>
       import(

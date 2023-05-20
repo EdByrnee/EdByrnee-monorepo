@@ -45,13 +45,15 @@ export class DropsController {
   ) {}
 
   @Get('/items/current-user')
-  async getDropItemsForCurrentUser(@User() user: RequestUser): Promise<DropItem[]> {
+  async getDropItemsForCurrentUser(
+    @User() user: RequestUser
+  ): Promise<DropItem[]> {
     return await this.uow.execute(async () => {
       return await this.dropService.getDropItemsForCurrentUser(user.uuid);
     });
   }
 
-  @Patch('/:dropUuid/replenish-warehouse/')
+  @Patch('/:dropUuid/replenish-warehouse')
   async replenishDropQuantityToWarehouse(
     @Param('dropUuid') dropUuid: string,
     @Body() replenishDropQuantityToWarehouseDto: CreateDropItemDto[]

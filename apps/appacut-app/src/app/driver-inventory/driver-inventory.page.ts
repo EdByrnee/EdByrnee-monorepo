@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
 import { DriverReplenishWarehouseStockPageModule } from '../driver-replenish-warehouse-stock/driver-replenish-warehouse-stock.module';
 import { DriverReplenishWarehouseStockPage } from '../driver-replenish-warehouse-stock/driver-replenish-warehouse-stock.page';
 import { DropItemsService } from '../../core/drop-items';
+import { AssignToDriverPage } from '../assign-to-driver/assign-to-driver.page';
 
 @Component({
   selector: 'shoppr-monorepo-driver-inventory',
@@ -36,7 +37,7 @@ export class DriverInventoryPage implements OnInit {
 
   addDriverInventory() {
     const driverWarehouseWareshouseStockModal = this.modalController.create({
-      component: DriverReplenishWarehouseStockPageModule
+      component: AssignToDriverPage
     });
     driverWarehouseWareshouseStockModal.then((modal) => modal.present());
   }
