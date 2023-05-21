@@ -167,6 +167,7 @@ export class OrderService {
     const order = await this.orderRepo.get(uuid);
     order.driverUuid = driverUuid;
     order.assignedToDriverAt = new Date().toLocaleDateString();
+    order.order_status = 'ASSIGNED_TO_DRIVER';
     await this.orderRepo.update(order);
   }
 
@@ -174,6 +175,7 @@ export class OrderService {
     const order = await this.orderRepo.get(uuid);
     order.driverUuid = null;
     order.assignedToDriverAt = null;
+    order.order_status = 'OPEN';
     await this.orderRepo.update(order);
   }
 

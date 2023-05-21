@@ -49,6 +49,61 @@ export class OrdersService {
     );
   }
 
+  assignDriver(orderUuid: string) {
+    return this.http
+      .patch<any>(this.api + '/api/orders/' + orderUuid + '/assign-driver', {})
+      .pipe(
+        tap(() => {
+          /* Update deliveries and orders with driver */
+          const currentDeliveries = this.deliveries.getValue();
+
+          const deliveryIndex = currentDeliveries.findIndex(
+            (delivery) => delivery.uuid === orderUuid
+          );
+
+          if (deliveryIndex !== -1) {
+            currentDeliveries[deliveryIndex].driverUuid =
+              this.authService.currentUser$.value?.uuid;
+            currentDeliveries[deliveryIndex].assignedToDriverAt =
+              new Date().toLocaleDateString();
+            currentDeliveries[deliveryIndex].order_status =
+              'ASSIGNED_TO_DRIVER';
+
+            this.deliveries.next(currentDeliveries);
+          }
+        })
+      );
+  }
+
+  releaseDriver(orderUuid: string) {
+    return this.http
+      .patch<any>(this.api + '/api/orders/' + orderUuid + '/release-driver', {})
+      .pipe(
+        tap(() => {
+          /* Update deliveries and orders with driver */
+          const currentDeliveries = this.deliveries.getValue();
+
+          const deliveryIndex = currentDeliveries.findIndex(
+            (delivery) => delivery.uuid === orderUuid
+          );
+
+          if (currentDeliveries[deliveryIndex] !== null) {
+            (currentDeliveries[deliveryIndex] as any).driverUuid = null;
+            (currentDeliveries[deliveryIndex] as any).assignedToDriverAt = null;
+            (currentDeliveries[deliveryIndex] as any).order_status = 'OPEN';
+            this.deliveries.next(currentDeliveries);
+          }
+        })
+      );
+  }
+
+  confirmDelivery(orderUuid: string) {
+    return this.http.patch<any>(
+      this.api + '/api/orders/' + orderUuid + '/confirm-delivery',
+      {}
+    );
+  }
+
   async updateDeliveriesWithDistance() {
     const currentDeliveries = this.deliveries.getValue();
 
@@ -59,7 +114,7 @@ export class OrdersService {
         );
 
       delivery.distance = distance / 1000;
-      // Round to 1 dp 
+      // Round to 1 dp
       delivery.distance = Math.round(delivery.distance * 10) / 10;
     }
 

@@ -21,4 +21,7 @@ export interface IMultiOrder {
   collectionAddressCountry?: string;
   multiOrderLines?: IMultiOrderLine[];
   distance?: number;
+  driverUuid?: string;
+  assignedToDriverAt?: string;
+  deliveredAt?: string;
 }

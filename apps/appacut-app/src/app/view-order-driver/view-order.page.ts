@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import {
+  AlertController,
+  NavController,
+  ToastController,
+} from '@ionic/angular';
 import {
   IMultiOrder,
   IOrder,
@@ -30,7 +34,8 @@ export class ViewOrderPage implements OnInit {
     private authService: AuthService,
     private alertController: AlertController,
     private toastController: ToastController,
-    private dropItemService: DropItemsService
+    private dropItemService: DropItemsService,
+    private navController: NavController
   ) {
     this.uuid = this.route.snapshot.paramMap.get('id') || '';
     this.currentUserUuid = this.authService.currentUser$.value?.uuid || '';
@@ -53,7 +58,94 @@ export class ViewOrderPage implements OnInit {
     });
   }
 
-  async updateOrderStatus(status: OrderStatus) {
+  async confirmDelivery() {
+    /* Confirm Release /*/
+    const confirmRelease = await this.alertController.create({
+      header: 'Confrim Delivery',
+      message: `Are you outside the house ready to pack the order?`,
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.orderService.confirmDelivery(this.uuid).subscribe(
+              async (ok: any) => {
+                /* Success Message /*/
+                const toastController = await this.toastController.create({
+                  message: 'Delivery confirmed',
+                  duration: 2000,
+                  color: 'success',
+                });
+                await toastController.present();
+
+                /* close modal */
+                this.navController.back();
+              },
+              async (err: any) => {
+                /* Error Message /*/
+                console.log(err);
+                const toastController = await this.toastController.create({
+                  message: 'Error, please try again later',
+                  duration: 2000,
+                  color: 'danger',
+                });
+                await toastController.present();
+              }
+            );
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+    await confirmRelease.present();
+  }
+
+  async releaseOrderFromDriver() {
+    /* Confirm Release /*/
+    const confirmRelease = await this.alertController.create({
+      header: 'Release Delivery',
+      message: `Are you sure you want to release this delivery?`,
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.orderService.releaseDriver(this.uuid).subscribe(
+              async (ok: any) => {
+                /* Success Message /*/
+                const toastController = await this.toastController.create({
+                  message: 'Delivery released',
+                  duration: 2000,
+                  color: 'success',
+                });
+                await toastController.present();
+                /* close modal */
+                this.navController.back();
+              },
+              async (err: any) => {
+                /* Error Message /*/
+                console.log(err);
+                const toastController = await this.toastController.create({
+                  message: 'Error, please try again later',
+                  duration: 2000,
+                  color: 'danger',
+                });
+                await toastController.present();
+              }
+            );
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+    await confirmRelease.present();
+  }
+
+  async assignDriver() {
     const confirmUpdate = await this.alertController.create({
       header: 'Take Delivery',
       message: `Are you sure you want to assign this deliery to yourself?`,
@@ -69,7 +161,29 @@ export class ViewOrderPage implements OnInit {
         {
           text: 'Yes',
           handler: () => {
-            this.completeOrderUpdate(status);
+            this.orderService.assignDriver(this.uuid).subscribe(
+              async (ok) => {
+                /* Success Message /*/
+                const toastController = await this.toastController.create({
+                  message: 'Delivery assigned to you',
+                  duration: 2000,
+                  color: 'success',
+                });
+                await toastController.present();
+                /* close modal */
+                this.navController.back();
+              },
+              async (err) => {
+                /* Error Message /*/
+                console.log(err);
+                const toastController = await this.toastController.create({
+                  message: 'Error, please try again later',
+                  duration: 2000,
+                  color: 'danger',
+                });
+                await toastController.present();
+              }
+            );
           },
         },
       ],

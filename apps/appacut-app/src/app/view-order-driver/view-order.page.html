@@ -108,10 +108,29 @@
     <ion-button
       expand="block"
       color="success"
-      (click)="updateOrderStatus('CLOSED')"
+      (click)="assignDriver()"
+      *ngIf="order.order_status === 'OPEN'"
     >
       Assign Delivery
     </ion-button>
+
+    <ion-button
+    expand="block"
+    color="success"
+    (click)="confirmDelivery()"
+    *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
+  >
+    Confirm Delivery
+  </ion-button>
+
+    <ion-button
+    expand="block"
+    color="danger"
+    (click)="releaseOrderFromDriver()"
+    *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
+  >
+    Release Delivery
+  </ion-button>
 
     <!-- <ion-button
       expand="block"

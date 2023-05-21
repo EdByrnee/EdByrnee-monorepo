@@ -64,8 +64,11 @@
           <p>{{ order.multiOrderLines?.length }} items</p>
           <p>{{ order.order_total | currency:"GBP":true }}</p>
           <p>
-            <ion-text color="warning" *ngIf="order.order_status === 'OPEN'">
+            <ion-text color="danger" *ngIf="order.order_status === 'OPEN'">
               Open
+            </ion-text>
+            <ion-text color="warning" *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'">
+              Assigned To Driver
             </ion-text>
             <ion-text color="success" *ngIf="order.order_status === 'CLOSED'">
               Completed

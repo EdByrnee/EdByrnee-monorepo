@@ -41,7 +41,7 @@ export class OrdersController {
   @Patch('/:orderUuid/assign-driver')
   async assignDriver(
     @User() user: RequestUser,
-    @Param('uuorderUuidid') orderUuid: string
+    @Param('orderUuid') orderUuid: string
   ): Promise<void> {
     return await this.uow.execute(async () => {
       return await this.orderService.assignDriver(orderUuid, user.uuid);
@@ -51,7 +51,7 @@ export class OrdersController {
   @ApiOperation({ summary: 'Release order from the assigned driver' })
   @ApiResponse({ status: 200, description: 'Success' })
   @Patch('/:orderUuid/release-driver')
-  async releaseOrderFromDriver(orderUuid: string): Promise<void> {
+  async releaseOrderFromDriver(@Param('orderUuid') orderUuid: string): Promise<void> {
     return await this.uow.execute(async () => {
       return await this.orderService.releaseOrderFromDriver(orderUuid);
     });
