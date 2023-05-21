@@ -15,4 +15,5 @@ export interface IUserProfile {
   lastSetPostcode: string;
   location: string;
   userPhotos: any[];
+  mobile_number: string;
 }

@@ -16,8 +16,8 @@
           [src]="currentUser.photoUrl ? currentUser.photoUrl : 'https://ui-avatars.com/api/?name=' + currentUser.name + '&background=random&color=fff&size=256'"
         />
       </ion-avatar>
-      <div class="handle" (click)="goToMaker(currentUser.uuid)">
-        @{{ currentUser.username }}
+      <div class="handle">
+        {{ currentUser.name }}
       </div>
     </div>
   </div>
@@ -25,33 +25,33 @@
   <!-- could put a stats component here !!-->
 
   <ion-list>
-    <ion-item button (click)="goToMaker(currentUser.uuid)">
+    <!-- <ion-item button (click)="goToMaker(currentUser.uuid)">
       <ion-label>
         <ion-icon name="person-circle-outline"></ion-icon>
         View Profile
       </ion-label>
-    </ion-item>
+    </ion-item>-->
 
     <ion-item button (click)="goToEditProfile()">
       <ion-label>
         <ion-icon name="pencil-outline"></ion-icon>
-        Edit Profile
+        My Account
       </ion-label>
-    </ion-item>
+    </ion-item> 
 
     <ion-item button (click)="goToPurchaseHistory()">
       <ion-label>
         <ion-icon name="wallet-outline"></ion-icon>
-        Purchased</ion-label
+        Orders</ion-label
       >
     </ion-item>
 
-    <ion-item button (click)="goToSalesHistory()">
+    <!-- <ion-item button (click)="goToSalesHistory()">
       <ion-label>
         <ion-icon name="pricetag-outline"></ion-icon>
         Sold</ion-label
       >
-    </ion-item>
+    </ion-item> -->
 
     <!-- <ion-item button (click)="goToNewDrop()">
       <ion-label>
@@ -60,17 +60,17 @@
       >
     </ion-item> -->
 
-    <ion-item button disabled (click)="holidayMode()">
+    <!-- <ion-item button disabled (click)="holidayMode()">
       <ion-label>
         <ion-icon name="airplane-outline"></ion-icon>
         Holiday Mode</ion-label
       >
-    </ion-item>
+    </ion-item> -->
 
     <ion-item button (click)="contactSupport()">
       <ion-label>
         <ion-icon name="chatbubbles-outline"></ion-icon>
-        Contact Support</ion-label
+        Need Help?</ion-label
       >
     </ion-item>
 
@@ -88,7 +88,11 @@
       >
     </ion-item>
   </ion-list>
-  {{ binaryVersion }} / v {{currentVersion$ | async}}
+  <div class="version">
+    App version number:
+    <span *ngIf="binaryVersion"> {{ binaryVersion + " /" }} </span>
+    {{currentVersion$ | async}}
+  </div>
 </ion-content>
 <!-- </ng-template> -->
 
@@ -129,9 +133,7 @@
             formControlName="otp_code"
             placeholder="Enter OTP"
           ></ion-input>
-          <ion-text slot="error">
-            You must enter a valid OTP
-          </ion-text>
+          <ion-text slot="error"> You must enter a valid OTP </ion-text>
         </ion-item>
       </form>
     </ion-card-content>

@@ -31,11 +31,8 @@ export class ProfileEditPage implements OnInit {
     this.authService.currentUser$;
 
   public currentUserForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
+    mobile_number: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required, Validators.email]),
-    website: new FormControl('', [Validators.required]),
-    bio: new FormControl('', [Validators.required]),
-    story: new FormControl('', [Validators.required]),
   });
 
   public profileCompleteMode = false;
@@ -58,14 +55,11 @@ export class ProfileEditPage implements OnInit {
       }) as GalleryPhoto[];
 
       this.currentUserForm.patchValue({
-        username: user?.username,
+        mobile_number: user?.mobile_number,
         name: user?.name,
-        website: user?.website,
-        bio: user?.bio,
-        story: user?.story,
       });
 
-      this.currentUserForm.controls['username'].disable();
+      this.currentUserForm.controls['mobile_number'].disable();
 
       this.currentUserForm.valueChanges.subscribe((changes) => {
         // If changes are made, enable the save button

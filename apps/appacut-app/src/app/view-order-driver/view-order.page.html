@@ -50,19 +50,21 @@
     </ion-item>
   </ion-list>
 
-  <ion-list inset="true">
+  <div class="ion-padding">
+    <ion-button (click)="packItem()" *ngIf="packing" style="width: 100%">
+      <ion-icon name="scan-circle-outline"></ion-icon>&nbsp; Scan Barcode
+    </ion-button>
+  </div>
 
+  <ion-list inset="true">
     <ion-list-header>
       <ion-label>Items For Order</ion-label>
     </ion-list-header>
-
-
     <ion-item *ngFor="let orderLine of order.multiOrderLines">
       <ion-label>
         <h2>
-          ({{ orderLine.drop?.itemCode }})
-          {{ orderLine.quantity }} x 
-          {{ orderLine.line_title }}
+          ({{ orderLine.drop?.itemCode }}) {{ orderLine.quantity }} x {{
+          orderLine.line_title }}
         </h2>
       </ion-label>
     </ion-item>
@@ -116,22 +118,22 @@
     </ion-button>
 
     <ion-button
-    expand="block"
-    color="success"
-    (click)="startPacking()"
-    *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
-  >
-    Start Packing
-  </ion-button>
+      expand="block"
+      color="success"
+      (click)="startPacking()"
+      *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
+    >
+      Start Packing
+    </ion-button>
 
     <ion-button
-    expand="block"
-    color="danger"
-    (click)="releaseOrderFromDriver()"
-    *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
-  >
-    Release Delivery
-  </ion-button>
+      expand="block"
+      color="danger"
+      (click)="releaseOrderFromDriver()"
+      *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
+    >
+      Release Delivery
+    </ion-button>
 
     <!-- <ion-button
       expand="block"

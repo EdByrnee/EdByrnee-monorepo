@@ -7,7 +7,7 @@ ion-avatar {
   width: 100px;
   height: 100px;
 }
-.avatar{
+.avatar {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -41,9 +41,15 @@ ion-card {
   left: 0px;
 }
 
-.spinner{
+.spinner {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.version {
+  text-align: center;
+  padding: 2px;
+  font-size: 12px;
 }

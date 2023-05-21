@@ -18,56 +18,24 @@
 </ion-header>
 
 <ion-content *ngIf="(currentUser$ | async) as currentUser;">
-  <ion-list inset="true">
-    <!-- Avatar -->
-    <ion-item (click)="authService.showChangeProfilePhotoActions()">
-      <ion-avatar slot="start">
-        <img [src]="currentUser.photoUrl" />
-      </ion-avatar>
-      <!-- <ion-label position="fixed">Profile Photo </ion-label> -->
-      <ion-label button>
-        <ion-button>
-          <ion-icon name="camera-outline"></ion-icon>
-          &nbsp; Change Profile Photo
-        </ion-button>
-      </ion-label>
-    </ion-item>
 
+  <ion-list-header>
+    <ion-label>Your Details</ion-label>
+  </ion-list-header>
+
+  <ion-list inset="true">
     <form [formGroup]="currentUserForm">
       <ion-item>
-        <ion-label position="fixed">Username</ion-label>
-        <ion-input placeholder="Enter text" formControlName="username">
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="fixed">Display Name</ion-label>
+        <ion-label position="stacked">Name</ion-label>
         <ion-input placeholder="Enter text" formControlName="name"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="fixed">Website</ion-label>
+        <ion-label position="stacked">Contact Number</ion-label>
         <ion-input
           placeholder="Enter text"
-          formControlName="website"
+          formControlName="mobile_number"
         ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Bio</ion-label>
-        <ion-textarea
-          rows="3"
-          placeholder="Eg. fresh maker in Liverpool"
-          formControlName="bio"
-        ></ion-textarea>
-      </ion-item>
-
-      <ion-item *ngIf="currentUser.maker">
-        <ion-label position="stacked">Our Story</ion-label>
-        <ion-textarea
-          rows="8"
-          placeholder="Write a long form story your customers will love to read"
-          formControlName="story"
-        ></ion-textarea>
       </ion-item>
     </form>
   </ion-list>

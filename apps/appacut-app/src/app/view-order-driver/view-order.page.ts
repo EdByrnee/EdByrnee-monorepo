@@ -80,6 +80,10 @@ export class ViewOrderPage implements OnInit {
     });
   }
 
+  packItem(){
+    
+  }
+
   async startPacking() {
     /* Confirm Release /*/
     const confirmRelease = await this.alertController.create({
