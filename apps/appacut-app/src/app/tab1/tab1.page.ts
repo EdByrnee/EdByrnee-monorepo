@@ -31,7 +31,7 @@ export class Tab1Page {
     private basketService: BasketService
   ) {}
 
-  public showLaunchingSoon = true;
+  public showLaunchingSoon = false;
 
   public loading = true;
 

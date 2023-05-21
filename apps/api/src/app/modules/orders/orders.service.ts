@@ -16,6 +16,8 @@ import { CreateMultiOrderDto } from './dto/create-multi-order.dto';
 import { MultiOrder } from './entity/multi-order.entity';
 import { MultiOrderLine } from './entity/multi-order-line';
 import * as uuid from 'uuid';
+/* import fetch */
+import fetch from 'node-fetch';
 
 @Injectable()
 export class OrderService {

@@ -16,6 +16,6 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
     IonicModule,
     ListOrdersPageRoutingModule,
   ],
-  declarations: [ListOrdersPage, DateAgoPipe],
+  declarations: [ListOrdersPage],
 })
 export class ListOrdersPageModule {}

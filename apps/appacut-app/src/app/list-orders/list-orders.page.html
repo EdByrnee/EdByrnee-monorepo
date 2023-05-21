@@ -44,7 +44,7 @@
           {{ order.deliveryAddressPostcode }}, {{ order.distance }} miles
         </h2>
         <p>
-          {{ order.createdAt | dateAgo }}
+          {{ order.createdAt | date: 'dd MMM HH:mm' }}
           <small> ({{ order.createdAt | date: 'dd MMM HH:mm' }})</small>
         </p>
         <p>{{ order.multiOrderLines?.length }} items</p>

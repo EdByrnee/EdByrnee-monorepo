@@ -180,7 +180,7 @@ export class PaymentService {
       deliveryAddressLine1: '26 Kingscourt Road',
       deliveryAddressLine2: '',
       deliveryAddressCity: 'Liverpool',
-      deliveryAddressPostcode: 'L12 8RD',
+      deliveryAddressPostcode: 'L13 3DE',
       deliveryAddressCountry: 'England'
     };
     return createOrderObj;

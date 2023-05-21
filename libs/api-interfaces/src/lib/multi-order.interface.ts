@@ -24,4 +24,6 @@ export interface IMultiOrder {
   driverUuid?: string;
   assignedToDriverAt?: string;
   deliveredAt?: string;
+  deliveryLat?: number;
+  deliveryLng?: number;
 }

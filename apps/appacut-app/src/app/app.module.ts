@@ -23,7 +23,7 @@ import { DropItemsService } from '../core/drop-items';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 @NgModule({
-  declarations: [AppComponent, DateAgoPipe],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     HttpClientModule,
