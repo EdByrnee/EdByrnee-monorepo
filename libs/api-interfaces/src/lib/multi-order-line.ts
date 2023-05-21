@@ -1,3 +1,4 @@
+import { IDrop } from './drop.interface';
 import { IMultiOrder } from './multi-order.interface';
 
 export interface IMultiOrderLine {
@@ -7,4 +8,6 @@ export interface IMultiOrderLine {
   line_total: number;
   multiOrder: IMultiOrder | null;
   line_title: string;
+  dropUuid: string;
+  drop?: IDrop;
 }

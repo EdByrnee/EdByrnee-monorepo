@@ -116,6 +116,7 @@ export class OrderService {
         orderLine.line_total = orderLine.unit_price * orderLine.quantity;
         orderLine.multiOrderId = newMultiOrder.id;
         orderLine.line_title = drop.name;
+        orderLine.dropUuid = drop.uuid;
         return orderLine;
       });
 

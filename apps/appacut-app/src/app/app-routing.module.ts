@@ -10,6 +10,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'pack-order',
+    loadChildren: () =>
+      import('./pack-order/pack-order.module').then(
+        (m) => m.PackOrderPageModule
+      ),
+  },
+  {
     path: 'assign-to-driver',
     loadChildren: () =>
       import('./assign-to-driver/assign-to-driver.module').then(

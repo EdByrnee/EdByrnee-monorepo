@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   AlertController,
+  ModalController,
   NavController,
   ToastController,
 } from '@ionic/angular';
@@ -13,6 +14,8 @@ import {
 import { AuthService } from '../../core/auth';
 import { OrdersService } from '../../core/orders';
 import { DropItemsService } from '../../core/drop-items';
+import { PackOrderPage } from '../pack-order/pack-order.page';
+import { DropsService } from '../../core/drops';
 @Component({
   selector: 'shoppr-monorepo-view-order',
   templateUrl: './view-order.page.html',
@@ -28,17 +31,33 @@ export class ViewOrderPage implements OnInit {
 
   currentUserUuid: string;
 
+  packing = false;
+
   constructor(
     private route: ActivatedRoute,
     private orderService: OrdersService,
     private authService: AuthService,
     private alertController: AlertController,
     private toastController: ToastController,
+    private dropService: DropsService,
     private dropItemService: DropItemsService,
-    private navController: NavController
+    private navController: NavController,
+    private modalController: ModalController
   ) {
     this.uuid = this.route.snapshot.paramMap.get('id') || '';
     this.currentUserUuid = this.authService.currentUser$.value?.uuid || '';
+  }
+
+  populateDrops(){
+    this.loading = true;
+    this.order?.multiOrderLines?.forEach((line) => {
+      const allDrops = this.dropService.allDrops$.getValue();
+      const drop = allDrops.find((drop) => drop.uuid === line.dropUuid);
+      if (drop) {
+        line.drop = drop;
+      }
+      this.loading = false;
+    });
   }
 
   ngOnInit() {
@@ -46,6 +65,9 @@ export class ViewOrderPage implements OnInit {
       (order) => {
         this.order = order;
         this.loading = false;
+        this.dropService.getDrops().subscribe((drops) => {
+          this.populateDrops();
+        });
       },
       (err) => {
         this.error = true;
@@ -58,6 +80,27 @@ export class ViewOrderPage implements OnInit {
     });
   }
 
+  async startPacking() {
+    /* Confirm Release /*/
+    const confirmRelease = await this.alertController.create({
+      header: 'Confrim Delivery',
+      message: `Are you outside the house ready to pack the order?`,
+      buttons: [
+        {
+          text: 'Yes',
+          handler: async () => {
+            this.packing = true;
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+    await confirmRelease.present();
+  }
+
   async confirmDelivery() {
     /* Confirm Release /*/
     const confirmRelease = await this.alertController.create({
@@ -66,31 +109,15 @@ export class ViewOrderPage implements OnInit {
       buttons: [
         {
           text: 'Yes',
-          handler: () => {
-            this.orderService.confirmDelivery(this.uuid).subscribe(
-              async (ok: any) => {
-                /* Success Message /*/
-                const toastController = await this.toastController.create({
-                  message: 'Delivery confirmed',
-                  duration: 2000,
-                  color: 'success',
-                });
-                await toastController.present();
-
-                /* close modal */
-                this.navController.back();
+          handler: async () => {
+            const modal = await this.modalController.create({
+              component: PackOrderPage,
+              componentProps: {
+                orderUuid: this.uuid,
               },
-              async (err: any) => {
-                /* Error Message /*/
-                console.log(err);
-                const toastController = await this.toastController.create({
-                  message: 'Error, please try again later',
-                  duration: 2000,
-                  color: 'danger',
-                });
-                await toastController.present();
-              }
-            );
+            });
+
+            await modal.present();
           },
         },
         {

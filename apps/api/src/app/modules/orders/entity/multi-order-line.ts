@@ -43,6 +43,12 @@ export class MultiOrderLine extends Model<MultiOrderLine> {
   })
   line_total: number;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
+  })
+  dropUuid: string;
+
   // Foreign Key Multi Order
   @ForeignKey(() => MultiOrder)
   @Column({

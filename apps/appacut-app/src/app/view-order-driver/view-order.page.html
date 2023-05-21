@@ -60,6 +60,7 @@
     <ion-item *ngFor="let orderLine of order.multiOrderLines">
       <ion-label>
         <h2>
+          ({{ orderLine.drop?.itemCode }})
           {{ orderLine.quantity }} x 
           {{ orderLine.line_title }}
         </h2>
@@ -117,10 +118,10 @@
     <ion-button
     expand="block"
     color="success"
-    (click)="confirmDelivery()"
+    (click)="startPacking()"
     *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
   >
-    Confirm Delivery
+    Start Packing
   </ion-button>
 
     <ion-button
