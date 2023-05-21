@@ -179,7 +179,7 @@ export class OrderService {
 
   async confirmDelivery(uuid: string): Promise<void> {
     const order = await this.orderRepo.get(uuid);
-    order.order_status = 'DELIVERED';
+    order.order_status = 'CLOSED';
     order.deliveredAt = new Date().toLocaleDateString();
     await this.orderRepo.update(order);
   }
