@@ -36,6 +36,39 @@ export class OrdersController {
     private uow: SequelizeUow
   ) {}
 
+  @ApiOperation({ summary: 'Assign a driver to an order' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Patch('/:orderUuid/assign-driver')
+  async assignDriver(
+    @User() user: RequestUser,
+    @Param('uuorderUuidid') orderUuid: string
+  ): Promise<void> {
+    return await this.uow.execute(async () => {
+      return await this.orderService.assignDriver(orderUuid, user.uuid);
+    });
+  }
+
+  @ApiOperation({ summary: 'Release order from the assigned driver' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Patch('/:orderUuid/release-driver')
+  async releaseOrderFromDriver(orderUuid: string): Promise<void> {
+    return await this.uow.execute(async () => {
+      return await this.orderService.releaseOrderFromDriver(orderUuid);
+    });
+  }
+  /* confirm order delivery endpoint */
+  @ApiOperation({ summary: 'Confirm order delivery' })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @Patch('/:orderUuid/confirm-delivery')
+  async confirmDelivery(
+    @User() user: RequestUser,
+    @Param('orderUuid') orderUuid: string
+  ): Promise<void> {
+    return await this.uow.execute(async () => {
+      return await this.orderService.confirmDelivery(orderUuid);
+    });
+  }
+
   @ApiOperation({ summary: 'Get all orders' })
   @ApiResponse({ status: 200, description: 'Success' })
   @Get('/deliveries')

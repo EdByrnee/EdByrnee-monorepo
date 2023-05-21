@@ -26,7 +26,7 @@ export class MultiOrder extends Model<MultiOrder> {
   order_total: number;
 
   @Column({
-    type: DataType.ENUM('OPEN','ASSIGNED_TO_DRIVER', 'CLOSED'),
+    type: DataType.ENUM('OPEN', 'ASSIGNED_TO_DRIVER', 'CLOSED'),
     allowNull: false,
   })
   order_status: OrderStatus;
@@ -107,4 +107,23 @@ export class MultiOrder extends Model<MultiOrder> {
   // Has Many order lines
   @HasMany(() => MultiOrderLine, 'multiOrderId')
   multiOrderLines: MultiOrderLine[];
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  driverUuid: string;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  assignedToDriverAt: string;
+
+  /* deliveredAt */
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  deliveredAt: string;
 }

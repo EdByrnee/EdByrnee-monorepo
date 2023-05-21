@@ -162,4 +162,25 @@ export class OrderService {
     order.order_status = status;
     await this.orderRepo.update(order);
   }
+
+  async assignDriver(uuid: string, driverUuid: string): Promise<void> {
+    const order = await this.orderRepo.get(uuid);
+    order.driverUuid = driverUuid;
+    order.assignedToDriverAt = new Date().toLocaleDateString();
+    await this.orderRepo.update(order);
+  }
+
+  async releaseOrderFromDriver(uuid: string): Promise<void> {
+    const order = await this.orderRepo.get(uuid);
+    order.driverUuid = null;
+    order.assignedToDriverAt = null;
+    await this.orderRepo.update(order);
+  }
+
+  async confirmDelivery(uuid: string): Promise<void> {
+    const order = await this.orderRepo.get(uuid);
+    order.order_status = 'DELIVERED';
+    order.deliveredAt = new Date().toLocaleDateString();
+    await this.orderRepo.update(order);
+  }
 }
