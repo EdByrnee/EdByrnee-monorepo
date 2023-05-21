@@ -49,10 +49,10 @@ export class EmailService {
 
     const email = userProfile.email;
     const subject = `Order Confirmation`;
-    const templateName = 'buyer-order-confirmation.hbs';
+    const templateName = 'order-confirmation.hbs';
     const templateData = {
       myOrdersUrl: 'https://shoppr.com/orders',
-      dropName: drops[0].name,
+      drops: drops,
       dropDescription: drops[0].description,
       customerName: userProfile.name,
       deliveryType: 'Local Delivery',

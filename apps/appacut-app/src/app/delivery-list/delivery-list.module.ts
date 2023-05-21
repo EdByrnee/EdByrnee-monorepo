@@ -8,6 +8,7 @@ import { DeliveryListPageRoutingModule } from './delivery-list-routing.module';
 
 import { DeliveryListPage } from './delivery-list.page';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { DateAgoPipe } from '../pipes/date-ago.pipe';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -16,8 +17,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     FormsModule,
     IonicModule,
     DeliveryListPageRoutingModule,
-    GoogleMapsModule
+    GoogleMapsModule,
   ],
-  declarations: [DeliveryListPage],
+  declarations: [DeliveryListPage, DateAgoPipe],
 })
 export class DeliveryListPageModule {}

@@ -152,6 +152,10 @@ export class Tab3Page {
     if (role === 'confirm') this.authService.logout(true);
   }
 
+  goSell(){
+    this.navControl.navigateForward('/new-drop');
+  }
+
   requestOTP() {
     this.authService
       .requestOtp(this.emailForm.controls['mobile_number'].value)

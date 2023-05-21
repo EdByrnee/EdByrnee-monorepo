@@ -20,9 +20,10 @@ import { NotificationService } from '../core/notifications';
 import { ConfigService } from '../core/config';
 import { BasketService } from '../core/basket.service';
 import { DropItemsService } from '../core/drop-items';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DateAgoPipe],
   entryComponents: [],
   imports: [
     HttpClientModule,

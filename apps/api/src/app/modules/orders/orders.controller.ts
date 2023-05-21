@@ -112,12 +112,15 @@ export class OrdersController {
 
         await this.orderService.createMulti(user.uuid, drops, body);
         const multiOrder = await this.orderService.get(body.uuid);
-        await this.emailService.sendOrderConfirmationEmail(
-          user.uuid,
-          drops as any,
-          body,
-          multiOrder
-        );
+
+        /* Some users placing an order may not have an email address */
+
+        // await this.emailService.sendOrderConfirmationEmail(
+        //   user.uuid,
+        //   drops as any,
+        //   body,
+        //   multiOrder
+        // );
       } catch (err) {
         Logger.error(err);
         throw new HttpException('Error creating order', 500);
