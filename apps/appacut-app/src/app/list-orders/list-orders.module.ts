@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ListOrdersPageRoutingModule } from './list-orders-routing.module';
 
 import { ListOrdersPage } from './list-orders.page';
+import { DateAgoPipe } from '../pipes/date-ago.pipe';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ListOrdersPage } from './list-orders.page';
     IonicModule,
     ListOrdersPageRoutingModule,
   ],
-  declarations: [ListOrdersPage],
+  declarations: [ListOrdersPage, DateAgoPipe],
 })
 export class ListOrdersPageModule {}

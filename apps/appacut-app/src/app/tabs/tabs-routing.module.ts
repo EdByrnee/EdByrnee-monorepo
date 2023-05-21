@@ -20,7 +20,7 @@ const routes: Routes = [
       {
         path: 'list-orders',
         loadChildren: () =>
-          import('../new-drop/new-drop.module').then((m) => m.NewDropPageModule),
+          import('../list-orders/list-orders.module').then((m) => m.ListOrdersPageModule),
       },
       {
         path: 'tab2',

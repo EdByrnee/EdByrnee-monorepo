@@ -88,17 +88,20 @@ export class OrderService {
     newOrder.order_status = 'OPEN';
     newOrder.buyerUuid = currentUserUuid;
 
-    switch (deliveryMethod) {
-      case 'LOCAL_DELIVERY':
-        newOrder.deliveryMethod = 'LOCAL_DELIVERY';
-        newOrder.deliveryAddressLine1 = order.deliveryAddressLine1;
-        newOrder.deliveryAddressLine2 = order.deliveryAddressLine2;
-        newOrder.deliveryAddressCity = order.deliveryAddressCity;
-        newOrder.deliveryAddressPostcode = order.deliveryAddressPostcode;
-        newOrder.deliveryAddressCountry = order.deliveryAddressCountry;
-        break;
-      default:
-        throw new Error('Invalid delivery method');
+    newOrder.deliveryMethod = 'LOCAL_DELIVERY';
+    newOrder.deliveryAddressLine1 = order.deliveryAddressLine1;
+    newOrder.deliveryAddressLine2 = order.deliveryAddressLine2;
+    newOrder.deliveryAddressCity = order.deliveryAddressCity;
+    newOrder.deliveryAddressPostcode = order.deliveryAddressPostcode;
+    newOrder.deliveryAddressCountry = order.deliveryAddressCountry;
+
+    try {
+      const geoCode = await this.geoCodePostcode(order.deliveryAddressPostcode);
+      newOrder.deliveryLat = geoCode.result.latitude;
+      newOrder.deliveryLng = geoCode.result.longitude;
+    } catch (err) {
+      Logger.error(err);
+      throw err;
     }
 
     console.log(`Creating order ${JSON.stringify(newOrder)}`);
@@ -126,6 +129,14 @@ export class OrderService {
       console.log(err);
       throw err;
     }
+  }
+
+  async geoCodePostcode(postcode: string): Promise<any> {
+    const response = await fetch(
+      `https://api.postcodes.io/postcodes/${postcode}`
+    );
+    const data = await response.json();
+    return data;
   }
 
   async getAllForUser(userUuid: string): Promise<any> {

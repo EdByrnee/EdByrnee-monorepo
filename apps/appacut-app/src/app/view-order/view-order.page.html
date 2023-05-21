@@ -17,27 +17,6 @@
 
   <ion-list inset="true">
     <ion-item>
-      <ion-label>Drop Name</ion-label>
-      <ion-label>
-        <h2>{{ order.dropName }}</h2>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Maker Name</ion-label>
-      <ion-label>
-        <h2>{{ order.makerName }}</h2>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Order Date</ion-label>
-      <ion-label>
-        <h2>{{ order.createdAt | date:"dd MMM hh:mm" }}</h2>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
       <ion-label>Order Status</ion-label>
       <ion-label>
         <h2 *ngIf="order.order_status === 'OPEN'" style="color: orange">
@@ -46,6 +25,13 @@
         <h2 *ngIf="order.order_status === 'CLOSED'" style="color: green">
           Complete
         </h2>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Order Date</ion-label>
+      <ion-label>
+        <h2>{{ order.createdAt | date:"dd MMM hh:mm" }}</h2>
       </ion-label>
     </ion-item>
 
@@ -60,25 +46,6 @@
       <ion-label>Order Number</ion-label>
       <ion-label>
         <h2>{{ order.uuid }}</h2>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Shipping Method</ion-label>
-      <ion-label>
-        <h2>
-          <ion-text *ngIf="order.deliveryMethod === 'NATIONAL_DELIVERY'">
-            National Delivery
-          </ion-text>
-
-          <ion-text *ngIf="order.deliveryMethod === 'LOCAL_DELIVERY'">
-            Local Delivery
-          </ion-text>
-
-          <ion-text *ngIf="order.deliveryMethod === 'COLLECTION'">
-            Collection
-          </ion-text>
-        </h2>
       </ion-label>
     </ion-item>
   </ion-list>

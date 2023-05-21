@@ -126,4 +126,18 @@ export class MultiOrder extends Model<MultiOrder> {
     allowNull: true,
   })
   deliveredAt: string;
+
+  /* deliveryLat */
+  @Column({
+    type: DataType.DOUBLE(15, 2),
+    allowNull: true,
+  })
+  deliveryLat: number;
+
+  /* deliveryLng */
+  @Column({
+    type: DataType.DOUBLE(15, 2),
+    allowNull: true,
+  })
+  deliveryLng: number;
 }
