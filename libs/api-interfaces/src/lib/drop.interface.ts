@@ -1,4 +1,5 @@
-import { DropStatus } from "./interface/drop-status.interface";
+import { IDropItem } from './drop-item.interface';
+import { DropStatus } from './interface/drop-status.interface';
 
 export interface IDrop {
   uuid: string;
@@ -32,4 +33,5 @@ export interface IDrop {
   localDeliveryLng?: number;
   localDeliveryRadius?: number;
   itemCode: string;
+  dropItems?: IDropItem[];
 }

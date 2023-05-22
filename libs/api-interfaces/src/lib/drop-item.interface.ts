@@ -7,4 +7,6 @@ export interface IDropItem {
   withDriver: boolean;
   driverUuid: string;
   location: any;
+  createdAt: string;
+  updatedAt: string;
 }

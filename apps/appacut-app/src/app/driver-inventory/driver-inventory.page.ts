@@ -3,7 +3,6 @@ import { IDrop, IDropItem } from '@shoppr-monorepo/api-interfaces';
 import { DropsService } from '../../core/drops';
 import { Observable } from 'rxjs';
 import { ModalController } from '@ionic/angular';
-import { DriverReplenishWarehouseStockPageModule } from '../driver-replenish-warehouse-stock/driver-replenish-warehouse-stock.module';
 import { DriverReplenishWarehouseStockPage } from '../driver-replenish-warehouse-stock/driver-replenish-warehouse-stock.page';
 import { DropItemsService } from '../../core/drop-items';
 import { AssignToDriverPage } from '../assign-to-driver/assign-to-driver.page';
