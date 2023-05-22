@@ -173,6 +173,10 @@ export class PaymentService {
     newOrderUuid: string,
     dropUuids: string[]
   ) {
+
+
+    const deliveryAddressPostcode = prompt('Enter demo postcode', 'L8 7LW')
+
     const createOrderObj: ICreateMultiOrder = {
       uuid: newOrderUuid,
       dropUuids: dropUuids,
@@ -180,7 +184,7 @@ export class PaymentService {
       deliveryAddressLine1: '26 Kingscourt Road',
       deliveryAddressLine2: '',
       deliveryAddressCity: 'Liverpool',
-      deliveryAddressPostcode: 'L13 3DE',
+      deliveryAddressPostcode: deliveryAddressPostcode as string,
       deliveryAddressCountry: 'England'
     };
     return createOrderObj;

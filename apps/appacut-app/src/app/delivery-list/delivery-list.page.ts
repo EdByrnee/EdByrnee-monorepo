@@ -71,7 +71,7 @@ export class DeliveryListPage implements OnInit {
             b: 255,
             a: 1,
           },
-          iconUrl: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+          iconUrl: "/assets/maps/hb.png"
         });
 
         for (const delivery of deliveries) {
