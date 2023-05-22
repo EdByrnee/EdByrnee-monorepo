@@ -33,7 +33,7 @@
 
   <ion-accordion-group>
     <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="start"       *ngFor="let item of (allDrops$ | async)">
-      <ion-item slot="header" color="light">
+      <ion-item slot="header" color="rose">
         <ion-label>
           <h4>({{ item.itemCode }}) {{item.name}}</h4>
           <p class="primary">You/Drivers/Warehouse : 0/{{ item.qty_available }}/0</p>
