@@ -17,14 +17,16 @@ import { EMAIL_GATEWAY } from '../../core/database/infra/gateways/email/smtp/ema
 import { IEmailGatewayPort } from '../../core/database/ports/email-gateway.port';
 import * as uuid from 'uuid';
 import { IUploadResult } from '../files/interfaces/upload-result.interface';
-import { USER_PHOTOS_REPO } from './auth.providers';
+import { USER_PHOTOS_REPO, USER_ROLE_REPO } from './auth.providers';
 import { UserPhoto } from './entities/user-photos.entity';
 import { Op } from 'sequelize';
+import { UserRole } from './entities/user-role.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
     @Inject('USER_REPO') private userRepo: IRepositoryPort<UserProfile>,
+    @Inject(USER_ROLE_REPO) private userRoleRepo: IRepositoryPort<UserRole>,
     @Inject(USER_PHOTOS_REPO)
     private userProfilePhotoRepo: IRepositoryPort<UserPhoto>,
     @Inject('PASSWORD_RESET_TOKEN_REPO')
@@ -34,6 +36,13 @@ export class AuthService {
     @Inject(EMAIL_GATEWAY)
     private emailGateway: IEmailGatewayPort
   ) {}
+
+  async getAllDrivers() {
+    const user_roles = await this.userRoleRepo.findAll({
+      role_name: 'driver',
+    });
+    return user_roles.map((user_role) => user_role.userProfile);
+  }
 
   async patchUserPhotos(
     userUuid: string,
@@ -147,7 +156,6 @@ export class AuthService {
   }
 
   public async loginViaOtp(otp: string, otp_token: string) {
-
     Logger.log(`Attemping login via otp`);
     Logger.log(`otp is ${otp}, otp_token is ${otp_token}`);
 

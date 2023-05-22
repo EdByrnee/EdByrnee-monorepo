@@ -11,6 +11,7 @@ import { Deploy } from 'cordova-plugin-ionic';
 import { UpdateService } from '../core/update.service';
 import { AnalyticsService } from '../core/analytics';
 import { ConfigService } from '../core/config';
+import { AuthService } from '../core/auth';
 
 @Component({
   selector: 'shoppr-monorepo-root',
@@ -25,7 +26,8 @@ export class AppComponent {
     private router: Router,
     private updateService: UpdateService,
     private analyticsService: AnalyticsService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private authService: AuthService
   ) {
     this.initializeApp();
   }
@@ -59,5 +61,7 @@ export class AppComponent {
     this.updateService.checkForBinaryUpdate();
 
     this.updateService.downloadUpdate();
+
+    this.authService.getAllDrivers().subscribe();
   }
 }

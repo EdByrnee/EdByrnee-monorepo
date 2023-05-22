@@ -31,4 +31,8 @@ export class UserRole extends Model<UserRole> {
     allowNull: false,
   })
   userId: number;
+
+  @BelongsTo(() => UserProfile)
+  userProfile: UserProfile;
+  
 }

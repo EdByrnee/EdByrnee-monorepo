@@ -47,6 +47,13 @@ export class AuthController {
   //   });
   // }
 
+  @Get('users/drivers')
+  @ApiOperation({ summary: 'Get all drivers' })
+  @ApiResponse({ status: 200, description: 'Drivers found' })
+  async getAllDrivers() {
+    return await this.authService.getAllDrivers();
+  }
+
   @Public()
   @Post('request-otp')
   @ApiResponse({ status: 200, description: 'Get OTP for Login' })

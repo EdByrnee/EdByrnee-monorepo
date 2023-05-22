@@ -33,6 +33,10 @@ export class AuthService {
 
   public demoMode$ = new BehaviorSubject<boolean>(true);
 
+  public allDrivers$: BehaviorSubject<IUserProfile[]> = new BehaviorSubject<
+    IUserProfile[]
+  >([]);
+
   constructor(
     private navController: NavController,
     private http: HttpClient,
@@ -65,7 +69,7 @@ export class AuthService {
       .pipe(
         tap((ok: any) => {
           // Save otp token to local storage
-          console.log('otp_token', ok.otp_token)
+          console.log('otp_token', ok.otp_token);
           localStorage.setItem('otp_token', ok.otp_token);
         })
       );
@@ -258,6 +262,16 @@ export class AuthService {
       .pipe(
         tap((res) => {
           this.suggestedMakers$.next(res);
+        })
+      );
+  }
+
+  getAllDrivers() {
+    return this.http
+      .get<IUserProfile[]>(this.apiUrl + '/api/auth/users/drivers')
+      .pipe(
+        tap((res) => {
+          this.allDrivers$.next(res);
         })
       );
   }

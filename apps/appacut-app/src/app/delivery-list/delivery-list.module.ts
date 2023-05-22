@@ -9,6 +9,7 @@ import { DeliveryListPageRoutingModule } from './delivery-list-routing.module';
 import { DeliveryListPage } from './delivery-list.page';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
+import { UserProfilePipe } from '../pipes/user-profile-pipe';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -19,6 +20,6 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
     DeliveryListPageRoutingModule,
     GoogleMapsModule,
   ],
-  declarations: [DeliveryListPage, DateAgoPipe],
+  declarations: [DeliveryListPage, DateAgoPipe, UserProfilePipe],
 })
 export class DeliveryListPageModule {}

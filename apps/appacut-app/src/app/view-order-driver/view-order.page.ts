@@ -48,7 +48,7 @@ export class ViewOrderPage implements OnInit {
     this.currentUserUuid = this.authService.currentUser$.value?.uuid || '';
   }
 
-  populateDrops(){
+  populateDrops() {
     this.loading = true;
     this.order?.multiOrderLines?.forEach((line) => {
       const allDrops = this.dropService.allDrops$.getValue();
@@ -75,14 +75,17 @@ export class ViewOrderPage implements OnInit {
       }
     );
 
-    this.dropItemService.getDropItemsForCurrentUser().subscribe((ok) => {
-      // Populate IDrop with atHand here so show how many of a given item are currently availabel to a dliver
+    this.dropService.getDrops().subscribe((drops) => {
+      this.order.multiOrderLines?.forEach((orderLine) => {
+        const drop = drops.find((drop) => drop.uuid === orderLine.dropUuid);
+        if (drop) {
+          orderLine.drop = drop;
+        }
+      });
     });
   }
 
-  packItem(){
-    
-  }
+  packItem() {}
 
   async startPacking() {
     /* Confirm Release /*/

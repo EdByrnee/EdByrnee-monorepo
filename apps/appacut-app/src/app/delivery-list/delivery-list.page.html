@@ -42,14 +42,14 @@
         <ion-avatar slot="start" *ngIf="!order.driverUuid">
           <img
             alt="Silhouette of a person's head"
-            [src]="'https://ui-avatars.com/api/?name=?&background=EE4B2B&color=fff'"
+            [src]="'https://ui-avatars.com/api/?name=?&background=e3e3e3&color=fff'"
           />
         </ion-avatar>
 
         <ion-avatar slot="start" *ngIf="order.driverUuid">
           <img
             alt="Silhouette of a person's head"
-            [src]="'https://ui-avatars.com/api/?name=E&background=0D8ABC&color=fff'"
+            [src]="(order.driverUuid | userProfile)?.photoUrl"
           />
         </ion-avatar>
 
