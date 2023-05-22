@@ -4,7 +4,7 @@
   padding-bottom: 6px;
   padding-right: 0px;
 
-  h6{
+  h6 {
     margin: 0px 0px 8px 0px;
   }
 
@@ -23,7 +23,7 @@
   padding-bottom: 15px;
 }
 
-ion-avatar{
+ion-avatar {
   border: solid #e3e3e3 1px;
   width: 70px;
   height: 70px;
@@ -45,12 +45,12 @@ ion-avatar{
 }
 
 ion-title {
-  font-family: Nexa, sans-serif;
-  font-size: 18px;
+  font-family: Pixelmania, sans-serif;
+  font-size: 15px;
   --padding-top: 8px;
 }
 
-.padding{
+.padding {
   padding: 16px;
 }
 
@@ -60,7 +60,7 @@ ion-title {
   overflow: auto;
   white-space: nowrap;
 
-  shoppr-monorepo-horizontal-listing{
+  shoppr-monorepo-horizontal-listing {
     margin-right: 16px;
   }
 }
@@ -92,4 +92,74 @@ ion-title {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.eta {
+  text-align: center;
+  background: none;
+}
+
+.rainbow-text {
+  position: relative;
+  color: #000;
+  background: #e3e3e3;
+  mix-blend-mode: multiply;
+  overflow: hidden;
+
+  // text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  padding: 2px 4px 6px;
+  margin-left: -4px;
+  margin-bottom: 12px;
+}
+.rainbow-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -100%;
+  background: white
+    repeating-linear-gradient(
+      90deg,
+      #14ffe9 0%,
+      #ffc800 16.66666%,
+      #ff00e0 33.33333%,
+      #14ffe9 50%
+    );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: move 7s linear infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
+@supports not (mix-blend-mode: multiply) {
+  .rainbow-text {
+    -webkit-text-fill-color: transparent;
+    background-clip: text !important;
+    background: white
+      repeating-linear-gradient(90deg, #14ffe9, #ffc800, #ff00e0, #14ffe9);
+    text-shadow: none;
+  }
+  .rainbow-text::before {
+    content: none;
+  }
+}
+
+.small-text{
+  font-size: 12px;
+}
+
+.subtext{
+  text-align: center;
+  font-weight: 900;
+  font-size: 12px;
+  // color: #2f2f2f;
 }

@@ -1,32 +1,34 @@
 <ion-header [translucent]="true">
-  
-
-  <ion-toolbar color="light">
-
+  <ion-toolbar color="secondary" style="padding: 16px 0px;">
     <ion-buttons slot="start">
-    <ion-button (click)="onSetLocation()" color="secondary">
-      <ion-icon name="navigate-outline"></ion-icon>
-      <span *ngIf="(postcode$ | async) as postcode"> {{ postcode }} </span>
-    </ion-button>
-  </ion-buttons>
-
-
-    <ion-title> SUGAR RUSH </ion-title>
-
-
-    <ion-buttons slot="end">
-      <ion-button (click)="onClickBasket()" color="secondary">
-        <ion-icon name="basket-outline"></ion-icon>
-        {{ basketTotal$ | async | currency:"GBP":true }}
+      <ion-button (click)="onSetLocation()" color="light">
+        <ion-icon name="navigate-outline"></ion-icon>
+        <span class="small-text" *ngIf="(postcode$ | async) as postcode">
+          {{ postcode }}
+        </span>
       </ion-button>
     </ion-buttons>
 
+    <ion-title> SUGAR RUSH </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="onClickBasket()" color="light">
+        <ion-icon name="basket-outline"></ion-icon>
+        <span class="small-text">
+          {{ basketTotal$ | async | currency:"GBP":true }}
+        </span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar color="warning">
+    <div class="subtext" style="width: 100%;">
+      ESTIMATED DELIVERY TIME: 10-28 MINUTES  
+    </div>
   </ion-toolbar>
 
   <!-- <ion-toolbar style="margin-bottom: -30px;"></ion-toolbar> -->
 
-  <ion-toolbar>
-    <!-- <ion-searchbar
+  <!-- <ion-searchbar
       animated="true"
       placeholder="Find anything"
       show-cancel-button="focus"
@@ -36,11 +38,12 @@
       (ionCancel)="searching = false"
     ></ion-searchbar> -->
 
-    <ion-title>
-      16-24 MINUTES 
-    </ion-title> 
-
-  </ion-toolbar>
+  <!-- <div class="eta">
+        <ion-icon name="rocket-outline"></ion-icon>
+        <span>
+          <strong>15-28 mins</strong>
+        </span>
+      </div> -->
 </ion-header>
 
 <ion-content class="" *ngIf="!searching">
@@ -61,8 +64,8 @@
       </ion-card-header>
 
       <ion-card-content>
-        You can see items for sale - but you can't buy anything
-        yet. Check back in a few days!
+        You can see items for sale - but you can't buy anything yet. Check back
+        in a few days!
       </ion-card-content>
 
       <!-- <ion-button fill="clear" color="secondary">Remind me</ion-button> -->
