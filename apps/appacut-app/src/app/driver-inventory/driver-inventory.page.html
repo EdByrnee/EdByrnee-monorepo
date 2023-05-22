@@ -26,27 +26,41 @@
   </ion-list> -->
 
   <h4>Inventory</h4>
-  <!-- 
-  <pre>
-    {{ currentUserDropItems$ | async | json }}
-  </pre> -->
-
   <ion-accordion-group>
-    <ion-accordion value="first" toggleIcon="caret-down-circle" toggleIconSlot="start"       *ngFor="let item of (allDrops$ | async)">
-      <ion-item slot="header" color="rose">
+    <ion-accordion
+      value="first"
+      toggleIcon="caret-down-circle"
+      toggleIconSlot="start"
+      *ngFor="let item of (allDrops$ | async)"
+    >
+      <ion-item
+        slot="header"
+        color="rose"
+        [class.selected]="selectedDrop?.uuid === item.uuid"
+        (click)="selectDrop(item)"
+      >
         <ion-label>
           <h4>({{ item.itemCode }}) {{item.name}}</h4>
-          <p class="primary">You/Drivers/Warehouse : 0/{{ item.qty_available }}/0</p>
+          <p class="primary">
+            You/Drivers/Warehouse : 0/{{ item.qty_available }}/0
+          </p>
         </ion-label>
       </ion-item>
-      <div class="ion-padding" slot="content" *ngFor="let ol of item.dropItems">
-        {{ ol.createdAt | date:"dd-MM-yy hh:mm" }}
-        ({{ ol.expiration_date | date:"dd-MM-yy" }})
-        <small *ngIf="ol.driverUuid">
-          With Driver: {{ ol.driverUuid }}
-        </small>
-        <small *ngIf="ol.location">
-          At Location: {{ ol.location.location_name }}
+      <div
+        class="ion-padding"
+        slot="content"
+        *ngFor="let dropItem of item.dropItems"
+        (click)="selectDropItem(dropItem)"
+      >
+        <span [class.selected]="selectedDropItem?.uuid === dropItem.uuid">
+          {{ dropItem.uuid }}
+          {{ dropItem.createdAt | date:"dd-MM-yy hh:mm" }} ({{ dropItem.expiration_date |
+          date:"dd-MM-yy" }})
+        </span>
+
+        <small *ngIf="dropItem.driverUuid"> With Driver: {{ dropItem.driverUuid }} </small>
+        <small *ngIf="dropItem.location">
+          At Location: {{ dropItem.location.location_name }}
         </small>
       </div>
     </ion-accordion>

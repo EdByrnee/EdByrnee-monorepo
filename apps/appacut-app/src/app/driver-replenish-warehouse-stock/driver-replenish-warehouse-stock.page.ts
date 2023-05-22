@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ICreateDropItem, IDrop } from '@shoppr-monorepo/api-interfaces';
 import { DropsService } from '../../core/drops';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'shoppr-monorepo-driver-replenish-warehouse-stock',
@@ -33,7 +34,7 @@ export class DriverReplenishWarehouseStockPage implements OnInit {
 
     for (let i = 0; i < this.quantity; i++) {
       newDropItems.push({
-        uuid: this.drop.uuid,
+        uuid: uuid.v4(),
         expirationDate: this.expirationDate
       });
     }

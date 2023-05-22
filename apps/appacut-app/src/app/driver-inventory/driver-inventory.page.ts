@@ -13,30 +13,53 @@ import { AssignToDriverPage } from '../assign-to-driver/assign-to-driver.page';
   styleUrls: ['./driver-inventory.page.scss'],
 })
 export class DriverInventoryPage implements OnInit {
-
   allDrops$: Observable<IDrop[]> = this.dropsService.allDrops$;
 
-  currentUserDropItems$: Observable<IDropItem[]> = this.dropItemsService.currentUserDropItems$;
+  currentUserDropItems$: Observable<IDropItem[]> =
+    this.dropItemsService.currentUserDropItems$;
 
-  selectedDrop:IDrop | null  = null;
+  selectedDrop: IDrop | null = null;
+  selectedDropItem: IDropItem | null = null;
 
   constructor(
     private dropsService: DropsService,
     private dropItemsService: DropItemsService,
     private modalController: ModalController
-    ) {}
+  ) {}
 
   ngOnInit() {
-    console.log(`Loading all drops...`)
-    this.dropsService.getDrops().subscribe(drops=>{
-      this.selectedDrop = drops[0];
+    console.log(`Loading all drops...`);
+    this.dropsService.getDrops().subscribe((drops) => {
+      
     });
     this.dropItemsService.getDropItemsForCurrentUser().subscribe();
   }
 
+  selectDrop(drop: IDrop) {
+    /* highlight a drop within the accordion */
+    if (this.selectedDrop === drop) {
+      this.selectedDrop = null;
+      return;
+    }
+    else {
+      this.selectedDrop = drop;
+    }
+  }
+
+  selectDropItem(dropItem: IDropItem) {
+    /* highlight a drop within the accordion */
+    if (this.selectedDropItem === dropItem) {
+      this.selectedDropItem = null;
+      return;
+    }
+    else {
+      this.selectedDropItem = dropItem;
+    }
+  }
+
   addDriverInventory() {
     const driverWarehouseWareshouseStockModal = this.modalController.create({
-      component: AssignToDriverPage
+      component: AssignToDriverPage,
     });
     driverWarehouseWareshouseStockModal.then((modal) => modal.present());
   }
@@ -45,8 +68,8 @@ export class DriverInventoryPage implements OnInit {
     const driverWarehouseWareshouseStockModal = this.modalController.create({
       component: DriverReplenishWarehouseStockPage,
       componentProps: {
-        drop: this.selectedDrop
-      }
+        drop: this.selectedDrop,
+      },
     });
     driverWarehouseWareshouseStockModal.then((modal) => modal.present());
   }
