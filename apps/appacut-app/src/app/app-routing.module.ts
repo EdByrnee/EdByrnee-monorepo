@@ -103,13 +103,6 @@ const routes: Routes = [
       import('./checkout/checkout.module').then((m) => m.CheckoutPageModule),
   },
   {
-    path: 'view-order',
-    loadChildren: () =>
-      import('./view-order/view-order.module').then(
-        (m) => m.ViewOrderPageModule
-      ),
-  },
-  {
     path: 'view-order-driver',
     loadChildren: () =>
       import('./view-order-driver/view-order.module').then(

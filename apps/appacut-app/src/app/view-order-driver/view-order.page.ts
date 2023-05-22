@@ -33,6 +33,8 @@ export class ViewOrderPage implements OnInit {
 
   packing = false;
 
+  isDriver$ = this.authService.isDriver$;
+
   constructor(
     private route: ActivatedRoute,
     private orderService: OrdersService,

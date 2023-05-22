@@ -8,7 +8,7 @@ import {
   ToastController,
 } from '@ionic/angular';
 import { IUserProfile } from '@shoppr-monorepo/api-interfaces';
-import { BehaviorSubject, catchError, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, pipe, tap } from 'rxjs';
 import { environment } from '../environments/environment';
 import { AnalyticsService } from './analytics';
 
@@ -26,6 +26,12 @@ export class AuthService {
 
   public currentUser$: BehaviorSubject<IUserProfile | null> =
     new BehaviorSubject<IUserProfile | null>(null);
+
+  public isDriver$: any = this.currentUser$.pipe(
+    map((user) => {
+      return user?.userRoles.map((role) => role.role_name).includes('driver');
+    })
+  );
 
   public postcode$: BehaviorSubject<string | null> = new BehaviorSubject<
     string | null

@@ -12,7 +12,7 @@ export const USER_ROLE_REPO = 'USER_ROLE_REPO';
 export const authProviders = [
   {
     provide: USER_REPO,
-    useFactory: () => new SequelizeRepo<UserProfile>(UserProfile, [UserPhoto]),
+    useFactory: () => new SequelizeRepo<UserProfile>(UserProfile, [UserPhoto, UserRole]),
   },
   {
     provide: PASSWORD_RESET_TOKEN_REPO,

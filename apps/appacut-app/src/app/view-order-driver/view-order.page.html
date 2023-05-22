@@ -16,12 +16,13 @@
   </div> -->
 
   <div class="ion-padding">
-    <shoppr-monorepo-order-tracking [order]="order"></shoppr-monorepo-order-tracking>
+    <shoppr-monorepo-order-tracking
+      [order]="order"
+    ></shoppr-monorepo-order-tracking>
   </div>
 
-
-  <div class="ion-padding">
-    <ion-button (click)="packItem()" *ngIf="packing" style="width: 100%">
+  <div class="ion-padding scan-barcode" *ngIf="packing">
+    <ion-button (click)="packItem()" style="width: 100%">
       <ion-icon name="scan-circle-outline"></ion-icon>&nbsp; Scan Barcode
     </ion-button>
   </div>
@@ -36,9 +37,7 @@
           ({{ orderLine.drop?.itemCode }}) {{ orderLine.quantity }} x {{
           orderLine.line_title }}
         </h3>
-        <p>
-          You/Drivers/Warehouse ({{ orderLine.drop?.dropItems?.length }})
-        </p>
+        <p>You/Drivers/Warehouse ({{ orderLine.drop?.dropItems?.length }})</p>
       </ion-label>
     </ion-item>
   </ion-list>
@@ -53,46 +52,43 @@
 
     <ion-item>
       <ion-label>
-        <p> {{ order.deliveryAddressLine1 }}</p>
-        <p>{{ order.deliveryAddressLine2 }} </p>
+        <p>{{ order.deliveryAddressLine1 }}</p>
+        <p>{{ order.deliveryAddressLine2 }}</p>
         <p>{{ order.deliveryAddressCountry }}</p>
-        <p>{{ order.deliveryAddressCity }} </p>
-        <p> {{ order.deliveryAddressPostcode }}</p>
+        <p>{{ order.deliveryAddressCity }}</p>
+        <p>{{ order.deliveryAddressPostcode }}</p>
       </ion-label>
     </ion-item>
-
   </ion-list>
 
-<ion-footer>
+  <ion-footer *ngIf="isDriver$ | async">
+    <ion-button
+      expand="block"
+      color="success"
+      (click)="assignDriver()"
+      *ngIf="order.order_status === 'OPEN'"
+    >
+      Assign Delivery
+    </ion-button>
 
-  <ion-button
-    expand="block"
-    color="success"
-    (click)="assignDriver()"
-    *ngIf="order.order_status === 'OPEN'"
-  >
-    Assign Delivery
-  </ion-button>
+    <ion-button
+      expand="block"
+      color="success"
+      (click)="startPacking()"
+      *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
+    >
+      Start Packing
+    </ion-button>
 
-  <ion-button
-    expand="block"
-    color="success"
-    (click)="startPacking()"
-    *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
-  >
-    Start Packing
-  </ion-button>
-
-  <ion-button
-    expand="block"
-    color="danger"
-    (click)="releaseOrderFromDriver()"
-    *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
-  >
-    Release Delivery
-  </ion-button>
-</ion-footer>
-
+    <ion-button
+      expand="block"
+      color="danger"
+      (click)="releaseOrderFromDriver()"
+      *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
+    >
+      Release Delivery
+    </ion-button>
+  </ion-footer>
 </ion-content>
 
 <ng-template *ngIf="loading">

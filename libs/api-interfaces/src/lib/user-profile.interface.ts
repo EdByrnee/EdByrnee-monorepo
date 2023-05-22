@@ -16,4 +16,5 @@ export interface IUserProfile {
   location: string;
   userPhotos: any[];
   mobile_number: string;
+  userRoles: any[];
 }

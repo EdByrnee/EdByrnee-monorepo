@@ -1,8 +1,16 @@
 import { DropStatus } from '@shoppr-monorepo/api-interfaces';
-import { Table, Model, Column, DataType, HasOne, HasMany } from 'sequelize-typescript';
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  HasOne,
+  HasMany,
+} from 'sequelize-typescript';
 import { PasswordResetToken } from './user-password-reset-token';
 import { Exclude } from 'class-transformer';
 import { UserPhoto } from './user-photos.entity';
+import { UserRole } from './user-role.entity';
 
 @Table({ tableName: 'UserProfiles', paranoid: true })
 export class UserProfile extends Model<UserProfile> {
@@ -128,7 +136,7 @@ export class UserProfile extends Model<UserProfile> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: true
+    allowNull: true,
   })
   location: string;
 
@@ -138,6 +146,6 @@ export class UserProfile extends Model<UserProfile> {
   // @HasOne(() => EmailValidationToken)
   // emailValidationToken: EmailValidationToken;
 
-  // @HasOne(() => UserRole)
-  // userRole: UserRole;
+  @HasMany(() => UserRole)
+  userRoles: UserRole;
 }

@@ -88,7 +88,7 @@ export class CheckoutPage implements OnInit {
   clearModalsAndNavigate(uuid: string) {
     this.close();
     this.navController.navigateRoot('/tabs/tab1');
-    this.navController.navigateForward('/view-order/' + uuid);
+    this.navController.navigateForward('/view-order-driver/' + uuid);
   }
 
   close() {

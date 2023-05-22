@@ -21,12 +21,18 @@ export class ListOrdersPage implements OnInit {
     this.orderFilter = this.route.snapshot.params['filter'];
   }
 
-  ngOnInit() {
+  ionViewDidEnter(): void {
+    this.loadData();
+  }
+
+  loadData() {
     this.ordersService.getOrdersForUser().subscribe();
   }
 
+  ngOnInit() {}
+
   viewOrder(orderUuid: string) {
-    this.navController.navigateForward(`/view-order/${orderUuid}`);
+    this.navController.navigateForward(`/view-order-driver/${orderUuid}`);
   }
 
   openSupport() {}

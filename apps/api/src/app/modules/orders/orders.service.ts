@@ -150,10 +150,7 @@ export class OrderService {
       order: [['createdAt', 'DESC']],
     });
 
-    return {
-      forUser: userUuid,
-      sales: orders,
-    };
+    return orders;
   }
 
   async getAllDeliveries(): Promise<any> {

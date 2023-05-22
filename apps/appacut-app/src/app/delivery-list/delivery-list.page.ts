@@ -39,6 +39,10 @@ export class DeliveryListPage implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+  ionViewDidEnter() {
     this.loadAllData();
   }
 
