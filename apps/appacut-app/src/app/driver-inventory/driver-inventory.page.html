@@ -68,11 +68,11 @@
 
   <ion-footer>
     <div class="buttons">
-      <ion-button color="primary" (click)="addDriverInventory()">
+      <ion-button color="primary" (click)="addDriverInventory()" [disabled]="!selectedDropItem">
         <ion-icon name="arrow-down-circle-outline"></ion-icon>&nbsp; Assign to
         Driver
       </ion-button>
-      <ion-button (click)="replenishStock()">
+      <ion-button (click)="replenishStock()" [disabled]="!selectedDrop">
         <ion-icon name="home-outline"></ion-icon>&nbsp; Replenish Warehouse
         Stock
       </ion-button>

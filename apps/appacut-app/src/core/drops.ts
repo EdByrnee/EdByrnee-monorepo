@@ -4,6 +4,7 @@ import {
   ICreateDropItem,
   IDrop,
   IDropFeed,
+  IDropItem,
   IUpdateDrop,
 } from '@shoppr-monorepo/api-interfaces';
 import { HttpClient, HttpRequest } from '@angular/common/http';
@@ -106,14 +107,45 @@ export class DropsService {
     );
   }
 
-  updateItemDropLocation(dropItemUuid: string, locationOrDriverUuid: string, withDriver: boolean) {
-    return this.http.patch(
-      this.api + '/api/drops/items/' + dropItemUuid + '/location',
-      {
-        locationOrDriverUuid,
-        withDriver
-      }
+  private updateItemDrop(dropItemUuid: string, updates: Partial<IDropItem>) {
+    const dropItems = this.allDrops$.value.map((drop) => drop.dropItems).flat();
+
+    const dropItem = dropItems.find(
+      (dropItem) => dropItem?.uuid === dropItemUuid
     );
+
+    Object.assign(dropItem as any, updates);
+
+    this.allDrops$.next(this.allDrops$.value);
+  }
+
+  updateItemDropLocation(
+    dropItemUuid: string,
+    locationOrDriverUuid: string,
+    withDriver: boolean
+  ) {
+    return this.http
+      .patch(this.api + '/api/drops/items/' + dropItemUuid + '/location', {
+        locationOrDriverUuid,
+        withDriver,
+      })
+      .pipe(
+        tap((res: any) => {
+          if (withDriver) {
+            this.updateItemDrop(dropItemUuid, {
+              withDriver: true,
+              driverUuid: locationOrDriverUuid,
+              location: null,
+            });
+          } else {
+            this.updateItemDrop(dropItemUuid, {
+              withDriver: false,
+              driverUuid: null as any,
+              location: locationOrDriverUuid,
+            });
+          }
+        })
+      );
   }
 
   replenishWareshouseStock(dropUuid: string, newDropItems: ICreateDropItem[]) {
