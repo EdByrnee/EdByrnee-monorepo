@@ -1,12 +1,12 @@
 import { IDatabaseConfig } from './db-config.interface';
 
-const database = 'localdrop';
+const database = 'sugarrush';
 const dialect = 'mysql';
 const dialectModule = '';
 
 export const databaseConfig: IDatabaseConfig = {
   development: {
-    username: process.env.DB_USER || 'localdrop',
+    username: process.env.DB_USER || 'sugarrush',
     password: process.env.DB_PASS || 'Localdr0p1234',
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || '3306',
