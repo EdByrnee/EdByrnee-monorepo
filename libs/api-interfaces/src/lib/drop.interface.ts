@@ -34,4 +34,5 @@ export interface IDrop {
   localDeliveryRadius?: number;
   itemCode: string;
   dropItems?: IDropItem[];
+  summary?: any;
 }

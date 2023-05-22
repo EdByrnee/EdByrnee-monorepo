@@ -29,7 +29,7 @@
 
   <ion-list class="order-list" inset="true">
     <ion-list-header>
-      <ion-label>YOUR ORDER</ion-label>
+      <ion-label>YOUR ORDER.</ion-label>
     </ion-list-header>
     <ion-item *ngFor="let orderLine of order.multiOrderLines">
       <ion-label>
@@ -37,7 +37,25 @@
           ({{ orderLine.drop?.itemCode }}) {{ orderLine.quantity }} x {{
           orderLine.line_title }}
         </h3>
-        <p>You/Drivers/Warehouse ({{ orderLine.drop?.dropItems?.length }})</p>
+        <p class="stockLevels" *ngIf="isDriver$ | async">
+          You/Drivers/Warehouse ({{ orderLine.drop?.summary.totalItemsWithSelf
+          }})/({{ orderLine.drop?.summary.totalItemsWithDrivers }})/({{
+          orderLine.drop?.summary.totalItemsWithLocation }})
+          &nbsp; 
+          <ion-icon
+            class="icon-larger"
+            color="success"
+            *ngIf="orderLine.quantity <= orderLine.drop?.summary.totalItemsWithSelf"
+            name="checkmark-circle-outline"
+          ></ion-icon>
+
+          <ion-icon
+            class="icon-larger"
+            color="danger"
+            *ngIf="orderLine.quantity > orderLine.drop?.summary.totalItemsWithSelf"
+            name="bag-remove-outline"
+          ></ion-icon>
+        </p>
       </ion-label>
     </ion-item>
   </ion-list>

@@ -12,6 +12,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { tap } from 'rxjs/operators';
+import { AuthService } from './auth';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +57,10 @@ export class DropsService {
     collectionAddressPostcode: new FormControl(null, [Validators.required]),
   });
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+    ) {
     this.localDeliveryForm.disable();
     this.nationalDeliveryForm.disable();
     this.collectionForm.disable();
@@ -75,11 +79,32 @@ export class DropsService {
   }
 
   getDrops() {
+
+    const currentUserUuid = this.authService.currentUser$.getValue()?.uuid;
+
     console.log(`getDrops()`);
     return this.http.get<IDrop[]>(this.api + '/api/drops').pipe(
       tap((res: IDrop[]) => {
         console.log(`Here are all the drops`);
         console.log(res);
+
+        /* add summary counts to each drop */
+        res.forEach((drop) => {
+          drop.summary = {
+            totalItems: drop?.dropItems?.length,
+            totalItemsWithDrivers: drop?.dropItems?.filter(
+              (dropItem) => dropItem.withDriver
+            ).length,
+            totalItemsWithSelf: drop?.dropItems?.filter(
+              (dropItem) => dropItem.driverUuid === currentUserUuid
+            ).length,
+            totalItemsWithLocation: drop?.dropItems?.filter(
+              (dropItem) => dropItem.location
+            ).length,
+          };
+        });
+
+
         this.allDrops$.next(res);
       })
     );
