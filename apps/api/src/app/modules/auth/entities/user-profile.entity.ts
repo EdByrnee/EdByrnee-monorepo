@@ -147,5 +147,5 @@ export class UserProfile extends Model<UserProfile> {
   // emailValidationToken: EmailValidationToken;
 
   @HasMany(() => UserRole)
-  userRoles: UserRole;
+  userRoles: UserRole[];
 }
