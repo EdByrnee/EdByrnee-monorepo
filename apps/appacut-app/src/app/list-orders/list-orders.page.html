@@ -21,7 +21,7 @@
 
   <ion-list [inset]="false">
     <ion-item
-      *ngFor="let order of (orders$ | async)"
+      *ngFor="let order of (myOrders$ | async)"
       (click)="viewOrder(order.uuid)"
       button
     >
@@ -31,7 +31,7 @@
           [src]="'https://ui-avatars.com/api/?name=?&background=EE4B2B&color=fff'"
         />
       </ion-avatar>
-
+<!-- 
       <ion-avatar slot="start" *ngIf="order.driverUuid">
         <img
           alt="Silhouette of a person's head"
@@ -63,9 +63,7 @@
             Completed
           </ion-text>
         </p>
-
-        <!-- <ion-button slot="end"> Mark complete </ion-button> -->
-      </ion-label>
+      </ion-label> -->
     </ion-item>
   </ion-list>
 </ion-content>

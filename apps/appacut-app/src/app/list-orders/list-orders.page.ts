@@ -9,7 +9,7 @@ import { OrdersService } from '../../core/orders';
   styleUrls: ['./list-orders.page.scss'],
 })
 export class ListOrdersPage implements OnInit {
-  orders$ = this.ordersService.orders;
+  myOrders$ = this.ordersService.myOrders;
 
   orderFilter: string;
 

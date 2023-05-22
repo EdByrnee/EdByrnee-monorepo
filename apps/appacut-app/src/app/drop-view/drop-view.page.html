@@ -171,7 +171,7 @@
           </small>
         </div>
 
-        <div class="buttons">
+        <div class="qty_buttons">
           <ion-button
             *ngIf="drop.makerUuid !== (currentUser$ | async)?.uuid"
             class="buy-now-button"
@@ -183,7 +183,7 @@
           >
             -
           </ion-button>
-          <span class="">
+          <span class="qty_in_basket">
             {{ qty_of_item_in_basket$ | async }}
           </span>
           <ion-button

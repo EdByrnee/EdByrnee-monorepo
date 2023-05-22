@@ -1,0 +1,104 @@
+<section class="root">
+  <figure>
+    <img
+      src="https://i.pinimg.com/originals/78/d8/bc/78d8bcedeea91115b4d8352793cc3db5.gif"
+      alt=""
+    />
+    <figcaption>
+      <h2>Thank you for your order!</h2>
+      <!-- <h6>Category</h6> -->
+      <h4>Order Total: {{ order.order_total | currency : 'GBP' : true }}</h4>
+    </figcaption>
+  </figure>
+</section>
+<br />
+
+<section class="root">
+  <figure>
+    <figcaption>
+      <h1>Track your order</h1>
+      <!-- <h6>Category</h6> -->
+    </figcaption>
+  </figure>
+  <div class="order-track">
+    <div class="order-track-step">
+      <div class="order-track-status">
+        <span class="order-track-status-dot"></span>
+        <span class="order-track-status-line"></span>
+      </div>
+      <div class="order-track-text">
+        <p class="order-track-text-stat">Order Received</p>
+        <span class="order-track-text-sub">{{
+          order.createdAt | date : 'hh:mm'
+        }}</span>
+      </div>
+    </div>
+    <!-- <div class="order-track-step">
+        <div class="order-track-status">
+          <span class="order-track-status-dot"></span>
+          <span class="order-track-status-line"></span>
+        </div>
+        <div class="order-track-text">
+          <p class="order-track-text-stat">Order Packed</p>
+          <span class="order-track-text-sub">{{ order.createdAt | date:"hh:mm - dd-MMM-YY" }}</span>
+        </div>
+      </div> -->
+    <div class="order-track-step">
+      <div class="order-track-status">
+        <span
+          class="order-track-status-dot"
+          [class.open-status]="order.order_status === 'OPEN'"
+        ></span>
+        <span class="order-track-status-line"></span>
+      </div>
+      <div class="order-track-text">
+        <p class="order-track-text-stat">
+          <ion-spinner
+            color="primary"
+            *ngIf="order.order_status === 'OPEN'"
+          ></ion-spinner>
+          Driver Assigned
+        </p>
+        <span
+          class="order-track-text-sub"
+          *ngIf="order.order_status === 'OPEN'"
+        >
+          Estimated: 1 minute
+        </span>
+      </div>
+    </div>
+    <div class="order-track-step">
+      <div class="order-track-status">
+        <span
+          class="order-track-status-dot open-status"
+          [class.open-status]="
+            order.order_status === 'OPEN' ||
+            order.order_status === 'ASSIGNED_TO_DRIVER'
+          "
+        ></span>
+        <span class="order-track-status-line"></span>
+      </div>
+      <div class="order-track-text">
+        <p class="order-track-text-stat">
+          <ion-spinner
+            color="primary"
+            *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
+          ></ion-spinner>
+          Order Delivered
+        </p>
+        <span class="order-track-text-sub">{{
+          order.deliveredAt | date : 'hh:mm'
+        }}</span>
+        <span
+          class="order-track-text-sub"
+          *ngIf="
+            order.order_status === 'OPEN' ||
+            order.order_status === 'ASSIGNED_TO_DRIVER'
+          "
+        >
+          Estimated: 10 minutes
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

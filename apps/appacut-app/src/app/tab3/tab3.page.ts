@@ -129,6 +129,11 @@ export class Tab3Page {
   goToEditProfile() {
     this.navControl.navigateForward('/profile-edit');
   }
+
+  goOrders() {
+    this.navControl.navigateForward('list-orders');
+  }
+
   async signOut() {
     const alert = await this.alertController.create({
       header: 'Are you sure you wish to log out?',
@@ -152,7 +157,7 @@ export class Tab3Page {
     if (role === 'confirm') this.authService.logout(true);
   }
 
-  goSell(){
+  goSell() {
     this.navControl.navigateForward('/new-drop');
   }
 

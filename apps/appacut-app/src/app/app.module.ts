@@ -20,7 +20,6 @@ import { NotificationService } from '../core/notifications';
 import { ConfigService } from '../core/config';
 import { BasketService } from '../core/basket.service';
 import { DropItemsService } from '../core/drop-items';
-import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 @NgModule({
   declarations: [AppComponent],
@@ -70,7 +69,7 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
       useClass: PaymentService,
     },
     UpdateService,
-    BasketService
+    BasketService,
   ],
   bootstrap: [AppComponent],
 })

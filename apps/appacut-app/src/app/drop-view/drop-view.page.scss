@@ -70,3 +70,18 @@ capacitor-google-map {
   font-size: 20px;
   font-weight: bold;
 }
+
+.qty_buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.qty_in_basket {
+  font-size: 18px;
+  height: 100%;
+  // padding: 0px 8px;
+  text-align: center;
+  width: 24px;
+}

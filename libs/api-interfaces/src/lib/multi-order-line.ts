@@ -10,4 +10,6 @@ export interface IMultiOrderLine {
   line_title: string;
   dropUuid: string;
   drop?: IDrop;
+  assignedToDriverAt?: string;
+  deliveredAt?: string;
 }

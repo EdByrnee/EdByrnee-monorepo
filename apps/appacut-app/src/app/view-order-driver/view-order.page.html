@@ -3,52 +3,22 @@
     <ion-buttons>
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>View Order</ion-title>
+    <ion-title>Order #1234</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="!loading">
-  <div class="ion-padding">
+  <!-- <div class="ion-padding">
     <h2 style="text-align: center; color: #2f2f2f">
       <ion-icon name="heart" style="color: #a7b974"></ion-icon>
       <span style="color: #a7b974"> Thank you </span>for your order!
     </h2>
+  </div> -->
+
+  <div class="ion-padding">
+    <shoppr-monorepo-order-tracking [order]="order"></shoppr-monorepo-order-tracking>
   </div>
 
-  <ion-list inset="true">
-    <ion-item>
-      <ion-label>Order Date</ion-label>
-      <ion-label>
-        <h2>{{ order.createdAt | date:"dd MMM hh:mm" }}</h2>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Order Status</ion-label>
-      <ion-label>
-        <h2 *ngIf="order.order_status === 'OPEN'" style="color: orange">
-          Open
-        </h2>
-        <h2 *ngIf="order.order_status === 'CLOSED'" style="color: green">
-          Complete
-        </h2>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Order Total</ion-label>
-      <ion-label>
-        <h2>{{ order.order_total | currency:"GBP":true }}</h2>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Order Number</ion-label>
-      <ion-label>
-        <h2>{{ order.uuid }}</h2>
-      </ion-label>
-    </ion-item>
-  </ion-list>
 
   <div class="ion-padding">
     <ion-button (click)="packItem()" *ngIf="packing" style="width: 100%">
@@ -98,16 +68,9 @@
       <ion-label> {{ order.deliveryAddressCountry }} </ion-label>
     </ion-item>
   </ion-list>
+</ion-content>
 
-  <div class="order-update-status-buttons ion-padding">
-    <!-- <ion-button
-      expand="block"
-      color="danger"
-      *ngIf="order.order_status === 'OPEN' && order.sellerUuid === currentUserUuid"
-    >
-      Cancel Order
-    </ion-button> -->
-
+<!-- <ion-footer>
     <ion-button
       expand="block"
       color="success"
@@ -134,16 +97,7 @@
     >
       Release Delivery
     </ion-button>
-
-    <!-- <ion-button
-      expand="block"
-      color="danger"
-      (click)="updateOrderStatus('OPEN')"
-    >
-      Re-open order
-    </ion-button> -->
-  </div>
-</ion-content>
+</ion-footer> -->
 
 <ng-template *ngIf="loading">
   <ion-content>

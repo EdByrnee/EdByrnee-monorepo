@@ -22,7 +22,7 @@ import { MapsService } from './maps.service';
 export class OrdersService {
   public api = environment.api;
 
-  orders: BehaviorSubject<IMultiOrder[]> = new BehaviorSubject<any[]>([]);
+  myOrders: BehaviorSubject<IMultiOrder[]> = new BehaviorSubject<any[]>([]);
 
   deliveries: BehaviorSubject<IMultiOrder[]> = new BehaviorSubject<any[]>([]);
 
@@ -36,7 +36,7 @@ export class OrdersService {
   getOrdersForUser() {
     return this.http.get<any>(this.api + '/api/orders').pipe(
       tap((res) => {
-        this.orders.next(res);
+        this.myOrders.next(res);
       })
     );
   }
@@ -171,8 +171,8 @@ export class OrdersService {
             },
           });
 
-          const currentMultiOrders = this.orders.getValue();
-          this.orders.next([...currentMultiOrders, newMultiOrder]);
+          const currentMultiOrders = this.myOrders.getValue();
+          this.myOrders.next([...currentMultiOrders, newMultiOrder]);
         })
       );
   }

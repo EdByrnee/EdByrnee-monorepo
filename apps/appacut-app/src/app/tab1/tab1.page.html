@@ -1,20 +1,32 @@
 <ion-header [translucent]="true">
-  <!-- <ion-toolbar>
-    <ion-title>
-      <img src="/assets/logo_black.png" width="150px;" />
-    </ion-title>
+  
+
+  <ion-toolbar color="light">
+
+    <ion-buttons slot="start">
+    <ion-button (click)="onSetLocation()" color="secondary">
+      <ion-icon name="navigate-outline"></ion-icon>
+      <span *ngIf="(postcode$ | async) as postcode"> {{ postcode }} </span>
+    </ion-button>
+  </ion-buttons>
+
+
+    <ion-title> SUGAR RUSH </ion-title>
+
+
     <ion-buttons slot="end">
-      <ion-button (click)="onSetLocation()">
-        <ion-icon name="navigate-outline"></ion-icon>
-        <span *ngIf="(postcode$ | async) as postcode"> {{ postcode }} </span>
+      <ion-button (click)="onClickBasket()" color="secondary">
+        <ion-icon name="basket-outline"></ion-icon>
+        {{ basketTotal$ | async | currency:"GBP":true }}
       </ion-button>
     </ion-buttons>
-  </ion-toolbar> -->
 
-  <ion-toolbar style="margin-bottom: -30px;"></ion-toolbar>
+  </ion-toolbar>
+
+  <!-- <ion-toolbar style="margin-bottom: -30px;"></ion-toolbar> -->
 
   <ion-toolbar>
-    <ion-searchbar
+    <!-- <ion-searchbar
       animated="true"
       placeholder="Find anything"
       show-cancel-button="focus"
@@ -22,18 +34,12 @@
       (ionBlur)="cancelSearchIfBlank($event)"
       (ionFocus)="searching = true"
       (ionCancel)="searching = false"
-    ></ion-searchbar>
-    <ion-buttons slot="end">
-      <ion-button (click)="onSetLocation()" color="secondary">
-        <ion-icon name="navigate-outline"></ion-icon>
-        <span *ngIf="(postcode$ | async) as postcode"> {{ postcode }} </span>
-      </ion-button>
+    ></ion-searchbar> -->
 
-      <ion-button (click)="onClickBasket()" color="secondary">
-        <ion-icon name="basket-outline"></ion-icon>
-        {{ basketTotal$ | async | currency:"GBP":true }}
-      </ion-button>
-    </ion-buttons>
+    <ion-title>
+      16-24 MINUTES 
+    </ion-title> 
+
   </ion-toolbar>
 </ion-header>
 

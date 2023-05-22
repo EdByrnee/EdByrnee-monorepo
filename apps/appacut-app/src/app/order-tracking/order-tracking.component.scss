@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600&display=swap');
+
+$melorraOrange: #f05a00;
+$subtleGrey: #e3e3e3;
+$blueShade1: #2c3e50;
+$blueShade2: #34495e;
+$boxShadowLight1: 0 2rem 5rem rgba(0,0,0,0.06);
+$boxShadwoDark1: 0 2rem 6rem rgba(0,0,0,0.1);
+
+
+*, *::after, *::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: $blueShade1;
+  font-family: 'Montserrat', sans-serif;
+  width: 40rem;
+  font-weight: 300;
+  min-height: 100vh;
+  position: relative;
+  display: block;
+  margin: 2rem auto;
+}
+
+h2, h4, h6 {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.root {
+  padding: 3rem 1.5rem;
+  border-radius: 20px;
+  box-shadow: $boxShadwoDark1;
+  zoom: 0.5;
+}
+
+figure {
+  display: flex;
+  & img {
+    width: 12rem;
+    height: 8rem;
+    // border-radius: 50%;
+    border: 1px solid $subtleGrey;
+    margin-right: 1.5rem;
+  }
+  
+  & figcaption {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+    & h4 {
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+    
+    & h6 {
+      font-size: 1rem;
+      font-weight: 300;
+    }
+    
+    & h2 {
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.order-track {
+  margin-top: 2rem;
+  padding: 0 1rem;
+  border-top: 1px dashed $blueShade1;
+  padding-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  
+  &-step {
+    display: flex;
+    height: 7rem;
+    
+    &:last-child {
+      overflow: hidden;
+      height: 4rem;
+      & .order-track-status span:last-of-type {
+        display: none;
+      }
+    }
+  }
+  
+  &-status {
+    margin-right: 1.5rem;
+    position: relative;
+    &-dot {
+      display: block;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      background: $melorraOrange;
+    }
+
+    &-line {
+      display: block;
+      margin: 0 auto;
+      width: 2px;
+      height: 7rem;
+      background: $melorraOrange;
+    }
+  }
+  
+  &-text {
+    &-stat {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+    
+    &-sub {
+      font-size: 1.3rem;
+      font-weight: 300;
+    }
+  }
+}
+
+.open-status {
+    background: white;
+    border: solid $melorraOrange 1px;
+}
+
+.order-track {
+  transition: all .3s height 0.3s;
+  transform-origin: top center;
+  // transform: scale(0);
+  // height: 0;
+}
