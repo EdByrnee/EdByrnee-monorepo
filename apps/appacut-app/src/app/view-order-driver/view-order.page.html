@@ -68,36 +68,38 @@
       <ion-label> {{ order.deliveryAddressCountry }} </ion-label>
     </ion-item>
   </ion-list>
+
+<ion-footer>
+
+  <ion-button
+    expand="block"
+    color="success"
+    (click)="assignDriver()"
+    *ngIf="order.order_status === 'OPEN'"
+  >
+    Assign Delivery
+  </ion-button>
+
+  <ion-button
+    expand="block"
+    color="success"
+    (click)="startPacking()"
+    *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
+  >
+    Start Packing
+  </ion-button>
+
+  <ion-button
+    expand="block"
+    color="danger"
+    (click)="releaseOrderFromDriver()"
+    *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
+  >
+    Release Delivery
+  </ion-button>
+</ion-footer>
+
 </ion-content>
-
-<!-- <ion-footer>
-    <ion-button
-      expand="block"
-      color="success"
-      (click)="assignDriver()"
-      *ngIf="order.order_status === 'OPEN'"
-    >
-      Assign Delivery
-    </ion-button>
-
-    <ion-button
-      expand="block"
-      color="success"
-      (click)="startPacking()"
-      *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
-    >
-      Start Packing
-    </ion-button>
-
-    <ion-button
-      expand="block"
-      color="danger"
-      (click)="releaseOrderFromDriver()"
-      *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'"
-    >
-      Release Delivery
-    </ion-button>
-</ion-footer> -->
 
 <ng-template *ngIf="loading">
   <ion-content>

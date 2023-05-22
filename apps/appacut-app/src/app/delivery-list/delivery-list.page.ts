@@ -27,6 +27,8 @@ export class DeliveryListPage implements OnInit {
     isFractionalZoomEnabled: true,
   };
 
+  loading = true;
+
   constructor(
     private ordersService: OrdersService,
     private navController: NavController,
@@ -37,6 +39,11 @@ export class DeliveryListPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loadAllData();
+  }
+
+  async loadAllData() {
+    this.loading = true;
     this.ordersService
       .getDeliveries()
       .subscribe(async (deliveries: IMultiOrder[]) => {
@@ -71,7 +78,7 @@ export class DeliveryListPage implements OnInit {
             b: 255,
             a: 1,
           },
-          iconUrl: "/assets/maps/hb.png"
+          iconUrl: '/assets/maps/hb.png',
         });
 
         for (const delivery of deliveries) {
@@ -82,7 +89,11 @@ export class DeliveryListPage implements OnInit {
             },
           });
         }
+        this.loading = false;
       });
+    // setTimeout(() => {
+    //   this.loadAllData();
+    // }, 30000);
   }
 
   viewOrder(orderUuid: string) {
