@@ -16,7 +16,9 @@ import * as confetti from 'canvas-confetti';
 import * as uuid from 'uuid';
 import { AnalyticsService } from '../../core/analytics';
 import { AuthService } from '../../core/auth';
-import { BasketService } from '../../core/basket.service';
+import { BasketService, IDiscount } from '../../core/basket.service';
+import { Observable } from 'rxjs';
+import { PromoCodeService } from '../../core/promo-code.service';
 
 @Component({
   selector: 'shoppr-monorepo-checkout',
@@ -39,6 +41,12 @@ export class CheckoutPage implements OnInit {
 
   _basketTotal$ = this.basketService.basketTotal$;
 
+  _discounts$: Observable<IDiscount[]> = this.basketService._discounts$;
+
+  applyPromoCode(code: string | number | null | undefined) {
+    // this.promoCodeService.apply(code);
+  }
+
   constructor(
     private modalCtrl: ModalController,
     private loadingController: LoadingController,
@@ -48,11 +56,14 @@ export class CheckoutPage implements OnInit {
     private paymentService: PaymentService,
     private analyticsService: AnalyticsService,
     private authService: AuthService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private promoCodeService: PromoCodeService
   ) {}
 
-  why(){
-    alert('Purcahses are currently disabled till launch day! Check back in a few days!')
+  why() {
+    alert(
+      'Purcahses are currently disabled till launch day! Check back in a few days!'
+    );
   }
 
   async pay(isDemo: string) {
@@ -65,7 +76,7 @@ export class CheckoutPage implements OnInit {
         await this.paymentService.demoPay(
           newOrderUuid,
           this.orderTotal,
-          this.basketService.getDropUuids(),
+          this.basketService.getDropUuids()
         );
       } else {
         console.log(`Presenting apply pay in non-demo mode`);
@@ -73,7 +84,7 @@ export class CheckoutPage implements OnInit {
         await this.paymentService.presentApplePay(
           newOrderUuid,
           this.orderTotal,
-          this.basketService.getDropUuids(),
+          this.basketService.getDropUuids()
         );
         this.loadingApplePay = false;
       }
@@ -100,8 +111,8 @@ export class CheckoutPage implements OnInit {
       name: 'checkout_view',
       params: {
         // drop_ids: this.drop.uuid,
-      }
-    })
+      },
+    });
     this.paymentService.isApplePayAvailable();
   }
 }

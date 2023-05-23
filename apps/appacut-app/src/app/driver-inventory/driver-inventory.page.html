@@ -53,22 +53,52 @@
         (click)="selectDropItem(dropItem)"
       >
         <span [class.selected]="selectedDropItem?.uuid === dropItem.uuid">
-          {{ dropItem.uuid }}
-          {{ dropItem.createdAt | date:"dd-MM-yy hh:mm" }} ({{ dropItem.expiration_date |
-          date:"dd-MM-yy" }})
-        </span>
+          #{{ dropItem.uuid.split('-')[0] }}
 
-        <small *ngIf="dropItem.driverUuid"> With Driver: {{ dropItem.driverUuid }} </small>
-        <small *ngIf="dropItem.location">
-          At Location: {{ dropItem.location.location_name }}
+          <ion-badge
+            color="success"
+            *ngIf="dropItem.withYou"
+            style="float: right"
+          >
+            With You
+          </ion-badge>
+
+          <ion-badge
+            color="warning"
+            *ngIf="dropItem.withYou && !dropItem.driverUuid"
+            style="float: right"
+          >
+            With {{ (dropItem.driverUuid | userProfile).name }}
+          </ion-badge>
+
+          <ion-badge
+            color="danger"
+            *ngIf="dropItem.location"
+            style="float: right"
+          >
+            At Warehouse
+          </ion-badge>
+        </span>
+        <br />
+        <small>
+          Expires In: {{ dropItem.expiration_date | date:"dd-MM-yy hh:mm" }}
         </small>
+        <br />
+        <small>
+          Stocked At: {{ dropItem.createdAt | date:"dd-MM-yy hh:mm" }}
+        </small>
+        <br />
       </div>
     </ion-accordion>
   </ion-accordion-group>
 
   <ion-footer>
     <div class="buttons">
-      <ion-button color="primary" (click)="addDriverInventory()" [disabled]="!selectedDropItem">
+      <ion-button
+        color="primary"
+        (click)="addDriverInventory()"
+        [disabled]="!selectedDropItem"
+      >
         <ion-icon name="arrow-down-circle-outline"></ion-icon>&nbsp; Assign to
         Driver
       </ion-button>

@@ -31,7 +31,31 @@
         <strong>{{ orderTotal | currency:"GBP": true }}</strong>
       </ion-label>
     </ion-item>
+
+    <ion-item *ngFor="let d of _discounts$ | async">
+      <ion-label slot="start">
+        {{ d.discount_display_name }}
+      </ion-label>
+      <ion-label slot="end">
+        <strong>{{ d.total_discount | currency:"GBP": true }}</strong>
+      </ion-label>
+    </ion-item>
+
   </ion-list>
+
+  <ion-list inset="true" class="amount-summary-list">    <ion-item>
+      <!-- <ion-label slot="start" >Promo Code</ion-label> -->
+      <ion-input #promo placeholder="Promo Code">
+
+      </ion-input>
+      <ion-button item-right (click)="applyPromoCode(promo.value)">
+        Submit
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+
+
 
   <br />
   <h4>Shipping & Contact</h4>

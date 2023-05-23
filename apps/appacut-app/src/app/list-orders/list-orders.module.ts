@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ListOrdersPageRoutingModule } from './list-orders-routing.module';
 
 import { ListOrdersPage } from './list-orders.page';
-import { DateAgoPipe } from '../pipes/date-ago.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,6 +15,7 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
     FormsModule,
     IonicModule,
     ListOrdersPageRoutingModule,
+    SharedModule,
   ],
   declarations: [ListOrdersPage],
 })

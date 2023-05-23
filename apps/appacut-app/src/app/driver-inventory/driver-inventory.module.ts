@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DriverInventoryPageRoutingModule } from './driver-inventory-routing.module';
 
 import { DriverInventoryPage } from './driver-inventory.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { DriverInventoryPage } from './driver-inventory.page';
     FormsModule,
     IonicModule,
     DriverInventoryPageRoutingModule,
+    SharedModule
   ],
   declarations: [DriverInventoryPage],
 })

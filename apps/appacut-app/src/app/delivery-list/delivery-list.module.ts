@@ -8,8 +8,7 @@ import { DeliveryListPageRoutingModule } from './delivery-list-routing.module';
 
 import { DeliveryListPage } from './delivery-list.page';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { DateAgoPipe } from '../pipes/date-ago.pipe';
-import { UserProfilePipe } from '../pipes/user-profile-pipe';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -19,7 +18,8 @@ import { UserProfilePipe } from '../pipes/user-profile-pipe';
     IonicModule,
     DeliveryListPageRoutingModule,
     GoogleMapsModule,
+    SharedModule,
   ],
-  declarations: [DeliveryListPage, DateAgoPipe, UserProfilePipe],
+  declarations: [DeliveryListPage],
 })
 export class DeliveryListPageModule {}

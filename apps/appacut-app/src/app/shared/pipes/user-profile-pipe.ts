@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AuthService } from '../../core/auth';
+import { AuthService } from '../../../core/auth';
 
 @Pipe({
   name: 'userProfile',
@@ -13,7 +13,9 @@ export class UserProfilePipe implements PipeTransform {
     if (uuid) {
       console.log('Searching for user with uuid: ', uuid);
       const allUsers = this.authService.allDrivers$.value;
-      console.log(`Here are the user uuids we have: ${allUsers.map((user) => user.uuid)}`)
+      console.log(
+        `Here are the user uuids we have: ${allUsers.map((user) => user.uuid)}`
+      );
 
       user = allUsers.find((user) => user.uuid === uuid);
     }

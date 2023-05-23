@@ -57,10 +57,7 @@ export class DropsService {
     collectionAddressPostcode: new FormControl(null, [Validators.required]),
   });
 
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService
-    ) {
+  constructor(private http: HttpClient, private authService: AuthService) {
     this.localDeliveryForm.disable();
     this.nationalDeliveryForm.disable();
     this.collectionForm.disable();
@@ -79,7 +76,6 @@ export class DropsService {
   }
 
   getDrops() {
-
     const currentUserUuid = this.authService.currentUser$.getValue()?.uuid;
 
     console.log(`getDrops()`);
@@ -102,8 +98,30 @@ export class DropsService {
               (dropItem) => dropItem.location
             ).length,
           };
-        });
 
+          /* add withYou to each drop item */
+          drop.dropItems?.forEach((dropItem) => {
+            dropItem.withYou = dropItem.driverUuid === currentUserUuid;
+            return dropItem
+          });
+
+          /* sort by withYou then driverUuid */
+          drop.dropItems?.sort((a, b) => {
+            if (a.withYou && !b.withYou) {
+              return -1;
+            } else if (!a.withYou && b.withYou) {
+              return 1;
+            } else {
+              if (a.driverUuid < b.driverUuid) {
+                return -1;
+              } else if (a.driverUuid > b.driverUuid) {
+                return 1;
+              } else {
+                return 0;
+              }
+            }
+          });
+        });
 
         this.allDrops$.next(res);
       })

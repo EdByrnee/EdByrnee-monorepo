@@ -8,6 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 export class BasketService {
   _basket$ = new BehaviorSubject<IBasketItem[]>([]);
 
+  _discounts$ = new BehaviorSubject<IDiscount[]>([]);
+
   _basketTotal$ = new BehaviorSubject<number>(0);
 
   constructor() {}
@@ -52,27 +54,41 @@ export class BasketService {
   updateBasketTotal() {
     const currentValue = this._basket$.value;
     const total = currentValue.reduce((acc, item) => {
-      return acc + (item.drop.price * item.qty);
+      return acc + item.drop.price * item.qty;
     }, 0);
     this._basketTotal$.next(total);
   }
 
-  getDropUuids(){
+  getDropUuids() {
     const currentValue = this._basket$.value;
     const dropUuids = currentValue.map((item) => item.drop.uuid);
     return dropUuids;
   }
 
-  getOrderTotal(){
+  getOrderTotal() {
     const currentValue = this._basket$.value;
     const total = currentValue.reduce((acc, item) => {
-      return acc + (item.drop.price * item.qty);
+      return acc + item.drop.price * item.qty;
     }, 0);
     return total;
+  }
+
+  public setDiscounts(discount: any) {
+    const currentDiscounts = this._discounts$.value;
+    this._discounts$.next([...currentDiscounts, discount]);
+  }
+
+  public getDiscounts() {
+    return this._discounts$.value;
   }
 }
 
 export interface IBasketItem {
   drop: IDrop;
   qty: number;
+}
+
+export interface IDiscount {
+  discount_display_name: 'Promo Code';
+  total_discount: number;
 }
