@@ -1,19 +1,22 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="secondary">
     <ion-buttons>
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Order #1234</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="!loading">
-  <!-- <div class="ion-padding">
-    <h2 style="text-align: center; color: #2f2f2f">
-      <ion-icon name="heart" style="color: #a7b974"></ion-icon>
-      <span style="color: #a7b974"> Thank you </span>for your order!
-    </h2>
-  </div> -->
+<ion-content *ngIf="!loading" [fullscreen]="true">
+  <div class="bg ion-padding">
+    <!-- <img
+    src="https://i.pinimg.com/originals/78/d8/bc/78d8bcedeea91115b4d8352793cc3db5.gif"
+    alt=""
+  /> -->
+
+    <ion-list-header class="ion-label-header">
+      <ion-label>THANK YOU FOR YOUR ORDER.</ion-label>
+    </ion-list-header>
+  </div>
 
   <div class="ion-padding">
     <shoppr-monorepo-order-tracking
@@ -40,8 +43,7 @@
         <p class="stockLevels" *ngIf="isDriver$ | async">
           You/Drivers/Warehouse ({{ orderLine.drop?.summary.totalItemsWithSelf
           }})/({{ orderLine.drop?.summary.totalItemsWithDrivers }})/({{
-          orderLine.drop?.summary.totalItemsWithLocation }})
-          &nbsp; 
+          orderLine.drop?.summary.totalItemsWithLocation }}) &nbsp;
           <ion-icon
             class="icon-larger"
             color="success"
