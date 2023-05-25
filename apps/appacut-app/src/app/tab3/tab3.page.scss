@@ -1,6 +1,7 @@
 ion-content {
   padding-top: 48px;
-  --background: #f9f9f9;
+  // background is secondary color from theme
+  --background: #f4f5f8;
 }
 ion-avatar {
   border: solid #e3e3e3 1px;
@@ -20,6 +21,7 @@ ion-avatar {
 .handle {
   text-align: center;
   padding-top: 8px;
+  font-weight: 900;
 }
 
 .background {
