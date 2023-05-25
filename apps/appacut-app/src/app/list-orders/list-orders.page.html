@@ -1,19 +1,14 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons>
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Orders</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div class="ion-padding bg">
+    <ion-list-header>
+      <ion-label>YOUR <br />ORDERS</ion-label>
+    </ion-list-header>
 
-  <div class="ion-padding">
     <h2>Need Help?</h2>
     <ion-button
       expand="block"
-      color="primary"
+      color="light"
+      fill="outline"
       (click)="openSupport()"
       >Contact Support</ion-button
     >
@@ -25,7 +20,7 @@
       (click)="viewOrder(order.uuid)"
       button
     >
-      <ion-avatar slot="start" *ngIf="!order.driverUuid">
+      <!-- <ion-avatar slot="start" *ngIf="!order.driverUuid">
         <img
           alt="Silhouette of a person's head"
           [src]="'https://ui-avatars.com/api/?name=?&background=EE4B2B&color=fff'"
@@ -37,18 +32,19 @@
           alt="Silhouette of a person's head"
           [src]="'https://ui-avatars.com/api/?name=E&background=0D8ABC&color=fff'"
         />
-      </ion-avatar>
+      </ion-avatar> -->
 
       <ion-label>
-        <h2>
-          {{ order.createdAt | date: 'dd MMM HH:mm' }}
-        </h2>
+        <h2>{{ order.createdAt | date: 'dd MMM HH:mm' }}</h2>
         <p>
-          {{ order.order_total | currency:"GBP":true }}, {{ order.multiOrderLines?.length }} items
+          {{ order.order_total | currency:"GBP":true }}, {{
+          order.multiOrderLines?.length }} items
           <small> ({{ order.createdAt | date: 'dd MMM HH:mm' }})</small>
         </p>
         <p>
           <ion-text color="danger" *ngIf="order.order_status === 'OPEN'">
+            <!-- loading spinner -->
+            <!-- <ion-spinner color="primary"></ion-spinner> -->
             Waiting for driver
           </ion-text>
           <ion-text

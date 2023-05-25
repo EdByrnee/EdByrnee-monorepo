@@ -73,9 +73,8 @@ export class BasketService {
     return total;
   }
 
-  public setDiscounts(discount: any) {
-    const currentDiscounts = this._discounts$.value;
-    this._discounts$.next([...currentDiscounts, discount]);
+  public setDiscounts(discounts: any) {
+    this._discounts$.next(discounts);
   }
 
   public getDiscounts() {

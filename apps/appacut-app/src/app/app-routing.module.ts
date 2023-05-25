@@ -193,13 +193,6 @@ const routes: Routes = [
       import('./chat-view/chat-view.module').then((m) => m.ChatViewPageModule),
   },
   {
-    path: 'view-maker/:id',
-    loadChildren: () =>
-      import('./view-maker/view-maker.module').then(
-        (m) => m.ViewMakerPageModule
-      ),
-  },
-  {
     path: 'new-drop',
     loadChildren: () =>
       import('./new-drop/new-drop.module').then((m) => m.NewDropPageModule),

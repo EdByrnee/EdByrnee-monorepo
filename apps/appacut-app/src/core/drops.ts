@@ -176,6 +176,7 @@ export class DropsService {
         tap((res: any) => {
           if (withDriver) {
             this.updateItemDrop(dropItemUuid, {
+              withYou: true,
               withDriver: true,
               driverUuid: locationOrDriverUuid,
               location: null,
@@ -183,6 +184,7 @@ export class DropsService {
           } else {
             this.updateItemDrop(dropItemUuid, {
               withDriver: false,
+              withYou: false,
               driverUuid: null as any,
               location: locationOrDriverUuid,
             });

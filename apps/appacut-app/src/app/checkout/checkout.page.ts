@@ -44,7 +44,7 @@ export class CheckoutPage implements OnInit {
   _discounts$: Observable<IDiscount[]> = this.basketService._discounts$;
 
   applyPromoCode(code: string | number | null | undefined) {
-    // this.promoCodeService.apply(code);
+    this.promoCodeService.apply(code as string);
   }
 
   constructor(

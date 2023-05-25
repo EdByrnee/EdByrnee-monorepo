@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  api: 'https://api.localshelf.market',
+  api: 'https://srapi.localshelf.market',
   // api: 'http://192.168.68.101:3333',
   apiKey: 'AIzaSyCd4vlmXh8ijgMTXjVD_HherjDPIZr-lqs',
   recaptchaSiteKey: '6LdRPXYkAAAAABPdSP-FsGFg7VqxhWJw6Rclwo82',
