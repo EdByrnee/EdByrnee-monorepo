@@ -12,6 +12,11 @@
   src: url('./assets/fonts/delight_winter/Delight Winter.ttf');
 }
 
+@font-face {
+  font-family: Pixelmania;
+  src: url('./assets/fonts/Pixelmania.ttf');
+}
+
 body {
   background: white;
   // background: url('https://media.istockphoto.com/id/1203731449/photo/baker-man-hands-breadmaking-kneading-bread.jpg?s=612x612&w=is&k=20&c=2ENTZWl4lCN-ZUa1RlG-R8B9ZkknIQNMB5GzE4Lu5IA=');
@@ -20,7 +25,7 @@ body {
 }
 
 h1 {
-  font-family: Delight-Winter;
+  font-family: Pixelmania;
   color: #2f2f2f;
 } p{
   color: #2f2f2f;

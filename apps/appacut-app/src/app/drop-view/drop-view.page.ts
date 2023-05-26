@@ -26,6 +26,7 @@ import { AuthService } from '../../core/auth';
 import { MapsService } from '../../core/maps.service';
 import { AnalyticsService } from '../../core/analytics';
 import { BasketService, IBasketItem } from '../../core/basket.service';
+import { ViewBasketPage } from '../view-basket/view-basket.page';
 
 @Component({
   selector: 'shoppr-monorepo-drop-view',
@@ -46,6 +47,8 @@ export class DropViewPage implements OnInit {
   userProfile$: Observable<IUserProfile>;
 
   currentUser$: Observable<IUserProfile | null> = this.authService.currentUser$;
+
+  public basketTotal$: Observable<number> = this.basketService.basketTotal$;
 
   basket$: Observable<IBasketItem[]> = this.basketService.basket$;
 
@@ -80,15 +83,39 @@ export class DropViewPage implements OnInit {
     private toastController: ToastController,
     private analyticsService: AnalyticsService,
     private mappingService: MapsService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private toastContoller: ToastController
   ) {
     this.id = this.router.snapshot.paramMap.get('id') || '';
   }
 
   ngOnInit() {}
 
-  addToBasket() {
+  async onClickBasket() {
+    const modal = await this.modalCtrl.create({
+      component: ViewBasketPage,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+  }
+
+  async addToBasket() {
     this.basketService.addToBasket(this.drop);
+    const alert = await this.toastContoller.create({
+      header: 'Added to basket',
+      position: 'top',
+      duration: 2000,
+      buttons: [
+        {
+          text: 'View Basket',
+          handler: () => {
+            this.onClickBasket();
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
   removeFromBasket() {

@@ -1,9 +1,17 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="light">
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title> SUGAR RUSH </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onClickBasket()" color="light">
+        <ion-icon name="basket-outline"></ion-icon>
+        <span class="small-text">
+          {{ basketTotal$ | async | currency:"GBP":true }}
+        </span>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

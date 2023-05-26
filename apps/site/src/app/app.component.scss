@@ -1,5 +1,5 @@
 h1 {
-  font-size: 120px;
+  font-size: 42px;
   margin-bottom: 0px;
 }
 p {
@@ -18,8 +18,9 @@ p {
   text-align: center;
   // background: #6D8274;
   position: absolute;
-  transform: translate(-50%);
+  transform: translate(-50%, -50%);
   left: 50%;
+  top: 50%;
 }
 img {
   margin-top: 12px;
