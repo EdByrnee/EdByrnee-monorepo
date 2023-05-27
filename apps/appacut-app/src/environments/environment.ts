@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api: 'http://localhost:3333',
-  apiKey: 'AIzaSyCd4vlmXh8ijgMTXjVD_HherjDPIZr-lqs',
+  apiKey: 'AIzaSyC9MUnge3iCqkTGUHJoFNsw4KMaq-llF2w',
   recaptchaSiteKey: '6Ld1_nUkAAAAANAWEyHxgBzRuEcDHuNLFyxPcn_Z',
   stripePublicKey:
     'pk_test_51MBiq3GGo318mVFjcnlBO0pXhz6Au7Rlc9Pv7rXtLKTYMRIHjkTrovqaxClLjQecC5LIv0sBYcpe0BDL6oRUfhLU00otno2sJx',

@@ -92,7 +92,7 @@ export class AuthController {
         const uploadResults: IUploadResult[] =
           await this.fileService.upsertFileArray(
             photos,
-            'local-shelf-demo-bucket'
+            'sugar-rush-public-bucket'
           );
 
         await this.authService.patchUserPhotos(
@@ -192,7 +192,7 @@ export class AuthController {
       const newlyUploadedPhotos: IUploadResult[] =
         await this.fileService.upsertFileArray(
           [photo],
-          'local-shelf-demo-bucket'
+          'sugar-rush-public-bucket'
         );
 
       return await this.authService.uploadProfilePhoto(

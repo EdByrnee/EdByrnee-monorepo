@@ -256,7 +256,7 @@ export class DropsController {
 
         uploadResults = await this.filesService.upsertFileArray(
           newPhotos,
-          'local-shelf-demo-bucket'
+          'sugar-rush-public-bucket'
         );
       }
 
@@ -347,7 +347,7 @@ export class DropsController {
       const uploadResults: IUploadResult[] =
         await this.filesService.upsertFileArray(
           photos,
-          'local-shelf-demo-bucket'
+          'sugar-rush-public-bucket'
         );
 
       await this.dropService.createDrop(
