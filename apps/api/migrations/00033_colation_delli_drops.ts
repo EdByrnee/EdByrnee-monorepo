@@ -8,7 +8,7 @@ export async function up(sequelize: Sequelize) {
       `
     
     ALTER DATABASE
-    localdrop
+    sugarrush
     CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_unicode_ci;
     `,
@@ -35,7 +35,7 @@ export async function up(sequelize: Sequelize) {
     // ALTER TABLE
     // DelliDrops
     // CHANGE description name
-    // VARCHAR(191)
+    // VARCHAR(191)§
     // CHARACTER SET utf8mb4
     // COLLATE utf8mb4_unicode_ci;
     // `,
@@ -61,7 +61,7 @@ export async function down(sequelize: Sequelize) {
       `
 
     ALTER DATABASE
-    localdrop
+    sugarrush
     CHARACTER SET = utf8
     COLLATE = utf8_general_ci;
     `,
