@@ -4,8 +4,8 @@ $melorraOrange: #f05a00;
 $subtleGrey: #e3e3e3;
 $blueShade1: #2c3e50;
 $blueShade2: #34495e;
-$boxShadowLight1: 0 2rem 5rem rgba(0,0,0,0.06);
-$boxShadwoDark1: 0 2rem 6rem rgba(0,0,0,0.1);
+$boxShadowLight1: 0 24px 128px rgba(0,0,0,0.06);
+$boxShadwoDark1: 0 24px 128px rgba(0,0,0,0.1);
 
 
 *, *::after, *::before {
@@ -15,18 +15,16 @@ $boxShadwoDark1: 0 2rem 6rem rgba(0,0,0,0.1);
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 16px;
 }
 
 body {
   color: $blueShade1;
   font-family: 'Montserrat', sans-serif;
-  width: 40rem;
   font-weight: 300;
   min-height: 100vh;
   position: relative;
   display: block;
-  margin: 2rem auto;
 }
 
 h2, h4, h6 {
@@ -36,7 +34,7 @@ h2, h4, h6 {
 }
 
 .root {
-  padding: 3rem 1.5rem;
+  padding: 48px 24px;
   border-radius: 20px;
   box-shadow: $boxShadwoDark1;
   zoom: 0.5;
@@ -45,11 +43,10 @@ h2, h4, h6 {
 figure {
   display: flex;
   & img {
-    width: 12rem;
-    height: 8rem;
+    width: 64px;
+    height: 64px;
     // border-radius: 50%;
     border: 1px solid $subtleGrey;
-    margin-right: 1.5rem;
   }
   
   & figcaption {
@@ -58,37 +55,37 @@ figure {
     justify-content: space-evenly;
     
     & h4 {
-      font-size: 1.4rem;
+      font-size: 16px;
       font-weight: 500;
     }
     
     & h6 {
-      font-size: 1rem;
+      font-size: 16px;
       font-weight: 300;
     }
     
     & h2 {
-      font-size: 1.6rem;
+      font-size: 16px;
       font-weight: 500;
     }
   }
 }
 
 .order-track {
-  margin-top: 2rem;
-  padding: 0 1rem;
+  margin-top: 16px;
+  padding: 0 16px;
   border-top: 1px dashed $blueShade1;
-  padding-top: 2.5rem;
+  padding-top: 32px;
   display: flex;
   flex-direction: column;
   
   &-step {
     display: flex;
-    height: 7rem;
+    height: 128px;
     
     &:last-child {
       overflow: hidden;
-      height: 4rem;
+      height: 32px;
       & .order-track-status span:last-of-type {
         display: none;
       }
@@ -96,12 +93,12 @@ figure {
   }
   
   &-status {
-    margin-right: 1.5rem;
+    margin-right: 16px;
     position: relative;
     &-dot {
       display: block;
-      width: 2.2rem;
-      height: 2.2rem;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: $melorraOrange;
     }
@@ -110,20 +107,20 @@ figure {
       display: block;
       margin: 0 auto;
       width: 2px;
-      height: 7rem;
+      height: 128px;
       background: $melorraOrange;
     }
   }
   
   &-text {
     &-stat {
-      font-size: 1.3rem;
+      font-size: 18px;
       font-weight: 500;
       margin-bottom: 3px;
     }
     
     &-sub {
-      font-size: 1.3rem;
+      font-size: 18px;
       font-weight: 300;
     }
   }
