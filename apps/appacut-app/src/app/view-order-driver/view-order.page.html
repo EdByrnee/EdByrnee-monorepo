@@ -30,6 +30,21 @@
     </ion-button>
   </div>
 
+  <ion-list class="order-list" inset="true" *ngIf="order.order_status === 'ASSIGNED_TO_DRIVER'">
+    <ion-item>
+      <ion-avatar slot="start" *ngIf="order.driverUuid">
+        <img
+          alt="Silhouette of a person's head"
+          [src]="(order.driverUuid | userProfile)?.photoUrl"
+        />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ (order.driverUuid | userProfile)?.name }} </h2>
+        <p>Has your order and is on his way.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
   <ion-list class="order-list" inset="true">
     <ion-list-header>
       <ion-label>YOUR ORDER.</ion-label>
