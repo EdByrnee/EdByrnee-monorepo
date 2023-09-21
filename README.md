@@ -1,4 +1,23 @@
-# LocalShelfMonorepo
+# Ed Byrne Monorepo
+
+This project hosts all projects and apps I am working on.
+
+This is to encourage code reuse between all projects under my control, reducing the cognitive load and to reduce the amount of boilerplate code I have to write.
+
+This can be personal projects, and commercial projects that are fully under my control.
+
+However, any repos involving other people e.g. Ardanis, should be kept separate. This is to avoid any confusion over ownership of code.
+
+Here are the projects I am currently working on (table):
+
+Projects include multiple apps.
+
+| Project Name | Description | Tech Stack | Status |
+| ------------ | ----------- | ---------- | ------ |
+| Local Shelf  | The aim of this is to launch an app that can later be sold. |            | In Development       |
+| Sugar Rush   | The aim of this is to launch an app that can later be sold. |            | In Development       |
+| Ed Byrne     | A collection of personal applications.                      |            | In Development       |
+
 
 ## Install nxtend for ionic-angular
 
