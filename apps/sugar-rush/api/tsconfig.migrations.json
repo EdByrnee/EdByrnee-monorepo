@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,        
+    "allowJs": true,
+    "target": "ES6",
+    "paths": {
+      "@future-planet-monorepo/data-store-expressions": ["../../libs/data-store-expressions/src/index.ts"],
+    }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}

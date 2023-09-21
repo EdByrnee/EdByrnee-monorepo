@@ -1,0 +1,1 @@
+export const EMAIL_GATEWAY = 'EMAIL_GATEWAY';

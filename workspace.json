@@ -2,14 +2,15 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "admin": "apps/admin",
-    "admin-e2e": "apps/admin-e2e",
-    "api": "apps/api",
+    "edbyrnee-api" :"apps/edbyrnee/api",
+    "admin": "apps/sugar-rush/admin",
+    "admin-e2e": "apps/sugar-rush/admin-e2e",
+    "api": "apps/sugar-rush/api",
     "api-interfaces": "libs/api-interfaces",
-    "appacut-app": "apps/appacut-app",
-    "appacut-app-e2e": "apps/appacut-app-e2e",
-    "site": "apps/site",
-    "site-e2e": "apps/site-e2e"
+    "appacut-app": "apps/sugar-rush/appacut-app",
+    "appacut-app-e2e": "apps/sugar-rush/appacut-app-e2e",
+    "site": "apps/sugar-rush/site",
+    "site-e2e": "apps/sugar-rush/site-e2e"
   },
   "defaultProject": "appacut-app"
 }
